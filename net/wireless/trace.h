@@ -703,9 +703,9 @@ DECLARE_EVENT_CLASS(station_del,
 		WIPHY_ASSIGN;
 		NETDEV_ASSIGN;
 		MAC_ASSIGN(sta_mac, params->mac);
-	TP_printk(WIPHY_PR_FMT ", " NETDEV_PR_FMT ", mac: " MAC_PR_FMT,
+	),
+	TP_printk(WIPHY_PR_FMT ", " NETDEV_PR_FMT ", station mac: " MAC_PR_FMT,
 		  WIPHY_PR_ARG, NETDEV_PR_ARG, MAC_PR_ARG(sta_mac))
->>>>>>> 391ad52... cfg80211: Convert del_station() callback to use a param struct
 );
 
 DEFINE_EVENT(station_del, rdev_del_station,
