@@ -576,6 +576,11 @@ config MSM_BCL_PERIPHERAL_CTL
 	  provides routines to configure and monitor the BCL
 	  PMIC peripheral.
 
+config THUNDERCHARGE_CONTROL
+     bool "Enable ThunderCharge Current Controlling mechanism"
+     depends on SMB1360_CHARGER_FG_TEST
+     help
+       Say Y here to enable ability to adjust charger current
 
 config TEST_ONLY
         bool "test driver different flag"

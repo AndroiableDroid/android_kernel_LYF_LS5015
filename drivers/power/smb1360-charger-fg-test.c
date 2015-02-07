@@ -2062,7 +2062,20 @@ static void smb1360_external_power_changed(struct power_supply *psy)
 		dev_err(chip->dev,
 			"could not read USB current_max property, rc=%d\n", rc);
 	else
-		current_limit = prop.intval / 1000;
+
+    {
+#ifdef CONFIG_THUNDERCHARGE_CONTROL
+        if(!((prop.intval / 1000) ==0))
+        {
+        pr_info("Using custom current of %d",custom_current);
+		current_limit = custom_current;
+        }
+        else
+        current_limit = 0;
+#else
+        current_limit = prop.intval / 1000;
+#endif
+    }
 	pr_debug("current_limit = %d\n", current_limit);
 	if (chip->usb_psy_ma != current_limit) {
 		mutex_lock(&chip->current_change_lock);
