@@ -1268,8 +1268,6 @@ struct xhci_td {
 	/* ZLP received in data stage of a control transfer */
 	bool			zlp_data;
 
-	/* actual_length of the URB has already been set */
-	bool			urb_length_set;
 };
 
 /* xHCI command default timeout value */
