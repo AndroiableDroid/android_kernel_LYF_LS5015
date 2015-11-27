@@ -275,6 +275,7 @@ static bool wq_disable_numa;
 module_param_named(disable_numa, wq_disable_numa, bool, 0444);
 
 /* see the comment above the definition of WQ_POWER_EFFICIENT */
+<<<<<<< HEAD
 #ifdef CONFIG_WQ_POWER_EFFICIENT_DEFAULT
 static bool wq_power_efficient = true;
 #else
@@ -282,6 +283,11 @@ static bool wq_power_efficient;
 #endif
 
 module_param_named(power_efficient, wq_power_efficient, bool, 0444);
+=======
+static bool wq_power_efficient = true;
+
+module_param_named(power_efficient, wq_power_efficient, bool, 0644);
+>>>>>>> d3d4129... Add Power-Efficient WorkQueue
 
 static bool wq_numa_enabled;		/* unbound NUMA affinity enabled */
 
@@ -4254,14 +4260,9 @@ struct workqueue_struct *__alloc_workqueue_key(const char *fmt,
 	struct workqueue_struct *wq;
 	struct pool_workqueue *pwq;
 
-	/* Unbound && max_active == 1 used to imply ordered, which is no
-	 * longer the case on NUMA machines due to per-node pools.  While
-	 * alloc_ordered_workqueue() is the right way to create an ordered
-	 * workqueue, keep the previous behavior to avoid subtle breakages
-	 * on NUMA.
-	 */
-	if ((flags & WQ_UNBOUND) && max_active == 1)
-		flags |= __WQ_ORDERED;
+	/* see the comment above the definition of WQ_POWER_EFFICIENT */
+	if ((flags & WQ_POWER_EFFICIENT) && wq_power_efficient)
+		flags |= WQ_UNBOUND;
 
 	/* allocate wq and format name */
 	if (flags & WQ_UNBOUND)
