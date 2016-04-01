@@ -630,7 +630,18 @@ int xt_compat_check_entry_offsets(const void *base, const char *elems,
 	if (target_offset + t->u.target_size > next_offset)
 		return -EINVAL;
 
-	return 0;
+	if (strcmp(t->u.user.name, XT_STANDARD_TARGET) == 0 &&
+	    target_offset + sizeof(struct compat_xt_standard_target) != next_offset)
+		return -EINVAL;
+
+	/* compat_xt_entry match has less strict aligment requirements,
+	 * otherwise they are identical.  In case of padding differences
+	 * we need to add compat version of xt_check_entry_match.
+	 */
+	BUILD_BUG_ON(sizeof(struct compat_xt_entry_match) != sizeof(struct xt_entry_match));
+
+	return xt_check_entry_match(elems, base + target_offset,
+				    __alignof__(struct compat_xt_entry_match));
 }
 EXPORT_SYMBOL(xt_compat_check_entry_offsets);
 #endif /* CONFIG_COMPAT */
@@ -643,16 +654,38 @@ EXPORT_SYMBOL(xt_compat_check_entry_offsets);
  * @target_offset: the arp/ip/ip6_t->target_offset
  * @next_offset: the arp/ip/ip6_t->next_offset
  *
- * validates that target_offset and next_offset are sane.
- * Also see xt_compat_check_entry_offsets for CONFIG_COMPAT version.
+ * validates that target_offset and next_offset are sane and that all
+ * match sizes (if any) align with the target offset.
  *
  * This function does not validate the targets or matches themselves, it
- * only tests that all the offsets and sizes are correct.
+ * only tests that all the offsets and sizes are correct, that all
+ * match structures are aligned, and that the last structure ends where
+ * the target structure begins.
+ *
+ * Also see xt_compat_check_entry_offsets for CONFIG_COMPAT version.
  *
  * The arp/ip/ip6t_entry structure @base must have passed following tests:
  * - it must point to a valid memory location
  * - base to base + next_offset must be accessible, i.e. not exceed allocated
  *   length.
+ *
+ * A well-formed entry looks like this:
+ *
+ * ip(6)t_entry   match [mtdata]  match [mtdata] target [tgdata] ip(6)t_entry
+ * e->elems[]-----'                              |               |
+ *                matchsize                      |               |
+ *                                matchsize      |               |
+ *                                               |               |
+ * target_offset---------------------------------'               |
+ * next_offset---------------------------------------------------'
+ *
+ * elems[]: flexible array member at end of ip(6)/arpt_entry struct.
+ *          This is where matches (if any) and the target reside.
+ * target_offset: beginning of target.
+ * next_offset: start of the next rule; also: size of this rule.
+ * Since targets have a minimum size, target_offset + minlen <= next_offset.
+ *
+ * Every match stores its size, sum of sizes must not exceed target_offset.
  *
  * Return: 0 on success, negative errno on failure.
  */
@@ -676,7 +709,12 @@ int xt_check_entry_offsets(const void *base,
 	if (target_offset + t->u.target_size > next_offset)
 		return -EINVAL;
 
-	return 0;
+	if (strcmp(t->u.user.name, XT_STANDARD_TARGET) == 0 &&
+	    target_offset + sizeof(struct xt_standard_target) != next_offset)
+		return -EINVAL;
+
+	return xt_check_entry_match(elems, base + target_offset,
+				    __alignof__(struct xt_entry_match));
 }
 EXPORT_SYMBOL(xt_check_entry_offsets);
 
