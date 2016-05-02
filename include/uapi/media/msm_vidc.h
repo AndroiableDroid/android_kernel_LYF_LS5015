@@ -122,6 +122,7 @@ struct msm_vidc_s3d_frame_packing_payload {
 	unsigned int fpa_extension_flag;
 };
 
+<<<<<<< HEAD
 struct msm_vidc_vpx_colorspace_payload {
 	unsigned int color_space;
 	unsigned int yuv_range_flag;
@@ -129,6 +130,8 @@ struct msm_vidc_vpx_colorspace_payload {
 	unsigned int sumsampling_y;
 };
 
+=======
+>>>>>>> f723d33cc76... msm: vidc: Add SEI extradata
 struct msm_vidc_mastering_display_colour_sei_payload {
 	unsigned int nDisplayPrimariesX[3];
 	unsigned int nDisplayPrimariesY[3];
@@ -141,23 +144,6 @@ struct msm_vidc_mastering_display_colour_sei_payload {
 struct msm_vidc_content_light_level_sei_payload {
 	unsigned int nMaxContentLight;
 	unsigned int nMaxPicAverageLight;
-};
-
-struct msm_vidc_vui_display_info_payload {
-	unsigned int video_signal_present_flag;
-	unsigned int video_format;
-	unsigned int bit_depth_y;
-	unsigned int bit_depth_c;
-	unsigned int video_full_range_flag;
-	unsigned int color_description_present_flag;
-	unsigned int color_primaries;
-	unsigned int transfer_characteristics;
-	unsigned int matrix_coefficients;
-	unsigned int chroma_location_info_present_flag;
-	unsigned int chroma_format_idc;
-	unsigned int separate_color_plane_flag;
-	unsigned int chroma_sample_loc_type_top_field;
-	unsigned int chroma_sample_loc_type_bottom_field;
 };
 
 enum msm_vidc_extradata_type {
