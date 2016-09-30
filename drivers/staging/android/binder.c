@@ -216,13 +216,10 @@ static struct binder_transaction_log_entry *binder_transaction_log_add(
 struct binder_context {
 	struct binder_node *binder_context_mgr_node;
 	kuid_t binder_context_mgr_uid;
-	const char *name;
 };
 
-struct binder_device {
-	struct hlist_node hlist;
-	struct miscdevice miscdev;
-	struct binder_context context;
+static struct binder_context global_context = {
+	.binder_context_mgr_uid = INVALID_UID,
 };
 
 struct binder_work {
@@ -1843,6 +1840,7 @@ static int binder_thread_write(struct binder_proc *proc,
 			binder_size_t *consumed)
 {
 	uint32_t cmd;
+	struct binder_context *context = proc->context;
 	void __user *buffer = (void __user *)(uintptr_t)binder_buffer;
 	void __user *ptr = buffer + *consumed;
 	void __user *end = buffer + size;
@@ -2799,9 +2797,9 @@ static long binder_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 				goto err;
 			}
 		} else
-			binder_context_mgr_uid = current->cred->euid;
-		binder_context_mgr_node = binder_new_node(proc, 0, 0);
-		if (binder_context_mgr_node == NULL) {
+			context->binder_context_mgr_uid = current->cred->euid;
+		context->binder_context_mgr_node = binder_new_node(proc, 0, 0);
+		if (!context->binder_context_mgr_node) {
 			ret = -ENOMEM;
 			goto err;
 		}
@@ -2989,6 +2987,7 @@ static int binder_open(struct inode *nodp, struct file *filp)
 		return -ENOMEM;
 	get_task_struct(current);
 	proc->tsk = current;
+	proc->context = &global_context;
 	INIT_LIST_HEAD(&proc->todo);
 	init_waitqueue_head(&proc->wait);
 	proc->default_priority = task_nice(current);
