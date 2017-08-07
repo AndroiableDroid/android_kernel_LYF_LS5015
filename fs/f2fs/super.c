@@ -1086,21 +1086,12 @@ static int sanity_check_raw_super(struct super_block *sb,
 		return 1;
 	}
 
-	/* check reserved ino info */
-	if (le32_to_cpu(raw_super->node_ino) != 1 ||
-		le32_to_cpu(raw_super->meta_ino) != 2 ||
-		le32_to_cpu(raw_super->root_ino) != 3) {
+	if (le32_to_cpu(raw_super->segment_count) > F2FS_MAX_SEGMENT) {
 		f2fs_msg(sb, KERN_INFO,
-			"Invalid Fs Meta Ino: node(%u) meta(%u) root(%u)",
-			le32_to_cpu(raw_super->node_ino),
-			le32_to_cpu(raw_super->meta_ino),
-			le32_to_cpu(raw_super->root_ino));
+			"Invalid segment count (%u)",
+			le32_to_cpu(raw_super->segment_count));
 		return 1;
 	}
-
-	/* check CP/SIT/NAT/SSA/MAIN_AREA area boundary */
-	if (sanity_check_area_boundary(sb, raw_super))
-		return 1;
 
 	return 0;
 }
@@ -1110,6 +1101,8 @@ int sanity_check_ckpt(struct f2fs_sb_info *sbi)
 	unsigned int total, fsmeta;
 	struct f2fs_super_block *raw_super = F2FS_RAW_SUPER(sbi);
 	struct f2fs_checkpoint *ckpt = F2FS_CKPT(sbi);
+	unsigned int main_segs, blocks_per_seg;
+	int i;
 
 	total = le32_to_cpu(raw_super->segment_count);
 	fsmeta = le32_to_cpu(raw_super->segment_count_ckpt);
@@ -1118,10 +1111,26 @@ int sanity_check_ckpt(struct f2fs_sb_info *sbi)
 	fsmeta += le32_to_cpu(ckpt->rsvd_segment_count);
 	fsmeta += le32_to_cpu(raw_super->segment_count_ssa);
 
-	if (unlikely(fsmeta >= total))
+	if (fsmeta >= total)
 		return 1;
 
-	if (unlikely(f2fs_cp_error(sbi))) {
+	main_segs = le32_to_cpu(sbi->raw_super->segment_count_main);
+	blocks_per_seg = sbi->blocks_per_seg;
+
+	for (i = 0; i < NR_CURSEG_NODE_TYPE; i++) {
+		if (le32_to_cpu(ckpt->cur_node_segno[i]) >= main_segs ||
+		    le16_to_cpu(ckpt->cur_node_blkoff[i]) >= blocks_per_seg) {
+			return 1;
+		}
+	}
+	for (i = 0; i < NR_CURSEG_DATA_TYPE; i++) {
+		if (le32_to_cpu(ckpt->cur_data_segno[i]) >= main_segs ||
+		    le16_to_cpu(ckpt->cur_data_blkoff[i]) >= blocks_per_seg) {
+			return 1;
+		}
+	}
+
+	if (is_set_ckpt_flags(ckpt, CP_ERROR_FLAG)) {
 		f2fs_msg(sbi->sb, KERN_ERR, "A bug case: need to run fsck");
 		return 1;
 	}
