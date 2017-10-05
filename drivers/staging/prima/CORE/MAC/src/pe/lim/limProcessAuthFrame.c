@@ -1881,4 +1881,3 @@ tSirRetStatus limProcessAuthFrameNoSession(tpAniSirGlobal pMac, tANI_U8 *pBd, vo
 }
 
 #endif /* WLAN_FEATURE_VOWIFI_11R */
-
