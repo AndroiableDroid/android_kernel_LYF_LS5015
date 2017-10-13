@@ -1,4 +1,4 @@
-/* Copyright (c) 2013-2014, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2013-2017, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -47,7 +47,6 @@ static bool qmi_modem_init_fin, qmi_indication_fin;
 static struct work_struct ipa_qmi_service_init_work;
 static bool is_load_uc;
 static uint32_t ipa_wan_platform;
-
 
 /* QMI A5 service */
 
@@ -739,4 +738,14 @@ void ipa_qmi_service_exit(void)
 		destroy_workqueue(ipa_clnt_resp_workqueue);
 
 	ipa_svc_handle = 0;
+}
+
+void ipa_qmi_init(void)
+{
+	mutex_init(&ipa_qmi_lock);
+}
+
+void ipa_qmi_cleanup(void)
+{
+	mutex_destroy(&ipa_qmi_lock);
 }
