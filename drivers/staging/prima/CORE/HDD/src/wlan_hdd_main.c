@@ -743,8 +743,11 @@ hdd_extract_assigned_int_from_str
     }
     *pOutPtr = tempInt;
 
-    pInPtr = strnchr(pInPtr, strlen(pInPtr), SPACE_ASCII_VALUE);
-    if (NULL == pInPtr)
+    /* getting the first argument which enables or disables RMC
+         * for input IP v4 address*/
+    sscanf(inPtr, "%31s ", buf);
+    v = kstrtos32(buf, 10, &tempInt);
+    if ( v < 0)
     {
         *pLastArg = TRUE;
         return NULL;
@@ -793,8 +796,11 @@ hdd_extract_assigned_char_from_str
 
     *pOutPtr = *pInPtr;
 
-    pInPtr = strnchr(pInPtr, strlen(pInPtr), SPACE_ASCII_VALUE);
-    if (NULL == pInPtr)
+    /* getting the first argument which enables or disables RMC
+         * for input IP v4 address*/
+    sscanf(inPtr, "%31s ", buf);
+    v = kstrtos32(buf, 10, &tempInt);
+    if ( v < 0)
     {
         *pLastArg = TRUE;
         return NULL;
@@ -881,13 +887,12 @@ hdd_parse_set_batchscan_command
         return -EINVAL;
     }
 
-    /*check and parse SCANFREQ*/
-    if ((strncmp(inPtr, "SCANFREQ", 8) == 0))
-    {
-        inPtr = hdd_extract_assigned_int_from_str(inPtr, 10,
-                    &temp, &lastArg);
-
-        if (0 != temp)
+    /*
+     * getting the first argument which sets multicast rate.
+     */
+    sscanf(inPtr, "%31s ", buf);
+    v = kstrtos32(buf, 10, &tempInt);
+    if ( v < 0)
         {
            nScanFreq = temp;
         }
@@ -8618,7 +8623,53 @@ void wlan_hdd_send_svc_nlink_msg(int type, void *data, int len)
     return;
 }
 
+#ifdef FEATURE_OEM_DATA_SUPPORT
+   //Initialize the OEM service
+   if (oem_activate_service(pHddCtx) != 0)
+   {
+       hddLog(VOS_TRACE_LEVEL_FATAL,
+              "%s: oem_activate_service failed", __func__);
+       goto err_btc_activate_service;
+   }
+#endif
 
+#ifdef PTT_SOCK_SVC_ENABLE
+   //Initialize the PTT service
+   if(ptt_sock_activate_svc(pHddCtx) != 0)
+   {
+      hddLog(VOS_TRACE_LEVEL_FATAL,"%s: ptt_sock_activate_svc failed",__func__);
+      goto err_oem_activate_service;
+   }
+#endif
+
+#ifdef WLAN_FEATURE_RMC
+   if (hdd_open_cesium_nl_sock() < 0)
+   {
+      hddLog(VOS_TRACE_LEVEL_FATAL,"%s: hdd_open_cesium_nl_sock failed", __func__);
+      goto err_ptt_sock_activate_svc;
+   }
+#endif
+
+#ifdef WLAN_LOGGING_SOCK_SVC_ENABLE
+   if(pHddCtx->cfg_ini && pHddCtx->cfg_ini->wlanLoggingEnable)
+   {
+       if(wlan_logging_sock_activate_svc(
+                   pHddCtx->cfg_ini->wlanLoggingFEToConsole,
+                   pHddCtx->cfg_ini->wlanLoggingNumBuf,
+                   pHddCtx->cfg_ini->wlanPerPktStatsLogEnable,
+                   pHddCtx->cfg_ini->wlanPerPktStatsNumBuf))
+       {
+           hddLog(VOS_TRACE_LEVEL_ERROR, "%s: wlan_logging_sock_activate_svc"
+                   " failed", __func__);
+           goto err_open_cesium_nl_sock;
+       }
+       //TODO: To Remove enableDhcpDebug and use gEnableDebugLog for
+       //EAPOL and DHCP
+       if (!pHddCtx->cfg_ini->gEnableDebugLog)
+           pHddCtx->cfg_ini->gEnableDebugLog =
+           VOS_PKT_PROTO_TYPE_EAPOL | VOS_PKT_PROTO_TYPE_DHCP |
+           VOS_PKT_PROTO_TYPE_ARP;
+   }
 
 /**---------------------------------------------------------------------------
 
@@ -8732,8 +8783,26 @@ static eHalStatus hdd_11d_scan_done(tHalHandle halHandle, void *pContext,
 
     EXIT();
 
-    return eHAL_STATUS_SUCCESS;
-}
+err_open_cesium_nl_sock:
+#ifdef WLAN_LOGGING_SOCK_SVC_ENABLE
+   hdd_close_cesium_nl_sock();
+#endif
+
+err_ptt_sock_activate_svc:
+#ifdef PTT_SOCK_SVC_ENABLE
+   ptt_sock_deactivate_svc(pHddCtx);
+#endif
+
+err_oem_activate_service:
+#ifdef FEATURE_OEM_DATA_SUPPORT
+   oem_deactivate_service();
+#endif
+
+err_btc_activate_service:
+   btc_deactivate_service();
+
+err_reg_netdev:
+   unregister_netdevice_notifier(&hdd_netdev_notifier);
 
 /**---------------------------------------------------------------------------
 
