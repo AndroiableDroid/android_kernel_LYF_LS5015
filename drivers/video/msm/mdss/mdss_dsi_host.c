@@ -32,6 +32,8 @@
 
 #define CEIL(x, y)		(((x) + ((y) - 1)) / (y))
 
+#define CEIL(x, y)		(((x) + ((y) - 1)) / (y))
+
 struct mdss_dsi_ctrl_pdata *ctrl_list[DSI_CTRL_MAX];
 
 struct mdss_hw mdss_dsi0_hw = {
