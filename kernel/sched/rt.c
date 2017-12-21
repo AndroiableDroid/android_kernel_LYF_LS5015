@@ -865,7 +865,11 @@ out:
 	pr_err("%s", buf);
 	BUG();
 #else
+<<<<<<< HEAD
 	printk_sched("%s", buf);
+=======
+	printk_deferred("%s", buf);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 #endif
 }
 

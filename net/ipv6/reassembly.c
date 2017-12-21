@@ -556,6 +556,12 @@ static int ipv6_frag_rcv(struct sk_buff *skb)
 		return 1;
 	}
 
+<<<<<<< HEAD
+=======
+	if (!net->ipv6.frags.high_thresh)
+		goto fail_mem;
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	evicted = inet_frag_evictor(&net->ipv6.frags, &ip6_frags, false);
 	if (evicted)
 		IP6_ADD_STATS_BH(net, ip6_dst_idev(skb_dst(skb)),
@@ -575,6 +581,10 @@ static int ipv6_frag_rcv(struct sk_buff *skb)
 		return ret;
 	}
 
+<<<<<<< HEAD
+=======
+fail_mem:
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	IP6_INC_STATS_BH(net, ip6_dst_idev(skb_dst(skb)), IPSTATS_MIB_REASMFAILS);
 	kfree_skb(skb);
 	return -1;

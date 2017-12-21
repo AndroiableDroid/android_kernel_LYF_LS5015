@@ -168,9 +168,12 @@ static void od_check_cpu(int cpu, unsigned int load)
 			dbs_info->rate_mult =
 				od_tuners->sampling_down_factor;
 		dbs_freq_increase(policy, policy->max);
+<<<<<<< HEAD
 
 		return;
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	} else {
 		/* Calculate the next frequency proportional to load */
 		unsigned int freq_next;

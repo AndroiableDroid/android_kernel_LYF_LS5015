@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright (c) 2010-2014, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2010-2014,2017, The Linux Foundation. All rights reserved.
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -34,6 +38,10 @@ struct pil_priv;
  * This defaults to ioremap if not specified.
  * @unmap_fw_mem: Custom function used to undo mapping by map_fw_mem.
  * This defaults to iounmap if not specified.
+<<<<<<< HEAD
+=======
+ * @clear_fw_region: Clear fw region on failure in loading.
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  */
 struct pil_desc {
 	const char *name;
@@ -49,6 +57,10 @@ struct pil_desc {
 	void * (*map_fw_mem)(phys_addr_t phys, size_t size, void *data);
 	void (*unmap_fw_mem)(void *virt, size_t size, void *data);
 	void *map_data;
+<<<<<<< HEAD
+=======
+	bool clear_fw_region;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 };
 
 /**

@@ -5610,12 +5610,18 @@ static tANI_BOOLEAN csrRoamProcessResults( tpAniSirGlobal pMac, tSmeCmd *pComman
         case eCsrReassocSuccess:
             if(eCsrReassocSuccess == Result)
             {
+<<<<<<< HEAD
                 roamInfo.reassoc = true;
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
                 ind_qos = SME_QOS_CSR_REASSOC_COMPLETE;
             }
             else
             {
+<<<<<<< HEAD
                 roamInfo.reassoc = false;
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
                 ind_qos = SME_QOS_CSR_ASSOC_COMPLETE;
             }
             // Success Join Response from LIM.  Tell NDIS we are connected and save the
@@ -5821,12 +5827,15 @@ static tANI_BOOLEAN csrRoamProcessResults( tpAniSirGlobal pMac, tSmeCmd *pComman
                     roamInfo.ucastSig = ( tANI_U8 )pJoinRsp->ucastSig;
                     roamInfo.bcastSig = ( tANI_U8 )pJoinRsp->bcastSig;
                     roamInfo.maxRateFlags = pJoinRsp->maxRateFlags;
+<<<<<<< HEAD
                     roamInfo.vht_caps = pJoinRsp->vht_caps;
                     roamInfo.ht_caps = pJoinRsp->ht_caps;
                     roamInfo.hs20vendor_ie = pJoinRsp->hs20vendor_ie;
                     roamInfo.ht_operation = pJoinRsp->ht_operation;
                     roamInfo.vht_operation = pJoinRsp->vht_operation;
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
                 }
                 else
                 {

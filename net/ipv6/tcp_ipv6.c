@@ -385,10 +385,19 @@ static void tcp_v6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
 	np = inet6_sk(sk);
 
 	if (type == NDISC_REDIRECT) {
+<<<<<<< HEAD
 		struct dst_entry *dst = __sk_dst_check(sk, np->dst_cookie);
 
 		if (dst)
 			dst->ops->redirect(dst, sk, skb);
+=======
+		if (!sock_owned_by_user(sk)) {
+			struct dst_entry *dst = __sk_dst_check(sk, np->dst_cookie);
+
+			if (dst)
+				dst->ops->redirect(dst, sk, skb);
+		}
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		goto out;
 	}
 
@@ -907,8 +916,19 @@ static void tcp_v6_timewait_ack(struct sock *sk, struct sk_buff *skb)
 static void tcp_v6_reqsk_send_ack(struct sock *sk, struct sk_buff *skb,
 				  struct request_sock *req)
 {
+<<<<<<< HEAD
 	tcp_v6_send_ack(skb, tcp_rsk(req)->snt_isn + 1, tcp_rsk(req)->rcv_isn + 1,
 			req->rcv_wnd, tcp_time_stamp, req->ts_recent,
+=======
+	/* RFC 7323 2.3
+	 * The window field (SEG.WND) of every outgoing segment, with the
+	 * exception of <SYN> segments, MUST be right-shifted by
+	 * Rcv.Wind.Shift bits:
+	 */
+	tcp_v6_send_ack(skb, tcp_rsk(req)->snt_isn + 1, tcp_rsk(req)->rcv_isn + 1,
+			req->rcv_wnd >> inet_rsk(req)->rcv_wscale,
+			tcp_time_stamp, req->ts_recent,
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			tcp_v6_md5_do_lookup(sk, &ipv6_hdr(skb)->daddr), 0);
 }
 
@@ -1333,7 +1353,11 @@ static int tcp_v6_do_rcv(struct sock *sk, struct sk_buff *skb)
 		goto discard;
 #endif
 
+<<<<<<< HEAD
 	if (sk_filter(sk, skb))
+=======
+	if (tcp_filter(sk, skb))
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		goto discard;
 
 	/*
@@ -1504,8 +1528,15 @@ process:
 	if (!xfrm6_policy_check(sk, XFRM_POLICY_IN, skb))
 		goto discard_and_relse;
 
+<<<<<<< HEAD
 	if (sk_filter(sk, skb))
 		goto discard_and_relse;
+=======
+	if (tcp_filter(sk, skb))
+		goto discard_and_relse;
+	th = (const struct tcphdr *)skb->data;
+	hdr = ipv6_hdr(skb);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	skb->dev = NULL;
 
@@ -1770,6 +1801,10 @@ static void get_tcp6_sock(struct seq_file *seq, struct sock *sp, int i)
 	const struct tcp_sock *tp = tcp_sk(sp);
 	const struct inet_connection_sock *icsk = inet_csk(sp);
 	const struct ipv6_pinfo *np = inet6_sk(sp);
+<<<<<<< HEAD
+=======
+	__u8 state = sp->sk_state;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	dest  = &np->daddr;
 	src   = &np->rcv_saddr;
@@ -1792,6 +1827,12 @@ static void get_tcp6_sock(struct seq_file *seq, struct sock *sp, int i)
 		timer_expires = jiffies;
 	}
 
+<<<<<<< HEAD
+=======
+	if (inet->transparent)
+		state |= 0x80;
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	seq_printf(seq,
 		   "%4d: %08X%08X%08X%08X:%04X %08X%08X%08X%08X:%04X "
 		   "%02X %08X:%08X %02X:%08lX %08X %5d %8d %lu %d %pK %lu %lu %u %u %d\n",
@@ -1800,7 +1841,11 @@ static void get_tcp6_sock(struct seq_file *seq, struct sock *sp, int i)
 		   src->s6_addr32[2], src->s6_addr32[3], srcp,
 		   dest->s6_addr32[0], dest->s6_addr32[1],
 		   dest->s6_addr32[2], dest->s6_addr32[3], destp,
+<<<<<<< HEAD
 		   sp->sk_state,
+=======
+		   state,
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		   tp->write_seq-tp->snd_una,
 		   (sp->sk_state == TCP_LISTEN) ? sp->sk_ack_backlog : (tp->rcv_nxt - tp->copied_seq),
 		   timer_active,

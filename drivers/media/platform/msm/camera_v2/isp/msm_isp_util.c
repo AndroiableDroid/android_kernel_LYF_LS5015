@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright (c) 2013-2016, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2013-2017, The Linux Foundation. All rights reserved.
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -21,6 +25,10 @@
 #include "msm_camera_io_util.h"
 
 #define MAX_ISP_V4l2_EVENTS 100
+<<<<<<< HEAD
+=======
+#define MAX_ISP_REG_LIST 100
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 static DEFINE_MUTEX(bandwidth_mgr_mutex);
 static struct msm_isp_bandwidth_mgr isp_bandwidth_mgr;
 
@@ -544,6 +552,10 @@ int msm_isp_cfg_input(struct vfe_device *vfe_dev, void *arg)
 static int msm_isp_proc_cmd_list_unlocked(struct vfe_device *vfe_dev, void *arg)
 {
 	int rc = 0;
+<<<<<<< HEAD
+=======
+	uint32_t count = 0;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	struct msm_vfe_cfg_cmd_list *proc_cmd =
 		(struct msm_vfe_cfg_cmd_list *)arg;
 	struct msm_vfe_cfg_cmd_list cmd, cmd_next;
@@ -567,6 +579,15 @@ static int msm_isp_proc_cmd_list_unlocked(struct vfe_device *vfe_dev, void *arg)
 				sizeof(struct msm_vfe_cfg_cmd_list));
 			break;
 		}
+<<<<<<< HEAD
+=======
+		if (++count >= MAX_ISP_REG_LIST) {
+			pr_err("%s:%d Error exceeding the max register count:%u\n",
+				__func__, __LINE__, count);
+			rc = -EINVAL;
+			break;
+		}
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		if (copy_from_user(&cmd_next, (void __user *)cmd.next,
 			sizeof(struct msm_vfe_cfg_cmd_list))) {
 			rc = -EFAULT;
@@ -613,6 +634,10 @@ static void msm_isp_compat_to_proc_cmd(struct msm_vfe_cfg_cmd2 *proc_cmd,
 static int msm_isp_proc_cmd_list_compat(struct vfe_device *vfe_dev, void *arg)
 {
 	int rc = 0;
+<<<<<<< HEAD
+=======
+	uint32_t count = 0;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	struct msm_vfe_cfg_cmd_list_32 *proc_cmd =
 		(struct msm_vfe_cfg_cmd_list_32 *)arg;
 	struct msm_vfe_cfg_cmd_list_32 cmd, cmd_next;
@@ -637,6 +662,15 @@ static int msm_isp_proc_cmd_list_compat(struct vfe_device *vfe_dev, void *arg)
 				sizeof(struct msm_vfe_cfg_cmd_list));
 			break;
 		}
+<<<<<<< HEAD
+=======
+		if (++count >= MAX_ISP_REG_LIST) {
+			pr_err("%s:%d Error exceeding the max register count:%u\n",
+				__func__, __LINE__, count);
+			rc = -EINVAL;
+			break;
+		}
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		if (copy_from_user(&cmd_next, compat_ptr(cmd.next),
 			sizeof(struct msm_vfe_cfg_cmd_list_32))) {
 			rc = -EFAULT;
@@ -925,7 +959,12 @@ static int msm_isp_send_hw_cmd(struct vfe_device *vfe_dev,
 			(UINT_MAX - reg_cfg_cmd->u.rw_info.len)) ||
 			((reg_cfg_cmd->u.rw_info.reg_offset +
 			reg_cfg_cmd->u.rw_info.len) >
+<<<<<<< HEAD
 			resource_size(vfe_dev->vfe_mem))) {
+=======
+			resource_size(vfe_dev->vfe_mem)) ||
+			(reg_cfg_cmd->u.rw_info.reg_offset & 0x3)) {
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			pr_err("%s:%d reg_offset %d len %d res %d\n",
 				__func__, __LINE__,
 				reg_cfg_cmd->u.rw_info.reg_offset,
@@ -1024,7 +1063,12 @@ static int msm_isp_send_hw_cmd(struct vfe_device *vfe_dev,
 			reg_cfg_cmd->u.mask_info.reg_offset) ||
 			(resource_size(vfe_dev->vfe_mem) <
 			reg_cfg_cmd->u.mask_info.reg_offset +
+<<<<<<< HEAD
 			sizeof(temp))) {
+=======
+			sizeof(temp)) ||
+			(reg_cfg_cmd->u.mask_info.reg_offset & 0x3)) {
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			pr_err("%s: VFE_CFG_MASK: Invalid length\n", __func__);
 			return -EINVAL;
 		}

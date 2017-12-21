@@ -379,6 +379,10 @@ static int crypto_init_ablkcipher_ops(struct crypto_tfm *tfm, u32 type,
 	}
 	crt->base = __crypto_ablkcipher_cast(tfm);
 	crt->ivsize = alg->ivsize;
+<<<<<<< HEAD
+=======
+	crt->has_setkey = alg->max_keysize;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	return 0;
 }
@@ -460,6 +464,10 @@ static int crypto_init_givcipher_ops(struct crypto_tfm *tfm, u32 type,
 	crt->givdecrypt = alg->givdecrypt ?: no_givdecrypt;
 	crt->base = __crypto_ablkcipher_cast(tfm);
 	crt->ivsize = alg->ivsize;
+<<<<<<< HEAD
+=======
+	crt->has_setkey = alg->max_keysize;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	return 0;
 }

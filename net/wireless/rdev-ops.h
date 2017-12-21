@@ -954,6 +954,7 @@ rdev_set_ap_chanwidth(struct cfg80211_registered_device *rdev,
 	return ret;
 }
 
+<<<<<<< HEAD
 static inline int rdev_key_mgmt_set_pmk(struct cfg80211_registered_device *rdev,
 				   struct net_device *dev, u8 *pmk,
 				   size_t pmk_len)
@@ -967,4 +968,6 @@ static inline int rdev_key_mgmt_set_pmk(struct cfg80211_registered_device *rdev,
 	return ret;
 }
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 #endif /* __CFG80211_RDEV_OPS */

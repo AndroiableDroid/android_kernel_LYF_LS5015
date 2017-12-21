@@ -2027,7 +2027,11 @@ static int mlx4_en_set_vf_mac(struct net_device *dev, int queue, u8 *mac)
 	struct mlx4_en_dev *mdev = en_priv->mdev;
 	u64 mac_u64 = mlx4_en_mac_to_u64(mac);
 
+<<<<<<< HEAD
 	if (!is_valid_ether_addr(mac))
+=======
+	if (is_multicast_ether_addr(mac))
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		return -EINVAL;
 
 	return mlx4_set_vf_mac(mdev->dev, en_priv->port, queue, mac_u64);

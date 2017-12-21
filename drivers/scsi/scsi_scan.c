@@ -1537,12 +1537,19 @@ static int scsi_report_lun_scan(struct scsi_target *starget, int bflags,
  out_err:
 	kfree(lun_data);
  out:
+<<<<<<< HEAD
 	scsi_device_put(sdev);
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	if (scsi_device_created(sdev))
 		/*
 		 * the sdev we used didn't appear in the report luns scan
 		 */
 		__scsi_remove_device(sdev);
+<<<<<<< HEAD
+=======
+	scsi_device_put(sdev);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	return ret;
 }
 

@@ -1715,7 +1715,16 @@ restart_locked:
 			goto out_unlock;
 	}
 
+<<<<<<< HEAD
 	if (unlikely(unix_peer(other) != sk && unix_recvq_full(other))) {
+=======
+	/* other == sk && unix_peer(other) != sk if
+	 * - unix_peer(sk) == NULL, destination address bound to sk
+	 * - unix_peer(sk) == sk by time of get but disconnected before lock
+	 */
+	if (other != sk &&
+	    unlikely(unix_peer(other) != sk && unix_recvq_full(other))) {
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		if (timeo) {
 			timeo = unix_wait_for_peer(other, timeo);
 

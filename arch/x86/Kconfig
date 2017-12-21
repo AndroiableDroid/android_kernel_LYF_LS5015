@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 Select 32 or 64 bit
+=======
+# Select 32 or 64 bit
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 config 64BIT
 	bool "64-bit kernel" if ARCH = "x86"
 	default ARCH != "i386"
@@ -97,8 +101,11 @@ config X86
 	select DCACHE_WORD_ACCESS
 	select GENERIC_SMP_IDLE_THREAD
 	select ARCH_WANT_IPC_PARSE_VERSION if X86_32
+<<<<<<< HEAD
 	select HAVE_ARCH_MMAP_RND_BITS		if MMU
 	select HAVE_ARCH_MMAP_RND_COMPAT_BITS	if MMU && COMPAT
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	select HAVE_ARCH_SECCOMP_FILTER
 	select BUILDTIME_EXTABLE_SORT
 	select GENERIC_CMOS_UPDATE
@@ -152,6 +159,7 @@ config HAVE_LATENCYTOP_SUPPORT
 config MMU
 	def_bool y
 
+<<<<<<< HEAD
 config ARCH_MMAP_RND_BITS_MIN
 	default 28 if 64BIT
 	default 8
@@ -166,6 +174,8 @@ config ARCH_MMAP_RND_COMPAT_BITS_MIN
 config ARCH_MMAP_RND_COMPAT_BITS_MAX
 	default 16
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 config SBUS
 	bool
 

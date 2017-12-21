@@ -256,7 +256,10 @@ err_out:
 		iscsi_release_param_list(tpg->param_list);
 		tpg->param_list = NULL;
 	}
+<<<<<<< HEAD
 	kfree(tpg);
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	return -ENOMEM;
 }
 

@@ -863,10 +863,21 @@ static int vc_do_resize(struct tty_struct *tty, struct vc_data *vc,
 	if (new_cols == vc->vc_cols && new_rows == vc->vc_rows)
 		return 0;
 
+<<<<<<< HEAD
+=======
+	if (new_screen_size > (4 << 20))
+		return -EINVAL;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	newscreen = kmalloc(new_screen_size, GFP_USER);
 	if (!newscreen)
 		return -ENOMEM;
 
+<<<<<<< HEAD
+=======
+	if (vc == sel_cons)
+		clear_selection();
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	old_rows = vc->vc_rows;
 	old_row_size = vc->vc_size_row;
 
@@ -1164,7 +1175,11 @@ static void csi_J(struct vc_data *vc, int vpar)
 			break;
 		case 3: /* erase scroll-back buffer (and whole display) */
 			scr_memsetw(vc->vc_screenbuf, vc->vc_video_erase_char,
+<<<<<<< HEAD
 				    vc->vc_screenbuf_size >> 1);
+=======
+				    vc->vc_screenbuf_size);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			set_origin(vc);
 			if (CON_IS_VISIBLE(vc))
 				update_screen(vc);

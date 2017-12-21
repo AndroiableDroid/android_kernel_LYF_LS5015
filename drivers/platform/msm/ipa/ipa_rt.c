@@ -189,7 +189,11 @@ int __ipa_generate_rt_hw_rule_v2_5(enum ipa_ip_type ip,
  * @hdr_sz: header size
  * @max_rt_idx: maximal index
  *
+<<<<<<< HEAD
  * Returns:	0 on success, negative on failure
+=======
+ * Returns:	size on success, negative on failure
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * caller needs to hold any needed locks to ensure integrity
  *
@@ -318,7 +322,15 @@ static int ipa_generate_rt_hw_tbl_common(enum ipa_ip_type ip, u8 *base, u8 *hdr,
 					      ((long)body &
 					      IPA_RT_ENTRY_MEMORY_ALLIGNMENT));
 		} else {
+<<<<<<< HEAD
 			WARN_ON(tbl->sz == 0);
+=======
+			if (tbl->sz == 0) {
+				IPAERR("cannot generate 0 size table\n");
+				goto proc_err;
+			}
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			/* allocate memory for the RT tbl */
 			rt_tbl_mem.size = tbl->sz;
 			rt_tbl_mem.base =
@@ -391,8 +403,20 @@ static int ipa_generate_rt_hw_tbl_v1(enum ipa_ip_type ip,
 	u8 *base;
 	int max_rt_idx;
 	int i;
+<<<<<<< HEAD
 
 	mem->size = ipa_get_rt_hw_tbl_size(ip, &hdr_sz, &max_rt_idx);
+=======
+	int res;
+
+	res = ipa_get_rt_hw_tbl_size(ip, &hdr_sz, &max_rt_idx);
+	if (res < 0) {
+		IPAERR("ipa_get_rt_hw_tbl_size failed %d\n", res);
+		goto error;
+	}
+
+	mem->size = res;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	mem->size = (mem->size + IPA_RT_TABLE_MEMORY_ALLIGNMENT) &
 				~IPA_RT_TABLE_MEMORY_ALLIGNMENT;
 
@@ -565,6 +589,10 @@ static int ipa_generate_rt_hw_tbl_v2(enum ipa_ip_type ip,
 	int num_index;
 	u32 body_start_offset;
 	u32 apps_start_idx;
+<<<<<<< HEAD
+=======
+	int res;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	if (ip == IPA_IP_v4) {
 		num_index = IPA_MEM_PART(v4_apps_rt_index_hi) -
@@ -594,7 +622,17 @@ static int ipa_generate_rt_hw_tbl_v2(enum ipa_ip_type ip,
 		entr++;
 	}
 
+<<<<<<< HEAD
 	mem->size = ipa_get_rt_hw_tbl_size(ip, &hdr_sz, &max_rt_idx);
+=======
+	res = ipa_get_rt_hw_tbl_size(ip, &hdr_sz, &max_rt_idx);
+	if (res < 0) {
+		IPAERR("ipa_get_rt_hw_tbl_size failed %d\n", res);
+		goto base_err;
+	}
+
+	mem->size = res;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	mem->size -= hdr_sz;
 	mem->size = (mem->size + IPA_RT_TABLE_MEMORY_ALLIGNMENT) &
 				~IPA_RT_TABLE_MEMORY_ALLIGNMENT;

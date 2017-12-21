@@ -181,7 +181,11 @@ int usb_add_function(struct usb_configuration *config,
 {
 	int	value = -EINVAL;
 
+<<<<<<< HEAD
 	DBG(config->cdev, "adding '%s'/%p to config '%s'/%p\n",
+=======
+	DBG(config->cdev, "adding '%s'/%pK to config '%s'/%pK\n",
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			function->name, function,
 			config->label, config);
 
@@ -215,7 +219,11 @@ int usb_add_function(struct usb_configuration *config,
 
 done:
 	if (value)
+<<<<<<< HEAD
 		DBG(config->cdev, "adding '%s'/%p --> %d\n",
+=======
+		DBG(config->cdev, "adding '%s'/%pK --> %d\n",
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				function->name, function, value);
 	return value;
 }
@@ -809,7 +817,11 @@ static int set_config(struct usb_composite_dev *cdev,
 
 		result = f->set_alt(f, tmp, 0);
 		if (result < 0) {
+<<<<<<< HEAD
 			DBG(cdev, "interface %d (%s/%p) alt 0 --> %d\n",
+=======
+			DBG(cdev, "interface %d (%s/%pK) alt 0 --> %d\n",
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 					tmp, f->name, f, result);
 
 			reset_config(cdev);
@@ -884,7 +896,11 @@ int usb_add_config(struct usb_composite_dev *cdev,
 	if (!bind)
 		goto done;
 
+<<<<<<< HEAD
 	DBG(cdev, "adding config #%u '%s'/%p\n",
+=======
+	DBG(cdev, "adding config #%u '%s'/%pK\n",
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			config->bConfigurationValue,
 			config->label, config);
 
@@ -901,7 +917,11 @@ int usb_add_config(struct usb_composite_dev *cdev,
 					struct usb_function, list);
 			list_del(&f->list);
 			if (f->unbind) {
+<<<<<<< HEAD
 				DBG(cdev, "unbind function '%s'/%p\n",
+=======
+				DBG(cdev, "unbind function '%s'/%pK\n",
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 					f->name, f);
 				f->unbind(config, f);
 				/* may free memory for "f" */
@@ -912,7 +932,11 @@ int usb_add_config(struct usb_composite_dev *cdev,
 	} else {
 		unsigned	i;
 
+<<<<<<< HEAD
 		DBG(cdev, "cfg %d/%p speeds:%s%s%s\n",
+=======
+		DBG(cdev, "cfg %d/%pK speeds:%s%s%s\n",
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			config->bConfigurationValue, config,
 			config->superspeed ? " super" : "",
 			config->highspeed ? " high" : "",
@@ -927,7 +951,11 @@ int usb_add_config(struct usb_composite_dev *cdev,
 
 			if (!f)
 				continue;
+<<<<<<< HEAD
 			DBG(cdev, "  interface %d = %s/%p\n",
+=======
+			DBG(cdev, "  interface %d = %s/%pK\n",
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				i, f->name, f);
 		}
 	}
@@ -955,13 +983,21 @@ static void unbind_config(struct usb_composite_dev *cdev,
 				struct usb_function, list);
 		list_del(&f->list);
 		if (f->unbind) {
+<<<<<<< HEAD
 			DBG(cdev, "unbind function '%s'/%p\n", f->name, f);
+=======
+			DBG(cdev, "unbind function '%s'/%pK\n", f->name, f);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			f->unbind(config, f);
 			/* may free memory for "f" */
 		}
 	}
 	if (config->unbind) {
+<<<<<<< HEAD
 		DBG(cdev, "unbind config '%s'/%p\n", config->label, config);
+=======
+		DBG(cdev, "unbind config '%s'/%pK\n", config->label, config);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		config->unbind(config);
 			/* may free memory for "c" */
 	}
@@ -1479,9 +1515,13 @@ composite_setup(struct usb_gadget *gadget, const struct usb_ctrlrequest *ctrl)
 		value = min(w_length, (u16) 1);
 		break;
 
+<<<<<<< HEAD
 	/* function drivers must handle get/set altsetting; if there's
 	 * no get() method, we know only altsetting zero works.
 	 */
+=======
+	/* function drivers must handle get/set altsetting */
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	case USB_REQ_SET_INTERFACE:
 		if (ctrl->bRequestType != USB_RECIP_INTERFACE)
 			goto unknown;
@@ -1490,7 +1530,17 @@ composite_setup(struct usb_gadget *gadget, const struct usb_ctrlrequest *ctrl)
 		f = cdev->config->interface[intf];
 		if (!f)
 			break;
+<<<<<<< HEAD
 		if (w_value && !f->set_alt)
+=======
+
+		/*
+		 * If there's no get_alt() method, we know only altsetting zero
+		 * works. There is no need to check if set_alt() is not NULL
+		 * as we check this in usb_add_function().
+		 */
+		if (w_value && !f->get_alt)
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			break;
 		/*
 		 * We put interfaces in default settings (alt 0)

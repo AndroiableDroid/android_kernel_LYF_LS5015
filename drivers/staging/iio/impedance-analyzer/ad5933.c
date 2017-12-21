@@ -646,6 +646,10 @@ static void ad5933_work(struct work_struct *work)
 	struct iio_dev *indio_dev = i2c_get_clientdata(st->client);
 	signed short buf[2];
 	unsigned char status;
+<<<<<<< HEAD
+=======
+	int ret;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	mutex_lock(&indio_dev->mlock);
 	if (st->state == AD5933_CTRL_INIT_START_FREQ) {
@@ -653,19 +657,37 @@ static void ad5933_work(struct work_struct *work)
 		ad5933_cmd(st, AD5933_CTRL_START_SWEEP);
 		st->state = AD5933_CTRL_START_SWEEP;
 		schedule_delayed_work(&st->work, st->poll_time_jiffies);
+<<<<<<< HEAD
 		mutex_unlock(&indio_dev->mlock);
 		return;
 	}
 
 	ad5933_i2c_read(st->client, AD5933_REG_STATUS, 1, &status);
+=======
+		goto out;
+	}
+
+	ret = ad5933_i2c_read(st->client, AD5933_REG_STATUS, 1, &status);
+	if (ret)
+		goto out;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	if (status & AD5933_STAT_DATA_VALID) {
 		int scan_count = bitmap_weight(indio_dev->active_scan_mask,
 					       indio_dev->masklength);
+<<<<<<< HEAD
 		ad5933_i2c_read(st->client,
 				test_bit(1, indio_dev->active_scan_mask) ?
 				AD5933_REG_REAL_DATA : AD5933_REG_IMAG_DATA,
 				scan_count * 2, (u8 *)buf);
+=======
+		ret = ad5933_i2c_read(st->client,
+				test_bit(1, indio_dev->active_scan_mask) ?
+				AD5933_REG_REAL_DATA : AD5933_REG_IMAG_DATA,
+				scan_count * 2, (u8 *)buf);
+		if (ret)
+			goto out;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 		if (scan_count == 2) {
 			buf[0] = be16_to_cpu(buf[0]);
@@ -677,8 +699,12 @@ static void ad5933_work(struct work_struct *work)
 	} else {
 		/* no data available - try again later */
 		schedule_delayed_work(&st->work, st->poll_time_jiffies);
+<<<<<<< HEAD
 		mutex_unlock(&indio_dev->mlock);
 		return;
+=======
+		goto out;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	}
 
 	if (status & AD5933_STAT_SWEEP_DONE) {
@@ -690,7 +716,11 @@ static void ad5933_work(struct work_struct *work)
 		ad5933_cmd(st, AD5933_CTRL_INC_FREQ);
 		schedule_delayed_work(&st->work, st->poll_time_jiffies);
 	}
+<<<<<<< HEAD
 
+=======
+out:
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	mutex_unlock(&indio_dev->mlock);
 }
 

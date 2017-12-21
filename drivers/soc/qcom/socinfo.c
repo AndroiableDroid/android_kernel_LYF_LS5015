@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright (c) 2009-2015, The Linux Foundation. All rights reserved.
+=======
+ * Copyright (c) 2009-2015,2017, The Linux Foundation. All rights reserved.
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -44,6 +48,10 @@
 #define SMEM_IMAGE_VERSION_OEM_OFFSET 96
 #define SMEM_IMAGE_VERSION_PARTITION_APPS 10
 
+<<<<<<< HEAD
+=======
+static DECLARE_RWSEM(current_image_rwsem);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 enum {
 	HW_PLATFORM_UNKNOWN = 0,
 	HW_PLATFORM_SURF    = 1,
@@ -792,7 +800,13 @@ msm_get_image_version(struct device *dev,
 				__func__);
 		return snprintf(buf, SMEM_IMAGE_VERSION_NAME_SIZE, "Unknown");
 	}
+<<<<<<< HEAD
 	string_address += current_image * SMEM_IMAGE_VERSION_SINGLE_BLOCK_SIZE;
+=======
+	down_read(&current_image_rwsem);
+	string_address += current_image * SMEM_IMAGE_VERSION_SINGLE_BLOCK_SIZE;
+	up_read(&current_image_rwsem);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	return snprintf(buf, SMEM_IMAGE_VERSION_NAME_SIZE, "%-.75s\n",
 			string_address);
 }
@@ -805,15 +819,31 @@ msm_set_image_version(struct device *dev,
 {
 	char *store_address;
 
+<<<<<<< HEAD
 	if (current_image != SMEM_IMAGE_VERSION_PARTITION_APPS)
 		return count;
+=======
+	down_read(&current_image_rwsem);
+	if (current_image != SMEM_IMAGE_VERSION_PARTITION_APPS) {
+		up_read(&current_image_rwsem);
+		return count;
+	}
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	store_address = socinfo_get_image_version_base_address();
 	if (IS_ERR_OR_NULL(store_address)) {
 		pr_err("%s : Failed to get image version base address",
 				__func__);
+<<<<<<< HEAD
 		return count;
 	}
 	store_address += current_image * SMEM_IMAGE_VERSION_SINGLE_BLOCK_SIZE;
+=======
+		up_read(&current_image_rwsem);
+		return count;
+	}
+	store_address += current_image * SMEM_IMAGE_VERSION_SINGLE_BLOCK_SIZE;
+	up_read(&current_image_rwsem);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	snprintf(store_address, SMEM_IMAGE_VERSION_NAME_SIZE, "%-.75s", buf);
 	return count;
 }
@@ -832,7 +862,13 @@ msm_get_image_variant(struct device *dev,
 		return snprintf(buf, SMEM_IMAGE_VERSION_VARIANT_SIZE,
 		"Unknown");
 	}
+<<<<<<< HEAD
 	string_address += current_image * SMEM_IMAGE_VERSION_SINGLE_BLOCK_SIZE;
+=======
+	down_read(&current_image_rwsem);
+	string_address += current_image * SMEM_IMAGE_VERSION_SINGLE_BLOCK_SIZE;
+	up_read(&current_image_rwsem);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	string_address += SMEM_IMAGE_VERSION_VARIANT_OFFSET;
 	return snprintf(buf, SMEM_IMAGE_VERSION_VARIANT_SIZE, "%-.20s\n",
 			string_address);
@@ -846,15 +882,31 @@ msm_set_image_variant(struct device *dev,
 {
 	char *store_address;
 
+<<<<<<< HEAD
 	if (current_image != SMEM_IMAGE_VERSION_PARTITION_APPS)
 		return count;
+=======
+	down_read(&current_image_rwsem);
+	if (current_image != SMEM_IMAGE_VERSION_PARTITION_APPS) {
+		up_read(&current_image_rwsem);
+		return count;
+	}
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	store_address = socinfo_get_image_version_base_address();
 	if (IS_ERR_OR_NULL(store_address)) {
 		pr_err("%s : Failed to get image version base address",
 				__func__);
+<<<<<<< HEAD
 		return count;
 	}
 	store_address += current_image * SMEM_IMAGE_VERSION_SINGLE_BLOCK_SIZE;
+=======
+		up_read(&current_image_rwsem);
+		return count;
+	}
+	store_address += current_image * SMEM_IMAGE_VERSION_SINGLE_BLOCK_SIZE;
+	up_read(&current_image_rwsem);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	store_address += SMEM_IMAGE_VERSION_VARIANT_OFFSET;
 	snprintf(store_address, SMEM_IMAGE_VERSION_VARIANT_SIZE, "%-.20s", buf);
 	return count;
@@ -873,7 +925,13 @@ msm_get_image_crm_version(struct device *dev,
 				__func__);
 		return snprintf(buf, SMEM_IMAGE_VERSION_OEM_SIZE, "Unknown");
 	}
+<<<<<<< HEAD
 	string_address += current_image * SMEM_IMAGE_VERSION_SINGLE_BLOCK_SIZE;
+=======
+	down_read(&current_image_rwsem);
+	string_address += current_image * SMEM_IMAGE_VERSION_SINGLE_BLOCK_SIZE;
+	up_read(&current_image_rwsem);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	string_address += SMEM_IMAGE_VERSION_OEM_OFFSET;
 	return snprintf(buf, SMEM_IMAGE_VERSION_OEM_SIZE, "%-.32s\n",
 			string_address);
@@ -887,15 +945,31 @@ msm_set_image_crm_version(struct device *dev,
 {
 	char *store_address;
 
+<<<<<<< HEAD
 	if (current_image != SMEM_IMAGE_VERSION_PARTITION_APPS)
 		return count;
+=======
+	down_read(&current_image_rwsem);
+	if (current_image != SMEM_IMAGE_VERSION_PARTITION_APPS) {
+		up_read(&current_image_rwsem);
+		return count;
+	}
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	store_address = socinfo_get_image_version_base_address();
 	if (IS_ERR_OR_NULL(store_address)) {
 		pr_err("%s : Failed to get image version base address",
 				__func__);
+<<<<<<< HEAD
 		return count;
 	}
 	store_address += current_image * SMEM_IMAGE_VERSION_SINGLE_BLOCK_SIZE;
+=======
+		up_read(&current_image_rwsem);
+		return count;
+	}
+	store_address += current_image * SMEM_IMAGE_VERSION_SINGLE_BLOCK_SIZE;
+	up_read(&current_image_rwsem);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	store_address += SMEM_IMAGE_VERSION_OEM_OFFSET;
 	snprintf(store_address, SMEM_IMAGE_VERSION_OEM_SIZE, "%-.32s", buf);
 	return count;
@@ -906,8 +980,19 @@ msm_get_image_number(struct device *dev,
 			struct device_attribute *attr,
 			char *buf)
 {
+<<<<<<< HEAD
 	return snprintf(buf, PAGE_SIZE, "%d\n",
 			current_image);
+=======
+	int ret;
+
+	down_read(&current_image_rwsem);
+	ret = snprintf(buf, PAGE_SIZE, "%d\n",
+			current_image);
+	up_read(&current_image_rwsem);
+	return ret;
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 static ssize_t
@@ -919,10 +1004,18 @@ msm_select_image(struct device *dev, struct device_attribute *attr,
 	ret = kstrtoint(buf, 10, &digit);
 	if (ret)
 		return ret;
+<<<<<<< HEAD
+=======
+	down_write(&current_image_rwsem);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	if (0 <= digit && digit < SMEM_IMAGE_VERSION_BLOCKS_COUNT)
 		current_image = digit;
 	else
 		current_image = 0;
+<<<<<<< HEAD
+=======
+	up_write(&current_image_rwsem);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	return count;
 }
 

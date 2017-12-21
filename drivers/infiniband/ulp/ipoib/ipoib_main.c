@@ -234,8 +234,12 @@ int ipoib_set_mode(struct net_device *dev, const char *buf)
 		priv->tx_wr.send_flags &= ~IB_SEND_IP_CSUM;
 
 		ipoib_flush_paths(dev);
+<<<<<<< HEAD
 		rtnl_lock();
 		return 0;
+=======
+		return (!rtnl_trylock()) ? -EBUSY : 0;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	}
 
 	if (!strcmp(buf, "datagram\n")) {
@@ -244,14 +248,22 @@ int ipoib_set_mode(struct net_device *dev, const char *buf)
 		dev_set_mtu(dev, min(priv->mcast_mtu, dev->mtu));
 		rtnl_unlock();
 		ipoib_flush_paths(dev);
+<<<<<<< HEAD
 		rtnl_lock();
 		return 0;
+=======
+		return (!rtnl_trylock()) ? -EBUSY : 0;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	}
 
 	return -EINVAL;
 }
 
+<<<<<<< HEAD
 static struct ipoib_path *__path_find(struct net_device *dev, void *gid)
+=======
+struct ipoib_path *__path_find(struct net_device *dev, void *gid)
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 {
 	struct ipoib_dev_priv *priv = netdev_priv(dev);
 	struct rb_node *n = priv->path_tree.rb_node;

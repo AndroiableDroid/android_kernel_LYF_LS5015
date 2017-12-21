@@ -2,5 +2,8 @@
 generic-y += clkdev.h
 generic-y += exec.h
 generic-y += mcs_spinlock.h
+<<<<<<< HEAD
 >>>>>>> ddf1d16... locking/mcs: Allow architecture specific asm files to be used for contended case
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 generic-y += trace_clock.h

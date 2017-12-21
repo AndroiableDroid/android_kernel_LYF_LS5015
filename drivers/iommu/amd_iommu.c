@@ -1029,7 +1029,11 @@ again:
 	next_tail = (tail + sizeof(*cmd)) % iommu->cmd_buf_size;
 	left      = (head - next_tail) % iommu->cmd_buf_size;
 
+<<<<<<< HEAD
 	if (left <= 2) {
+=======
+	if (left <= 0x20) {
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		struct iommu_cmd sync_cmd;
 		volatile u64 sem = 0;
 		int ret;
@@ -1991,6 +1995,12 @@ static void dma_ops_domain_free(struct dma_ops_domain *dom)
 		kfree(dom->aperture[i]);
 	}
 
+<<<<<<< HEAD
+=======
+	if (dom->domain.id)
+		domain_id_free(dom->domain.id);
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	kfree(dom);
 }
 
@@ -2551,8 +2561,21 @@ static void update_device_table(struct protection_domain *domain)
 {
 	struct iommu_dev_data *dev_data;
 
+<<<<<<< HEAD
 	list_for_each_entry(dev_data, &domain->dev_list, list)
 		set_dte_entry(dev_data->devid, domain, dev_data->ats.enabled);
+=======
+	list_for_each_entry(dev_data, &domain->dev_list, list) {
+		set_dte_entry(dev_data->devid, domain, dev_data->ats.enabled);
+
+		if (dev_data->alias_data == NULL)
+			continue;
+
+		/* There is an alias, update device table entry for it */
+		set_dte_entry(dev_data->alias_data->devid, domain,
+			      dev_data->alias_data->ats.enabled);
+	}
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 static void update_domain(struct protection_domain *domain)

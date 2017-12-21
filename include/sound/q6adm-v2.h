@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright (c) 2012-2016, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2012-2017, The Linux Foundation. All rights reserved.
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -34,7 +38,10 @@ enum {
 	ADM_AUDVOL_CAL,
 	ADM_RTAC_INFO_CAL,
 	ADM_RTAC_APR_CAL,
+<<<<<<< HEAD
 	ADM_DTS_EAGLE,
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	ADM_SRS_TRUMEDIA,
 	ADM_MAX_CAL_TYPES
 };

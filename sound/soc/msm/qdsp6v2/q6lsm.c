@@ -347,6 +347,10 @@ void q6lsm_client_free(struct lsm_client *client)
 	q6lsm_mmap_apr_dereg();
 	mutex_destroy(&client->cmd_lock);
 	kfree(client);
+<<<<<<< HEAD
+=======
+	client = NULL;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 /*

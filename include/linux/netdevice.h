@@ -1729,14 +1729,27 @@ static inline int skb_gro_header_hard(struct sk_buff *skb, unsigned int hlen)
 	return NAPI_GRO_CB(skb)->frag0_len < hlen;
 }
 
+<<<<<<< HEAD
+=======
+static inline void skb_gro_frag0_invalidate(struct sk_buff *skb)
+{
+	NAPI_GRO_CB(skb)->frag0 = NULL;
+	NAPI_GRO_CB(skb)->frag0_len = 0;
+}
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 static inline void *skb_gro_header_slow(struct sk_buff *skb, unsigned int hlen,
 					unsigned int offset)
 {
 	if (!pskb_may_pull(skb, hlen))
 		return NULL;
 
+<<<<<<< HEAD
 	NAPI_GRO_CB(skb)->frag0 = NULL;
 	NAPI_GRO_CB(skb)->frag0_len = 0;
+=======
+	skb_gro_frag0_invalidate(skb);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	return skb->data + offset;
 }
 
@@ -2223,6 +2236,10 @@ static inline void napi_free_frags(struct napi_struct *napi)
 	napi->skb = NULL;
 }
 
+<<<<<<< HEAD
+=======
+bool netdev_is_rx_handler_busy(struct net_device *dev);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 extern int netdev_rx_handler_register(struct net_device *dev,
 				      rx_handler_func_t *rx_handler,
 				      void *rx_handler_data);

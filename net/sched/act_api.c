@@ -814,10 +814,15 @@ static int tca_action_flush(struct net *net, struct nlattr *nla,
 		goto out_module_put;
 
 	err = a->ops->walk(skb, &dcb, RTM_DELACTION, a);
+<<<<<<< HEAD
 	if (err < 0)
 		goto out_module_put;
 	if (err == 0)
 		goto noflush_out;
+=======
+	if (err <= 0)
+		goto out_module_put;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	nla_nest_end(skb, nest);
 
@@ -835,7 +840,10 @@ static int tca_action_flush(struct net *net, struct nlattr *nla,
 out_module_put:
 	module_put(a->ops->owner);
 err_out:
+<<<<<<< HEAD
 noflush_out:
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	kfree_skb(skb);
 	kfree(a);
 	return err;

@@ -31,8 +31,11 @@
 #if !defined( HDD_CONNECTION_H__ ) 
 #define HDD_CONNECTION_H__
 #include <wlan_hdd_mib.h>
+<<<<<<< HEAD
 #include <net/cfg80211.h>
 #include <linux/ieee80211.h>
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 #define HDD_MAX_NUM_IBSS_STA ( 32 )
 #ifdef FEATURE_WLAN_TDLS
 #define HDD_MAX_NUM_TDLS_STA ( 8 )
@@ -49,6 +52,7 @@
 /* Timeout in ms for peer info request commpletion */
 #define IBSS_PEER_INFO_REQ_TIMOEUT 1000
 #endif
+<<<<<<< HEAD
 
 /**
  * struct hdd_conn_flag - connection flags
@@ -100,6 +104,8 @@ struct hdd_conn_flag {
 #define ANTENNA_SEL_INFO_TX_SOUNDING_PPDU	0x40
 #define ANTENNA_SEL_INFO_RSVD			0x80
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 typedef enum 
 {
    /** Not associated in Infra or participating in an IBSS / Ad-hoc network.*/
@@ -165,6 +171,7 @@ typedef struct connection_info_s
    tANI_U32 dot11Mode;
 
    uint32_t  rate_flags;
+<<<<<<< HEAD
 
    /** channel frequency */
    uint32_t freq;
@@ -201,6 +208,9 @@ typedef struct connection_info_s
 
    /** assoc fail reason */
    int32_t assoc_status_code;
+=======
+   
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }connection_info_t;
 /*Forward declaration of Adapter*/
 typedef struct hdd_adapter_s hdd_adapter_t;

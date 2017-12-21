@@ -1487,6 +1487,7 @@ megasas_queue_command_lck(struct scsi_cmnd *scmd, void (*done) (struct scsi_cmnd
 		goto out_done;
 	}
 
+<<<<<<< HEAD
 	switch (scmd->cmnd[0]) {
 	case SYNCHRONIZE_CACHE:
 		/*
@@ -1497,6 +1498,15 @@ megasas_queue_command_lck(struct scsi_cmnd *scmd, void (*done) (struct scsi_cmnd
 		goto out_done;
 	default:
 		break;
+=======
+	/*
+	 * FW takes care of flush cache on its own for Virtual Disk.
+	 * No need to send it down for VD. For JBOD send SYNCHRONIZE_CACHE to FW.
+	 */
+	if ((scmd->cmnd[0] == SYNCHRONIZE_CACHE) && MEGASAS_IS_LOGICAL(scmd)) {
+		scmd->result = DID_OK << 16;
+		goto out_done;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	}
 
 	if (instance->instancet->build_and_issue_cmd(instance, scmd)) {

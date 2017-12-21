@@ -7,6 +7,10 @@
 */
 
 #include "fuse_i.h"
+<<<<<<< HEAD
+=======
+#include "fuse_shortcircuit.h"
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 #include <linux/init.h>
 #include <linux/module.h>
@@ -1876,6 +1880,11 @@ static ssize_t fuse_dev_do_write(struct fuse_conn *fc,
 	err = copy_out_args(cs, &req->out, nbytes);
 	fuse_copy_finish(cs);
 
+<<<<<<< HEAD
+=======
+	fuse_setup_shortcircuit(fc, req);
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	spin_lock(&fc->lock);
 	req->locked = 0;
 	if (!err) {

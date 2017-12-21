@@ -375,7 +375,14 @@ struct kvm_vcpu_arch {
 	/* Host KSEG0 address of the EI/DI offset */
 	void *kseg0_commpage;
 
+<<<<<<< HEAD
 	u32 io_gpr;		/* GPR used as IO source/target */
+=======
+	/* Resume PC after MMIO completion */
+	unsigned long io_pc;
+	/* GPR used as IO source/target */
+	u32 io_gpr;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	/* Used to calibrate the virutal count register for the guest */
 	int32_t host_cp0_count;
@@ -386,8 +393,11 @@ struct kvm_vcpu_arch {
 	/* Bitmask of pending exceptions to be cleared */
 	unsigned long pending_exceptions_clr;
 
+<<<<<<< HEAD
 	unsigned long pending_load_cause;
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	/* Save/Restore the entryhi register when are are preempted/scheduled back in */
 	unsigned long preempt_entryhi;
 

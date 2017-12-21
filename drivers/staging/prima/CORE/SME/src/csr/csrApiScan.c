@@ -88,9 +88,12 @@ RSSI *cannot* be more than 0xFF or less than 0 for meaningful WLAN operation
 #define CSR_SCAN_MAX_SCORE_VAL 0xFF
 #define CSR_SCAN_MIN_SCORE_VAL 0x0
 #define CSR_SCAN_HANDOFF_DELTA 10
+<<<<<<< HEAD
 
 #define CSR_PURGE_RSSI_THRESHOLD -70
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 #define MAX_ACTIVE_SCAN_FOR_ONE_CHANNEL 140
 #define MIN_ACTIVE_SCAN_FOR_ONE_CHANNEL 120
 
@@ -152,7 +155,11 @@ eHalStatus csrSetBGScanChannelList( tpAniSirGlobal pMac, tANI_U8 *pAdjustChannel
 void csrReleaseCmdSingle(tpAniSirGlobal pMac, tSmeCmd *pCommand);
 tANI_BOOLEAN csrRoamIsValidChannel( tpAniSirGlobal pMac, tANI_U8 channel );
 void csrPruneChannelListForMode( tpAniSirGlobal pMac, tCsrChannel *pChannelList );
+<<<<<<< HEAD
 void csrPurgeScanResults(tpAniSirGlobal pMac);
+=======
+void csrPurgeOldScanResults(tpAniSirGlobal pMac);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 
 
@@ -3687,7 +3694,11 @@ static void csrMoveTempScanResultsToMainList( tpAniSirGlobal pMac, tANI_U8 reaso
           )
         {
             smsLog(pMac, LOG1, FL("########## BSS Limit reached ###########"));
+<<<<<<< HEAD
             csrPurgeScanResults(pMac);
+=======
+            csrPurgeOldScanResults(pMac);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
         }
         // check for duplicate scan results
         if ( !fDupBss )
@@ -3806,6 +3817,7 @@ end:
     return;
 }
 
+<<<<<<< HEAD
 /**
  * csrPurgeScanResults() - This function removes scan entry based
  * on RSSI or AGE
@@ -3828,6 +3840,18 @@ void csrPurgeScanResults(tpAniSirGlobal pMac)
     csrLLLock(&pMac->scan.scanResultList);
     pEntry = csrLLPeekHead( &pMac->scan.scanResultList, LL_ACCESS_NOLOCK );
     while(pEntry)
+=======
+void csrPurgeOldScanResults(tpAniSirGlobal pMac)
+{
+    tListElem *pEntry, *tmpEntry;
+    tCsrScanResult *pResult, *oldest_bss = NULL;
+    v_TIME_t oldest_entry = 0;
+    v_TIME_t curTime = vos_timer_get_system_time();
+
+    csrLLLock(&pMac->scan.scanResultList);
+    pEntry = csrLLPeekHead( &pMac->scan.scanResultList, LL_ACCESS_NOLOCK );
+    while( pEntry )
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
     {
         tmpEntry = csrLLNext(&pMac->scan.scanResultList, pEntry,
                 LL_ACCESS_NOLOCK);
@@ -3839,15 +3863,19 @@ void csrPurgeScanResults(tpAniSirGlobal pMac)
                                 pResult->Result.BssDescriptor.nReceivedTime;
             oldest_bss = pResult;
         }
+<<<<<<< HEAD
         if (pResult->Result.BssDescriptor.rssi < weakest_rssi)
         {
             weakest_rssi = pResult->Result.BssDescriptor.rssi;
             weakest_bss = pResult;
         }
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
         pEntry = tmpEntry;
     }
     if (oldest_bss)
     {
+<<<<<<< HEAD
         tCsrScanResult *bss_to_remove;
 
         if (weakest_rssi < CSR_PURGE_RSSI_THRESHOLD)
@@ -3867,6 +3895,16 @@ void csrPurgeScanResults(tpAniSirGlobal pMac)
                bss_to_remove->Result.BssDescriptor.nReceivedTime),
                bss_to_remove->Result.BssDescriptor.rssi);
             csrFreeScanResultEntry(pMac, bss_to_remove);
+=======
+        //Free the old BSS Entries
+        if( csrLLRemoveEntry(&pMac->scan.scanResultList,
+                               &oldest_bss->Link, LL_ACCESS_NOLOCK) )
+        {
+            smsLog(pMac, LOG1, FL(" Current time delta (%lu) of BSSID to be removed" MAC_ADDRESS_STR ),
+                    (curTime - oldest_bss->Result.BssDescriptor.nReceivedTime),
+                    MAC_ADDR_ARRAY(oldest_bss->Result.BssDescriptor.bssId));
+            csrFreeScanResultEntry(pMac, oldest_bss);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
         }
     }
     csrLLUnlock(&pMac->scan.scanResultList);

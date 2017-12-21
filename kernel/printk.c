@@ -2828,7 +2828,11 @@ void wake_up_klogd(void)
 	preempt_enable();
 }
 
+<<<<<<< HEAD
 int printk_sched(const char *fmt, ...)
+=======
+int printk_deferred(const char *fmt, ...)
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 {
 	unsigned long flags;
 	va_list args;

@@ -160,6 +160,7 @@ limSendSmeRsp(tpAniSirGlobal pMac, tANI_U16 msgType,
     limSysProcessMmhMsgApi(pMac, &mmhMsg,  ePROT);
 } /*** end limSendSmeRsp() ***/
 
+<<<<<<< HEAD
 /**
  * lim_add_bss_info() - copy data from session entry to join rsp
  * @session_entry: PE Session Info
@@ -183,6 +184,8 @@ void lim_add_bss_info(tpDphHashNode sta_ds,
     if (parsed_ies->vht_operation.present)
         sme_join_rsp->vht_operation = parsed_ies->vht_operation;
 }
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 /**
  * limSendSmeJoinReassocRspAfterResume()
@@ -405,7 +408,10 @@ limSendSmeJoinReassocRsp(tpAniSirGlobal pMac, tANI_U16 msgType,
                 pSirSmeJoinRsp->bcastSig   = pStaDs->ucBcastSig;
                 pSirSmeJoinRsp->maxRateFlags =
                                 limGetMaxRateFlags(pStaDs, psessionEntry);
+<<<<<<< HEAD
                 lim_add_bss_info(pStaDs, pSirSmeJoinRsp);
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
                 PELOGE(limLog(pMac, LOG1, FL("maxRateFlags: %x"),
                                               pSirSmeJoinRsp->maxRateFlags);)
             }

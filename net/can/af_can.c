@@ -425,6 +425,10 @@ static struct hlist_head *find_rcv_list(canid_t *can_id, canid_t *mask,
  * @func: callback function on filter match
  * @data: returned parameter for callback function
  * @ident: string for calling module indentification
+<<<<<<< HEAD
+=======
+ * @sk: socket pointer (might be NULL)
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * Description:
  *  Invokes the callback function with the received sk_buff and the given
@@ -448,7 +452,11 @@ static struct hlist_head *find_rcv_list(canid_t *can_id, canid_t *mask,
  */
 int can_rx_register(struct net_device *dev, canid_t can_id, canid_t mask,
 		    void (*func)(struct sk_buff *, void *), void *data,
+<<<<<<< HEAD
 		    char *ident)
+=======
+		    char *ident, struct sock *sk)
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 {
 	struct receiver *r;
 	struct hlist_head *rl;
@@ -476,6 +484,10 @@ int can_rx_register(struct net_device *dev, canid_t can_id, canid_t mask,
 		r->func    = func;
 		r->data    = data;
 		r->ident   = ident;
+<<<<<<< HEAD
+=======
+		r->sk      = sk;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 		hlist_add_head_rcu(&r->list, rl);
 		d->entries++;
@@ -500,8 +512,16 @@ EXPORT_SYMBOL(can_rx_register);
 static void can_rx_delete_receiver(struct rcu_head *rp)
 {
 	struct receiver *r = container_of(rp, struct receiver, rcu);
+<<<<<<< HEAD
 
 	kmem_cache_free(rcv_cache, r);
+=======
+	struct sock *sk = r->sk;
+
+	kmem_cache_free(rcv_cache, r);
+	if (sk)
+		sock_put(sk);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 /**
@@ -576,8 +596,16 @@ void can_rx_unregister(struct net_device *dev, canid_t can_id, canid_t mask,
 	spin_unlock(&can_rcvlists_lock);
 
 	/* schedule the receiver item for deletion */
+<<<<<<< HEAD
 	if (r)
 		call_rcu(&r->rcu, can_rx_delete_receiver);
+=======
+	if (r) {
+		if (r->sk)
+			sock_hold(r->sk);
+		call_rcu(&r->rcu, can_rx_delete_receiver);
+	}
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 EXPORT_SYMBOL(can_rx_unregister);
 

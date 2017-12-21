@@ -38,6 +38,10 @@
 #define atomic_dec(v) atomic_sub(1, (v))
 
 #define atomic_inc_not_zero(v) atomic_add_unless((v), 1, 0)
+<<<<<<< HEAD
+=======
+#define atomic_dec_if_positive(v)       atomic_sub_if_positive(1, v)
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 #define smp_mb__before_atomic_dec()	barrier()
 #define smp_mb__after_atomic_dec()	barrier()
@@ -46,8 +50,11 @@
 
 #endif
 
+<<<<<<< HEAD
 #define atomic_dec_if_positive(v)       atomic_sub_if_positive(1, v)
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 #include <asm-generic/atomic64.h>
 
 #endif /* __ASM_METAG_ATOMIC_H */

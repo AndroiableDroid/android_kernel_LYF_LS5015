@@ -92,6 +92,10 @@ struct ramoops_context {
 	struct persistent_ram_ecc_info ecc_info;
 	unsigned int max_dump_cnt;
 	unsigned int dump_write_cnt;
+<<<<<<< HEAD
+=======
+	/* _read_cnt need clear on ramoops_pstore_open */
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	unsigned int dump_read_cnt;
 	unsigned int console_read_cnt;
 	unsigned int ftrace_read_cnt;
@@ -108,8 +112,11 @@ static int ramoops_pstore_open(struct pstore_info *psi)
 	cxt->dump_read_cnt = 0;
 	cxt->console_read_cnt = 0;
 	cxt->ftrace_read_cnt = 0;
+<<<<<<< HEAD
 	cxt->pmsg_read_cnt = 0;
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	return 0;
 }
 
@@ -426,7 +433,10 @@ static int ramoops_probe(struct platform_device *pdev)
 	if (!is_power_of_2(pdata->ftrace_size))
 		pdata->ftrace_size = rounddown_pow_of_two(pdata->ftrace_size);
 
+<<<<<<< HEAD
 	cxt->dump_read_cnt = 0;
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	cxt->size = pdata->mem_size;
 	cxt->phys_addr = pdata->mem_address;
 	cxt->memtype = pdata->mem_type;

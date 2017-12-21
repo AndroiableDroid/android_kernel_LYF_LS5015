@@ -1314,8 +1314,13 @@ static int translate_compat_table(struct xt_table_info **pinfo,
 
 	newinfo->number = compatr->num_entries;
 	for (i = 0; i < NF_ARP_NUMHOOKS; i++) {
+<<<<<<< HEAD
 		newinfo->hook_entry[i] = info->hook_entry[i];
 		newinfo->underflow[i] = info->underflow[i];
+=======
+		newinfo->hook_entry[i] = compatr->hook_entry[i];
+		newinfo->underflow[i] = compatr->underflow[i];
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	}
 	entry1 = newinfo->entries[raw_smp_processor_id()];
 	pos = entry1;

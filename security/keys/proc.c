@@ -188,7 +188,11 @@ static int proc_keys_show(struct seq_file *m, void *v)
 	struct timespec now;
 	unsigned long timo;
 	key_ref_t key_ref, skey_ref;
+<<<<<<< HEAD
 	char xbuf[12];
+=======
+	char xbuf[16];
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	int rc;
 
 	key_ref = make_key_ref(key, 0);

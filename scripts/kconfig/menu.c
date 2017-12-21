@@ -525,7 +525,11 @@ static void get_prompt_str(struct gstr *r, struct property *prop,
 {
 	int i, j;
 	struct menu *submenu[8], *menu, *location = NULL;
+<<<<<<< HEAD
 	struct jump_key *jump;
+=======
+	struct jump_key *jump = NULL;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	str_printf(r, _("Prompt: %s\n"), _(prop->text));
 	menu = prop->menu->parent;

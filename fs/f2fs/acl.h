@@ -41,7 +41,10 @@ extern int f2fs_acl_chmod(struct inode *);
 extern int f2fs_init_acl(struct inode *, struct inode *, struct page *,
 							struct page *);
 #else
+<<<<<<< HEAD
 #define f2fs_check_acl	NULL
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 #define f2fs_get_acl	NULL
 #define f2fs_set_acl	NULL
 

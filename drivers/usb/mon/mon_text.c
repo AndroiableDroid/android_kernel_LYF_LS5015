@@ -347,7 +347,11 @@ static int mon_text_open(struct inode *inode, struct file *file)
 	rp->r.rnf_error = mon_text_error;
 	rp->r.rnf_complete = mon_text_complete;
 
+<<<<<<< HEAD
 	snprintf(rp->slab_name, SLAB_NAME_SZ, "mon_text_%p", rp);
+=======
+	snprintf(rp->slab_name, SLAB_NAME_SZ, "mon_text_%pK", rp);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	rp->e_slab = kmem_cache_create(rp->slab_name,
 	    sizeof(struct mon_event_text), sizeof(long), 0,
 	    mon_text_ctor);

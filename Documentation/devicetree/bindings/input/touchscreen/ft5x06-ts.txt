@@ -63,6 +63,10 @@ Optional properties:
  - focaltech,fw-name	: specify the firmware file name
  - focaltech,psensor-support	: specify whether support the proximity sensor
  - focaltech,gesture-support	: specify whether support gesture feature
+<<<<<<< HEAD
+=======
+ - focaltech,resume-in-workqueue : specifiy whether to defer the resume to workqueue
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 Example:
 	i2c@f9923000{

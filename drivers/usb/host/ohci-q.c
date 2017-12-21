@@ -927,10 +927,13 @@ rescan_all:
 		int			completed, modified;
 		__hc32			*prev;
 
+<<<<<<< HEAD
 		/* Is this ED already invisible to the hardware? */
 		if (ed->state == ED_IDLE)
 			goto ed_idle;
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		/* only take off EDs that the HC isn't using, accounting for
 		 * frame counter wraps and EDs with partially retired TDs
 		 */
@@ -961,14 +964,20 @@ skip_ed:
 		}
 
 		/* ED's now officially unlinked, hc doesn't see */
+<<<<<<< HEAD
 		ed->state = ED_IDLE;
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		if (quirk_zfmicro(ohci) && ed->type == PIPE_INTERRUPT)
 			ohci->eds_scheduled--;
 		ed->hwHeadP &= ~cpu_to_hc32(ohci, ED_H);
 		ed->hwNextED = 0;
 		wmb();
 		ed->hwINFO &= ~cpu_to_hc32(ohci, ED_SKIP | ED_DEQUEUE);
+<<<<<<< HEAD
 ed_idle:
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 		/* reentrancy:  if we drop the schedule lock, someone might
 		 * have modified this list.  normally it's just prepending
@@ -1039,6 +1048,10 @@ rescan_this:
 		if (list_empty(&ed->td_list)) {
 			*last = ed->ed_next;
 			ed->ed_next = NULL;
+<<<<<<< HEAD
+=======
+			ed->state = ED_IDLE;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		} else if (ohci->rh_state == OHCI_RH_RUNNING) {
 			*last = ed->ed_next;
 			ed->ed_next = NULL;

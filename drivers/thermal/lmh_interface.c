@@ -881,7 +881,12 @@ static int lmh_mon_init_driver(void)
 {
 	int ret = 0;
 
+<<<<<<< HEAD
 	lmh_mon_data = kzalloc(sizeof(lmh_mon_data), GFP_KERNEL);
+=======
+	lmh_mon_data = kzalloc(sizeof(struct lmh_mon_driver_data),
+				GFP_KERNEL);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	if (!lmh_mon_data) {
 		pr_err("No memory\n");
 		return -ENOMEM;

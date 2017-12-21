@@ -1848,7 +1848,11 @@ VOS_STATUS __vos_fatal_event_logs_req( uint32_t is_fatal,
         return VOS_STATUS_E_FAILURE;
     }
 
+<<<<<<< HEAD
     if (!pHddCtx->cfg_ini->enableFatalEvent || !pHddCtx->is_fatal_event_log_sup)
+=======
+    if(!pHddCtx->cfg_ini->enableFatalEvent)
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
     {
        VOS_TRACE(VOS_MODULE_ID_VOSS, VOS_TRACE_LEVEL_INFO,
             "%s: Fatal event not enabled", __func__);

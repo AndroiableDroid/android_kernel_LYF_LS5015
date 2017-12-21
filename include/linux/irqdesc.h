@@ -63,6 +63,10 @@ struct irq_desc {
 	const struct cpumask	*affinity_hint;
 	struct list_head	affinity_notify;
 	struct work_struct	affinity_work;
+<<<<<<< HEAD
+=======
+	struct mutex		notify_lock;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 #ifdef CONFIG_GENERIC_PENDING_IRQ
 	cpumask_var_t		pending_mask;
 #endif

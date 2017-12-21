@@ -401,6 +401,16 @@ static int ti_startup(struct usb_serial *serial)
 		goto free_tdev;
 	}
 
+<<<<<<< HEAD
+=======
+	if (serial->num_bulk_in < serial->num_ports ||
+			serial->num_bulk_out < serial->num_ports) {
+		dev_err(&serial->interface->dev, "missing endpoints\n");
+		status = -ENODEV;
+		goto free_tdev;
+	}
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	return 0;
 
 free_tdev:

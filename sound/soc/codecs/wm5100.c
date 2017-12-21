@@ -1246,7 +1246,11 @@ static const struct snd_soc_dapm_route wm5100_dapm_routes[] = {
 	{ "PWM2", NULL, "PWM2 Driver" },
 };
 
+<<<<<<< HEAD
 static const struct reg_default wm5100_reva_patches[] = {
+=======
+static const struct reg_sequence wm5100_reva_patches[] = {
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	{ WM5100_AUDIO_IF_1_10, 0 },
 	{ WM5100_AUDIO_IF_1_11, 1 },
 	{ WM5100_AUDIO_IF_1_12, 2 },

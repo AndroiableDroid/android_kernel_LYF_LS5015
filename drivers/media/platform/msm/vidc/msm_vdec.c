@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright (c) 2012-2015, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2012-2016, The Linux Foundation. All rights reserved.
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -50,6 +54,7 @@ static const char *const mpeg_video_output_order[] = {
 	"Decode Order",
 	NULL
 };
+<<<<<<< HEAD
 static const char *const mpeg_video_vidc_extradata[] = {
 	"Extradata none",
 	"Extradata MB Quantization",
@@ -71,6 +76,8 @@ static const char *const mpeg_video_vidc_extradata[] = {
 	"Extradata aspect ratio",
 	"Extradata mpeg2 seqdisp",
 };
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 static const char *const mpeg_vidc_video_alloc_mode_type[] = {
 	"Buffer Allocation Static",
 	"Buffer Allocation Ring Buffer",
@@ -246,7 +253,11 @@ static struct msm_vidc_ctrl msm_vdec_ctrls[] = {
 		.name = "Extradata Type",
 		.type = V4L2_CTRL_TYPE_MENU,
 		.minimum = V4L2_MPEG_VIDC_EXTRADATA_NONE,
+<<<<<<< HEAD
 		.maximum = V4L2_MPEG_VIDC_EXTRADATA_FRAME_BITS_INFO,
+=======
+		.maximum = V4L2_MPEG_VIDC_EXTRADATA_VPX_COLORSPACE,
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		.default_value = V4L2_MPEG_VIDC_EXTRADATA_NONE,
 		.menu_skip_mask = ~(
 			(1 << V4L2_MPEG_VIDC_EXTRADATA_NONE) |
@@ -268,7 +279,16 @@ static struct msm_vidc_ctrl msm_vdec_ctrls[] = {
 			(1 << V4L2_MPEG_VIDC_EXTRADATA_MPEG2_SEQDISP) |
 			(1 << V4L2_MPEG_VIDC_EXTRADATA_STREAM_USERDATA) |
 			(1 << V4L2_MPEG_VIDC_EXTRADATA_FRAME_QP) |
+<<<<<<< HEAD
 			(1 << V4L2_MPEG_VIDC_EXTRADATA_FRAME_BITS_INFO)
+=======
+			(1 << V4L2_MPEG_VIDC_EXTRADATA_FRAME_BITS_INFO) |
+			(1 << V4L2_MPEG_VIDC_EXTRADATA_DISPLAY_COLOUR_SEI) |
+			(1 <<
+			V4L2_MPEG_VIDC_EXTRADATA_CONTENT_LIGHT_LEVEL_SEI) |
+			(1 << V4L2_MPEG_VIDC_EXTRADATA_VUI_DISPLAY) |
+			(1 << V4L2_MPEG_VIDC_EXTRADATA_VPX_COLORSPACE)
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			),
 		.qmenu = mpeg_video_vidc_extradata,
 		.step = 0,
@@ -791,7 +811,11 @@ int msm_vdec_prepare_buf(struct msm_vidc_inst *inst,
 	if (inst->state == MSM_VIDC_CORE_INVALID ||
 			inst->core->state == VIDC_CORE_INVALID) {
 		dprintk(VIDC_ERR,
+<<<<<<< HEAD
 			"Core %p in bad state, ignoring prepare buf\n",
+=======
+			"Core %pK in bad state, ignoring prepare buf\n",
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				inst->core);
 		goto exit;
 	}
@@ -870,7 +894,11 @@ int msm_vdec_release_buf(struct msm_vidc_inst *inst,
 	if (inst->state == MSM_VIDC_CORE_INVALID ||
 			core->state == VIDC_CORE_INVALID) {
 		dprintk(VIDC_ERR,
+<<<<<<< HEAD
 			"Core %p in bad state, ignoring release output buf\n",
+=======
+			"Core %pK in bad state, ignoring release output buf\n",
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				core);
 		goto exit;
 	}
@@ -963,7 +991,11 @@ int msm_vdec_reqbufs(struct msm_vidc_inst *inst, struct v4l2_requestbuffers *b)
 	int rc = 0;
 	if (!inst || !b) {
 		dprintk(VIDC_ERR,
+<<<<<<< HEAD
 			"Invalid input, inst = %p, buffer = %p\n", inst, b);
+=======
+			"Invalid input, inst = %pK, buffer = %pK\n", inst, b);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		return -EINVAL;
 	}
 	q = msm_comm_get_vb2q(inst, b->type);
@@ -994,7 +1026,11 @@ int msm_vdec_g_fmt(struct msm_vidc_inst *inst, struct v4l2_format *f)
 
 	if (!inst || !f || !inst->core || !inst->core->device) {
 		dprintk(VIDC_ERR,
+<<<<<<< HEAD
 			"Invalid input, inst = %p, format = %p\n", inst, f);
+=======
+			"Invalid input, inst = %pK, format = %pK\n", inst, f);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		return -EINVAL;
 	}
 
@@ -1157,7 +1193,11 @@ int msm_vdec_s_parm(struct msm_vidc_inst *inst, struct v4l2_streamparm *a)
 		fps = fps - 1;
 
 	if (inst->prop.fps != fps) {
+<<<<<<< HEAD
 		dprintk(VIDC_PROF, "reported fps changed for %p: %d->%d\n",
+=======
+		dprintk(VIDC_PROF, "reported fps changed for %pK: %d->%d\n",
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				inst, inst->prop.fps, fps);
 		inst->prop.fps = fps;
 		msm_comm_init_dcvs_load(inst);
@@ -1502,7 +1542,11 @@ int msm_vdec_querycap(struct msm_vidc_inst *inst, struct v4l2_capability *cap)
 {
 	if (!inst || !cap) {
 		dprintk(VIDC_ERR,
+<<<<<<< HEAD
 			"Invalid input, inst = %p, cap = %p\n", inst, cap);
+=======
+			"Invalid input, inst = %pK, cap = %pK\n", inst, cap);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		return -EINVAL;
 	}
 	strlcpy(cap->driver, MSM_VIDC_DRV_NAME, sizeof(cap->driver));
@@ -1522,7 +1566,11 @@ int msm_vdec_enum_fmt(struct msm_vidc_inst *inst, struct v4l2_fmtdesc *f)
 	int rc = 0;
 	if (!inst || !f) {
 		dprintk(VIDC_ERR,
+<<<<<<< HEAD
 			"Invalid input, inst = %p, f = %p\n", inst, f);
+=======
+			"Invalid input, inst = %pK, f = %pK\n", inst, f);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		return -EINVAL;
 	}
 	if (f->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE) {
@@ -1564,7 +1612,11 @@ static int msm_vdec_queue_setup(struct vb2_queue *q,
 
 	if (!q || !num_buffers || !num_planes
 		|| !sizes || !q->drv_priv) {
+<<<<<<< HEAD
 		dprintk(VIDC_ERR, "Invalid input, q = %p, %p, %p\n",
+=======
+		dprintk(VIDC_ERR, "Invalid input, q = %pK, %pK, %pK\n",
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			q, num_buffers, num_planes);
 		return -EINVAL;
 	}
@@ -1725,7 +1777,11 @@ static inline int start_streaming(struct msm_vidc_inst *inst)
 	rc = msm_comm_try_state(inst, MSM_VIDC_START_DONE);
 	if (rc) {
 		dprintk(VIDC_ERR,
+<<<<<<< HEAD
 			"Failed to move inst: %p to start done state\n", inst);
+=======
+			"Failed to move inst: %pK to start done state\n", inst);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		goto fail_start;
 	}
 	msm_comm_init_dcvs_load(inst);
@@ -1762,7 +1818,11 @@ static inline int stop_streaming(struct msm_vidc_inst *inst)
 	rc = msm_comm_try_state(inst, MSM_VIDC_RELEASE_RESOURCES_DONE);
 	if (rc)
 		dprintk(VIDC_ERR,
+<<<<<<< HEAD
 			"Failed to move inst: %p to start done state\n", inst);
+=======
+			"Failed to move inst: %pK to start done state\n", inst);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	return rc;
 }
 
@@ -1772,7 +1832,11 @@ static int msm_vdec_start_streaming(struct vb2_queue *q, unsigned int count)
 	int rc = 0;
 	struct hfi_device *hdev;
 	if (!q || !q->drv_priv) {
+<<<<<<< HEAD
 		dprintk(VIDC_ERR, "Invalid input, q = %p\n", q);
+=======
+		dprintk(VIDC_ERR, "Invalid input, q = %pK\n", q);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		return -EINVAL;
 	}
 	inst = q->drv_priv;
@@ -1805,7 +1869,11 @@ static int msm_vdec_stop_streaming(struct vb2_queue *q)
 	struct msm_vidc_inst *inst;
 	int rc = 0;
 	if (!q || !q->drv_priv) {
+<<<<<<< HEAD
 		dprintk(VIDC_ERR, "Invalid input, q = %p\n", q);
+=======
+		dprintk(VIDC_ERR, "Invalid input, q = %pK\n", q);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		return -EINVAL;
 	}
 	inst = q->drv_priv;
@@ -1830,7 +1898,11 @@ static int msm_vdec_stop_streaming(struct vb2_queue *q)
 
 	if (rc)
 		dprintk(VIDC_ERR,
+<<<<<<< HEAD
 			"Failed to move inst: %p, cap = %d to state: %d\n",
+=======
+			"Failed to move inst: %pK, cap = %d to state: %d\n",
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			inst, q->type, MSM_VIDC_RELEASE_RESOURCES_DONE);
 	return rc;
 }
@@ -1888,7 +1960,11 @@ int msm_vdec_cmd(struct msm_vidc_inst *inst, struct v4l2_decoder_cmd *dec)
 		if (inst->state == MSM_VIDC_CORE_INVALID ||
 			core->state == VIDC_CORE_INVALID) {
 			dprintk(VIDC_ERR,
+<<<<<<< HEAD
 				"Core %p in bad state, Sending CLOSE event\n",
+=======
+				"Core %pK in bad state, Sending CLOSE event\n",
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 					core);
 			msm_vidc_queue_v4l2_event(inst,
 					V4L2_EVENT_MSM_VIDC_CLOSE_DONE);
@@ -1930,7 +2006,11 @@ int msm_vdec_inst_init(struct msm_vidc_inst *inst)
 {
 	int rc = 0;
 	if (!inst) {
+<<<<<<< HEAD
 		dprintk(VIDC_ERR, "Invalid input = %p\n", inst);
+=======
+		dprintk(VIDC_ERR, "Invalid input = %pK\n", inst);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		return -EINVAL;
 	}
 	inst->fmts[OUTPUT_PORT] = &vdec_formats[1];
@@ -2455,7 +2535,11 @@ static int msm_vdec_op_s_ctrl(struct v4l2_ctrl *ctrl)
 	rc = msm_comm_try_state(inst, MSM_VIDC_OPEN_DONE);
 	if (rc) {
 		dprintk(VIDC_ERR,
+<<<<<<< HEAD
 			"Failed to move inst: %p to start done state\n", inst);
+=======
+			"Failed to move inst: %pK to start done state\n", inst);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		goto failed_open_done;
 	}
 
@@ -2487,7 +2571,11 @@ static int msm_vdec_op_g_volatile_ctrl(struct v4l2_ctrl *ctrl)
 	rc = msm_comm_try_state(inst, MSM_VIDC_OPEN_DONE);
 	if (rc) {
 		dprintk(VIDC_ERR,
+<<<<<<< HEAD
 			"Failed to move inst: %p to start done state\n", inst);
+=======
+			"Failed to move inst: %pK to start done state\n", inst);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		goto failed_open_done;
 	}
 	for (c = 0; c < master->ncontrols; ++c) {

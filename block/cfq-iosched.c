@@ -2812,7 +2812,10 @@ static struct request *cfq_check_fifo(struct cfq_queue *cfqq)
 	if (time_before(jiffies, rq_fifo_time(rq)))
 		rq = NULL;
 
+<<<<<<< HEAD
 	cfq_log_cfqq(cfqq->cfqd, cfqq, "fifo=%p", rq);
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	return rq;
 }
 
@@ -3189,6 +3192,12 @@ static bool cfq_may_dispatch(struct cfq_data *cfqd, struct cfq_queue *cfqq)
 {
 	unsigned int max_dispatch;
 
+<<<<<<< HEAD
+=======
+	if (cfq_cfqq_must_dispatch(cfqq))
+		return true;
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	/*
 	 * Drain async requests before we start sync IO
 	 */
@@ -3280,15 +3289,29 @@ static bool cfq_dispatch_request(struct cfq_data *cfqd, struct cfq_queue *cfqq)
 
 	BUG_ON(RB_EMPTY_ROOT(&cfqq->sort_list));
 
+<<<<<<< HEAD
+=======
+	rq = cfq_check_fifo(cfqq);
+	if (rq)
+		cfq_mark_cfqq_must_dispatch(cfqq);
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	if (!cfq_may_dispatch(cfqd, cfqq))
 		return false;
 
 	/*
 	 * follow expired path, else get first next available
 	 */
+<<<<<<< HEAD
 	rq = cfq_check_fifo(cfqq);
 	if (!rq)
 		rq = cfqq->next_rq;
+=======
+	if (!rq)
+		rq = cfqq->next_rq;
+	else
+		cfq_log_cfqq(cfqq->cfqd, cfqq, "fifo=%p", rq);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	/*
 	 * insert request into driver dispatch list
@@ -3797,7 +3820,11 @@ cfq_should_preempt(struct cfq_data *cfqd, struct cfq_queue *new_cfqq,
 	 * if the new request is sync, but the currently running queue is
 	 * not, let the sync request have priority.
 	 */
+<<<<<<< HEAD
 	if (rq_is_sync(rq) && !cfq_cfqq_sync(cfqq))
+=======
+	if (rq_is_sync(rq) && !cfq_cfqq_sync(cfqq) && !cfq_cfqq_must_dispatch(cfqq))
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		return true;
 
 	if (new_cfqq->cfqg != cfqq->cfqg)

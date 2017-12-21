@@ -909,11 +909,27 @@ static int mdp3_check_version(void)
 {
 	int rc;
 
+<<<<<<< HEAD
 	rc = mdp3_clk_update(MDP3_CLK_AHB, 1);
 	rc |= mdp3_clk_update(MDP3_CLK_AXI, 1);
 	rc |= mdp3_clk_update(MDP3_CLK_MDP_CORE, 1);
 	if (rc)
 		return rc;
+=======
+	rc = mdp3_footswitch_ctrl(1);
+	if (rc) {
+		pr_err("unable to turn on FS\n");
+		return rc;
+	}
+
+	rc = mdp3_clk_update(MDP3_CLK_AHB, 1);
+	rc |= mdp3_clk_update(MDP3_CLK_AXI, 1);
+	rc |= mdp3_clk_update(MDP3_CLK_MDP_CORE, 1);
+	if (rc) {
+		mdp3_footswitch_ctrl(0);
+		return rc;
+	}
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	mdp3_res->mdp_rev = MDP3_REG_READ(MDP3_REG_HW_VERSION);
 
@@ -923,6 +939,13 @@ static int mdp3_check_version(void)
 	if (rc)
 		pr_err("fail to turn off the MDP3_CLK_AHB clk\n");
 
+<<<<<<< HEAD
+=======
+	rc = mdp3_footswitch_ctrl(0);
+	if (rc)
+		pr_err("unable to turn off FS\n");
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	if (mdp3_res->mdp_rev != MDP_CORE_HW_VERSION) {
 		pr_err("mdp_hw_revision=%x mismatch\n", mdp3_res->mdp_rev);
 		rc = -ENODEV;
@@ -1034,7 +1057,16 @@ u64 mdp3_get_panic_lut_cfg(u32 panel_width)
 int mdp3_qos_remapper_setup(struct mdss_panel_data *panel)
 {
 	int rc = 0;
+<<<<<<< HEAD
 	u64 panic_config = mdp3_get_panic_lut_cfg(panel->panel_info.xres);
+=======
+	u64 panic_config = 0;
+
+        if (!panel)
+                return -EINVAL;
+
+	panic_config = mdp3_get_panic_lut_cfg(panel->panel_info.xres);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	rc = mdp3_clk_update(MDP3_CLK_AHB, 1);
 	rc |= mdp3_clk_update(MDP3_CLK_AXI, 1);
@@ -1043,9 +1075,12 @@ int mdp3_qos_remapper_setup(struct mdss_panel_data *panel)
 		pr_err("fail to turn on MDP core clks\n");
 		return rc;
 	}
+<<<<<<< HEAD
 
 	if (!panel)
 		return -EINVAL;
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	/* Program MDP QOS Remapper */
 	MDP3_REG_WRITE(MDP3_DMA_P_QOS_REMAPPER, 0x1A9);
 	MDP3_REG_WRITE(MDP3_DMA_P_WATERMARK_0, 0x0);
@@ -1084,7 +1119,11 @@ static int mdp3_res_init(void)
 
 	mdp3_res->ion_client = msm_ion_client_create(mdp3_res->pdev->name);
 	if (IS_ERR_OR_NULL(mdp3_res->ion_client)) {
+<<<<<<< HEAD
 		pr_err("msm_ion_client_create() return error (%p)\n",
+=======
+		pr_err("msm_ion_client_create() return error (%pK)\n",
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				mdp3_res->ion_client);
 		mdp3_res->ion_client = NULL;
 		return -EINVAL;
@@ -1516,7 +1555,11 @@ void mdp3_unmap_iommu(struct ion_client *client, struct ion_handle *handle)
 	mutex_lock(&mdp3_res->iommu_lock);
 	meta = mdp3_iommu_meta_lookup(table);
 	if (!meta) {
+<<<<<<< HEAD
 		WARN(1, "%s: buffer was never mapped for %p\n", __func__,
+=======
+		WARN(1, "%s: buffer was never mapped for %pK\n", __func__,
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				handle);
 		mutex_unlock(&mdp3_res->iommu_lock);
 		goto out;
@@ -1544,7 +1587,11 @@ static void mdp3_iommu_meta_add(struct mdp3_iommu_meta *meta)
 		} else if (meta->table > entry->table) {
 			p = &(*p)->rb_right;
 		} else {
+<<<<<<< HEAD
 			pr_err("%s: handle %p already exists\n", __func__,
+=======
+			pr_err("%s: handle %pK already exists\n", __func__,
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				entry->handle);
 			BUG();
 		}
@@ -1606,7 +1653,11 @@ static int mdp3_iommu_map_iommu(struct mdp3_iommu_meta *meta,
 	ret = iommu_map_range(domain, meta->iova_addr + padding,
 			table->sgl, size, prot);
 	if (ret) {
+<<<<<<< HEAD
 		pr_err("%s: could not map %pa in domain %p\n",
+=======
+		pr_err("%s: could not map %pa in domain %pK\n",
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			__func__, &meta->iova_addr, domain);
 			unmap_size = padding;
 		goto out2;
@@ -1729,12 +1780,20 @@ int mdp3_self_map_iommu(struct ion_client *client, struct ion_handle *handle,
 		}
 	} else {
 		if (iommu_meta->flags != iommu_flags) {
+<<<<<<< HEAD
 			pr_err("%s: handle %p is already mapped with diff flag\n",
+=======
+			pr_err("%s: handle %pK is already mapped with diff flag\n",
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				__func__, handle);
 			ret = -EINVAL;
 			goto out_unlock;
 		} else if (iommu_meta->mapped_size != iova_length) {
+<<<<<<< HEAD
 			pr_err("%s: handle %p is already mapped with diff len\n",
+=======
+			pr_err("%s: handle %pK is already mapped with diff len\n",
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				__func__, handle);
 			ret = -EINVAL;
 			goto out_unlock;
@@ -1856,7 +1915,11 @@ done:
 		data->addr += img->offset;
 		data->len -= img->offset;
 
+<<<<<<< HEAD
 		pr_debug("mem=%d ihdl=%p buf=0x%pa len=0x%x\n", img->memory_id,
+=======
+		pr_debug("mem=%d ihdl=%pK buf=0x%pa len=0x%x\n", img->memory_id,
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			 data->srcp_ihdl, &data->addr, data->len);
 	} else {
 		mdp3_put_img(data, client);
@@ -2089,7 +2152,11 @@ static int mdp3_alloc(struct msm_fb_data_type *mfd)
 		return ret;
 	}
 
+<<<<<<< HEAD
 	pr_info("allocating %u bytes at %p (%lx phys) for fb %d\n",
+=======
+	pr_info("allocating %u bytes at %pK (%lx phys) for fb %d\n",
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		size, virt, phys, mfd->index);
 
 	mfd->fbi->screen_base = virt;

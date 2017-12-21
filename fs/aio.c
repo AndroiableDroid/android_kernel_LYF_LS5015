@@ -35,6 +35,10 @@
 #include <linux/eventfd.h>
 #include <linux/blkdev.h>
 #include <linux/compat.h>
+<<<<<<< HEAD
+=======
+#include <linux/personality.h>
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 #include <asm/kmap_types.h>
 #include <asm/uaccess.h>
@@ -153,6 +157,12 @@ static int aio_setup_ring(struct kioctx *ctx)
 	unsigned long size, populate;
 	int nr_pages;
 
+<<<<<<< HEAD
+=======
+	if (current->personality & READ_IMPLIES_EXEC)
+		return -EPERM;
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	/* Compensate for the ring buffer's head/tail overlap entry */
 	nr_events += 2;	/* 1 is required, 2 for good luck */
 

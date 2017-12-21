@@ -19,7 +19,11 @@
  * current->executable is only used by the procfs.  This allows a dispatch
  * table to check for several different types  of binary formats.  We keep
  * trying until we recognize the file or we run out of supported binary
+<<<<<<< HEAD
  * formats. 
+=======
+ * formats.
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  */
 
 #include <linux/slab.h>
@@ -1091,6 +1095,16 @@ int flush_old_exec(struct linux_binprm * bprm)
 	flush_thread();
 	current->personality &= ~bprm->per_clear;
 
+<<<<<<< HEAD
+=======
+	/*
+	 * We have to apply CLOEXEC before we change whether the process is
+	 * dumpable (in setup_new_exec) to avoid a race with a process in userspace
+	 * trying to access the should-be-closed file descriptors of a process
+	 * undergoing exec(2).
+	 */
+	do_close_on_exec(current->files);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	return 0;
 
 out:
@@ -1141,7 +1155,10 @@ void setup_new_exec(struct linux_binprm * bprm)
 	current->self_exec_id++;
 			
 	flush_signal_handlers(current, 0);
+<<<<<<< HEAD
 	do_close_on_exec(current->files);
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 EXPORT_SYMBOL(setup_new_exec);
 
@@ -1265,6 +1282,56 @@ static int check_unsafe_exec(struct linux_binprm *bprm)
 	return res;
 }
 
+<<<<<<< HEAD
+=======
+static void bprm_fill_uid(struct linux_binprm *bprm)
+{
+	struct inode *inode;
+	unsigned int mode;
+	kuid_t uid;
+	kgid_t gid;
+
+	/* clear any previous set[ug]id data from a previous binary */
+	bprm->cred->euid = current_euid();
+	bprm->cred->egid = current_egid();
+
+	if (bprm->file->f_path.mnt->mnt_flags & MNT_NOSUID)
+		return;
+
+	if (task_no_new_privs(current))
+		return;
+
+	inode = file_inode(bprm->file);
+	mode = ACCESS_ONCE(inode->i_mode);
+	if (!(mode & (S_ISUID|S_ISGID)))
+		return;
+
+	/* Be careful if suid/sgid is set */
+	mutex_lock(&inode->i_mutex);
+
+	/* reload atomically mode/uid/gid now that lock held */
+	mode = inode->i_mode;
+	uid = inode->i_uid;
+	gid = inode->i_gid;
+	mutex_unlock(&inode->i_mutex);
+
+	/* We ignore suid/sgid if there are no mappings for them in the ns */
+	if (!kuid_has_mapping(bprm->cred->user_ns, uid) ||
+		 !kgid_has_mapping(bprm->cred->user_ns, gid))
+		return;
+
+	if (mode & S_ISUID) {
+		bprm->per_clear |= PER_CLEAR_ON_SETID;
+		bprm->cred->euid = uid;
+	}
+
+	if ((mode & (S_ISGID | S_IXGRP)) == (S_ISGID | S_IXGRP)) {
+		bprm->per_clear |= PER_CLEAR_ON_SETID;
+		bprm->cred->egid = gid;
+	}
+}
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 /* 
  * Fill the binprm structure from the inode. 
  * Check permissions, then read the first 128 (BINPRM_BUF_SIZE) bytes
@@ -1273,6 +1340,7 @@ static int check_unsafe_exec(struct linux_binprm *bprm)
  */
 int prepare_binprm(struct linux_binprm *bprm)
 {
+<<<<<<< HEAD
 	umode_t mode;
 	struct inode * inode = file_inode(bprm->file);
 	int retval;
@@ -1306,6 +1374,14 @@ int prepare_binprm(struct linux_binprm *bprm)
 			bprm->cred->egid = inode->i_gid;
 		}
 	}
+=======
+	int retval;
+
+	if (bprm->file->f_op == NULL)
+		return -EACCES;
+
+	bprm_fill_uid(bprm);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	/* fill in binprm security blob */
 	retval = security_bprm_set_creds(bprm);

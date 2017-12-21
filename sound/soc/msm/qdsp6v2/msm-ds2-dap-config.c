@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright (c) 2013-2016, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2013-2017, The Linux Foundation. All rights reserved.
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License version 2 and
 * only version 2 as published by the Free Software Foundation.
@@ -1522,6 +1526,18 @@ static int msm_ds2_dap_get_param(u32 cmd, void *arg)
 		goto end;
 	}
 
+<<<<<<< HEAD
+=======
+	/* Return if invalid length */
+	if ((dolby_data->length >
+	      (DOLBY_MAX_LENGTH_INDIVIDUAL_PARAM - DOLBY_PARAM_PAYLOAD_SIZE)) ||
+	      (dolby_data->length <= 0)) {
+		pr_err("Invalid length %d", dolby_data->length);
+		rc = -EINVAL;
+		goto end;
+	}
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	for (i = 0; i < DS2_DEVICES_ALL; i++) {
 		if ((dev_map[i].active) &&
 			(dev_map[i].device_id & dolby_data->device_id)) {
@@ -1546,7 +1562,12 @@ static int msm_ds2_dap_get_param(u32 cmd, void *arg)
 	pr_debug("%s: port_id 0x%x, copp_idx %d, dev_map[i].device_id %x\n",
 		 __func__, port_id, copp_idx, dev_map[i].device_id);
 
+<<<<<<< HEAD
 	params_value = kzalloc(params_length, GFP_KERNEL);
+=======
+	params_value = kzalloc(params_length + param_payload_len,
+				GFP_KERNEL);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	if (!params_value) {
 		pr_err("%s: params memory alloc failed\n", __func__);
 		rc = -ENOMEM;
@@ -1570,9 +1591,15 @@ static int msm_ds2_dap_get_param(u32 cmd, void *arg)
 			rc = -EINVAL;
 			goto end;
 		} else {
+<<<<<<< HEAD
 			params_length = (ds2_dap_params_length[i] +
 						DOLBY_PARAM_PAYLOAD_SIZE) *
 						sizeof(uint32_t);
+=======
+			params_length =
+			ds2_dap_params_length[i] * sizeof(uint32_t);
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			rc = adm_get_params(port_id, copp_idx,
 					    DOLBY_BUNDLE_MODULE_ID,
 					    ds2_dap_params_id[i],
@@ -1627,6 +1654,17 @@ static int msm_ds2_dap_param_visualizer_control_get(u32 cmd, void *arg)
 	}
 
 	length = ds2_dap_params[cache_dev].params_val[DOLBY_PARAM_VCNB_OFFSET];
+<<<<<<< HEAD
+=======
+
+	if (length > DOLBY_PARAM_VCNB_MAX_LENGTH || length <= 0) {
+		ret = 0;
+		dolby_data->length = 0;
+		pr_err("%s Incorrect VCNB length", __func__);
+		return -EINVAL;
+	}
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	params_length = (2*length + DOLBY_VIS_PARAM_HEADER_SIZE) *
 							 sizeof(uint32_t);
 
@@ -1692,13 +1730,33 @@ end:
 
 int msm_ds2_dap_set_security_control(u32 cmd, void *arg)
 {
+<<<<<<< HEAD
+=======
+	int ret = 0;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	struct dolby_param_license *dolby_license =
 				 ((struct dolby_param_license *)arg);
 	pr_err("%s: dmid %d license key %d\n", __func__,
 		dolby_license->dmid, dolby_license->license_key);
+<<<<<<< HEAD
 	core_set_dolby_manufacturer_id(dolby_license->dmid);
 	core_set_license(dolby_license->license_key, DOLBY_DS1_LICENSE_ID);
 	return 0;
+=======
+
+	ret = core_set_dolby_manufacturer_id(dolby_license->dmid);
+	if (ret < 0) {
+		pr_err("%s: failed to set dolby manufacturer id",__func__);
+		return ret;
+	}
+
+	ret = core_set_license(dolby_license->license_key, DOLBY_DS1_LICENSE_ID);
+	if (ret < 0) {
+		pr_err("%s: failed to set dolby license",__func__);
+		return ret;
+	}
+	return ret;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 int msm_ds2_dap_update_port_parameters(struct snd_hwdep *hw,  struct file *file,

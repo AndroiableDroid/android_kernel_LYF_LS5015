@@ -871,8 +871,11 @@ void hdd_conf_ns_offload(hdd_adapter_t *pAdapter, int fenable)
                     i++;
                 }
             }
+<<<<<<< HEAD
             /* store actual slots being used */
             pAdapter->ns_slots = i;
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
             read_unlock_bh(&in6_dev->lock);
 
             vos_mem_zero(&offLoadRequest, sizeof(offLoadRequest));
@@ -977,7 +980,11 @@ void hdd_conf_ns_offload(hdd_adapter_t *pAdapter, int fenable)
         hdd_wlan_offload_event(SIR_IPV6_NS_OFFLOAD,
                                            SIR_OFFLOAD_DISABLE);
 
+<<<<<<< HEAD
         for (i = 0; i <  pAdapter->ns_slots; i++)
+=======
+        for (i = 0; i < slot_index; i++)
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
         {
             hddLog(VOS_TRACE_LEVEL_INFO, FL("Disable Slot= %d"), i);
             offLoadRequest.nsOffloadInfo.slotIdx = i;
@@ -989,7 +996,10 @@ void hdd_conf_ns_offload(hdd_adapter_t *pAdapter, int fenable)
                                                  " %d Slot"), i);
             }
         }
+<<<<<<< HEAD
         pAdapter->ns_slots = 0;
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
     }
 end:
     while (slot > 0 && selfIPv6Addr[--slot])
@@ -1949,8 +1959,11 @@ void hdd_resume_wlan(void)
    hdd_adapter_list_node_t *pAdapterNode = NULL, *pNext = NULL;
    VOS_STATUS status;
    v_CONTEXT_t pVosContext = NULL;
+<<<<<<< HEAD
    tPmcState pmc_state;
    hdd_adapter_t *first_adapter = NULL;
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
    hddLog(VOS_TRACE_LEVEL_INFO, "%s: WLAN being resumed by Android OS",__func__);
 
@@ -1985,6 +1998,7 @@ void hdd_resume_wlan(void)
 
    pHddCtx->hdd_wlan_suspended = FALSE;
    hdd_wlan_suspend_resume_event(HDD_WLAN_EARLY_RESUME);
+<<<<<<< HEAD
 
    /* Get first valid adapter for disable/enable  bmps purpose */
    status = hdd_get_front_adapter ( pHddCtx, &pAdapterNode );
@@ -2005,6 +2019,8 @@ void hdd_resume_wlan(void)
        wlan_hdd_enter_bmps(first_adapter, DRIVER_POWER_MODE_ACTIVE);
    }
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
    /*loop through all adapters. Concurrency */
    status = hdd_get_front_adapter ( pHddCtx, &pAdapterNode );
 
@@ -2052,8 +2068,19 @@ void hdd_resume_wlan(void)
                         "Switch to DTIM%d",powerRequest.uListenInterval);
          sme_SetPowerParams( WLAN_HDD_GET_HAL_CTX(pAdapter), &powerRequest, FALSE);
 
+<<<<<<< HEAD
          if (BMPS == pmc_state)
          {
+=======
+         if (BMPS == pmcGetPmcState(pHddCtx->hHal))
+         {
+             /* put the device into full power */
+             wlan_hdd_enter_bmps(pAdapter, DRIVER_POWER_MODE_ACTIVE);
+
+             /* put the device back into BMPS */
+             wlan_hdd_enter_bmps(pAdapter, DRIVER_POWER_MODE_AUTO);
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
              pHddCtx->hdd_ignore_dtim_enabled = FALSE;
          }
       }
@@ -2063,6 +2090,7 @@ void hdd_resume_wlan(void)
       pAdapterNode = pNext;
    }
 
+<<<<<<< HEAD
    if (BMPS == pmc_state && first_adapter)
    {
        /* put the device into full power */
@@ -2072,6 +2100,8 @@ void hdd_resume_wlan(void)
       wlan_hdd_enter_bmps(first_adapter, DRIVER_POWER_MODE_AUTO);
    }
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 #ifdef SUPPORT_EARLY_SUSPEND_STANDBY_DEEPSLEEP   
    if(pHddCtx->hdd_ps_state == eHDD_SUSPEND_STANDBY) 
    {
@@ -2558,7 +2588,10 @@ VOS_STATUS hdd_wlan_re_init(void)
    pHddCtx->last_scan_reject_session_id = 0xFF;
    pHddCtx->last_scan_reject_reason = 0;
    pHddCtx->last_scan_reject_timestamp = 0;
+<<<<<<< HEAD
    pHddCtx->scan_reject_cnt = 0;
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
    pHddCtx->hdd_mcastbcast_filter_set = FALSE;
    pHddCtx->btCoexModeSet = FALSE;
    hdd_register_mcast_bcast_filter(pHddCtx);

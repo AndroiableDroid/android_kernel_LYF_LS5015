@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright (c) 2012-2015, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2012-2015, 2017 The Linux Foundation. All rights reserved.
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -883,11 +887,17 @@ static int msm_open(struct file *filep)
 	BUG_ON(!pvdev);
 
 	/* !!! only ONE open is allowed !!! */
+<<<<<<< HEAD
 	if (atomic_read(&pvdev->opened))
 		return -EBUSY;
 
 	atomic_set(&pvdev->opened, 1);
 
+=======
+	if (atomic_cmpxchg(&pvdev->opened, 0, 1))
+		return -EBUSY;
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	spin_lock_irqsave(&msm_pid_lock, flags);
 	msm_pid = get_pid(task_pid(current));
 	spin_unlock_irqrestore(&msm_pid_lock, flags);

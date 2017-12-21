@@ -19,6 +19,11 @@ struct ipv6_devconf {
 	__s32		rtr_solicit_interval;
 	__s32		rtr_solicit_delay;
 	__s32		force_mld_version;
+<<<<<<< HEAD
+=======
+	__s32		mldv1_unsolicited_report_interval;
+	__s32		mldv2_unsolicited_report_interval;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 #ifdef CONFIG_IPV6_PRIVACY
 	__s32		use_tempaddr;
 	__s32		temp_valid_lft;
@@ -41,6 +46,10 @@ struct ipv6_devconf {
 	__s32		accept_source_route;
 #ifdef CONFIG_IPV6_OPTIMISTIC_DAD
 	__s32		optimistic_dad;
+<<<<<<< HEAD
+=======
+	__s32		use_optimistic;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 #endif
 #ifdef CONFIG_IPV6_MROUTE
 	__s32		mc_forwarding;
@@ -51,6 +60,10 @@ struct ipv6_devconf {
 	__s32           ndisc_notify;
 	__s32		accept_ra_prefix_route;
 	__s32		accept_ra_mtu;
+<<<<<<< HEAD
+=======
+	__s32		use_oif_addrs_only;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	void		*sysctl;
 };
 

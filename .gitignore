@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 #
 # NOTE! Don't add files that are generated in specific
 # subdirectories here. Add them in the ".gitignore" file
@@ -92,6 +95,7 @@ extra_certificates
 signing_key.priv
 signing_key.x509
 x509.genkey
+<<<<<<< HEAD
 =======
 # Built application files
 *.apk
@@ -149,3 +153,8 @@ freeline.py
 freeline/
 freeline_project_description.json
 >>>>>>> 53c03e89fdb4f5f4c26da47c0b0c98b08e837d67
+=======
+
+# Generated source files
+smd_rpc_sym.c
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147

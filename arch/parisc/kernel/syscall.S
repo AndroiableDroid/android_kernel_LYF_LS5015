@@ -106,8 +106,11 @@ linux_gateway_entry:
 	mtsp	%r0,%sr4			/* get kernel space into sr4 */
 	mtsp	%r0,%sr5			/* get kernel space into sr5 */
 	mtsp	%r0,%sr6			/* get kernel space into sr6 */
+<<<<<<< HEAD
 	mfsp    %sr7,%r1                        /* save user sr7 */
 	mtsp    %r1,%sr3                        /* and store it in sr3 */
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 #ifdef CONFIG_64BIT
 	/* for now we can *always* set the W bit on entry to the syscall
@@ -133,6 +136,17 @@ linux_gateway_entry:
 	depdi	0, 31, 32, %r21
 1:	
 #endif
+<<<<<<< HEAD
+=======
+
+	/* We use a rsm/ssm pair to prevent sr3 from being clobbered
+	 * by external interrupts.
+	 */
+	mfsp    %sr7,%r1                        /* save user sr7 */
+	rsm	PSW_SM_I, %r0			/* disable interrupts */
+	mtsp    %r1,%sr3                        /* and store it in sr3 */
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	mfctl   %cr30,%r1
 	xor     %r1,%r30,%r30                   /* ye olde xor trick */
 	xor     %r1,%r30,%r1
@@ -147,6 +161,10 @@ linux_gateway_entry:
 	 */
 
 	mtsp	%r0,%sr7			/* get kernel space into sr7 */
+<<<<<<< HEAD
+=======
+	ssm	PSW_SM_I, %r0			/* enable interrupts */
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	STREGM	%r1,FRAME_SIZE(%r30)		/* save r1 (usp) here for now */
 	mfctl	%cr30,%r1			/* get task ptr in %r1 */
 	LDREG	TI_TASK(%r1),%r1

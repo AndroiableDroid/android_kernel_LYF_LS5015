@@ -44,6 +44,18 @@
 #include <sound/compress_offload.h>
 #include <sound/compress_driver.h>
 
+<<<<<<< HEAD
+=======
+#define U32_MAX ((u32)~0U)
+
+/* struct snd_compr_codec_caps overflows the ioctl bit size for some
+ * architectures, so we need to disable the relevant ioctls.
+ */
+#if _IOC_SIZEBITS < 14
+#define COMPR_CODEC_CAPS_OVERFLOW
+#endif
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 /* TODO:
  * - add substream support for multiple devices in case of
  *	SND_DYNAMIC_MINORS is not used
@@ -443,6 +455,10 @@ out:
 	return retval;
 }
 
+<<<<<<< HEAD
+=======
+#ifndef COMPR_CODEC_CAPS_OVERFLOW
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 static int
 snd_compr_get_codec_caps(struct snd_compr_stream *stream, unsigned long arg)
 {
@@ -466,6 +482,10 @@ out:
 	kfree(caps);
 	return retval;
 }
+<<<<<<< HEAD
+=======
+#endif /* !COMPR_CODEC_CAPS_OVERFLOW */
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 /* revisit this with snd_pcm_preallocate_xxx */
 static int snd_compr_allocate_buffer(struct snd_compr_stream *stream,
@@ -496,7 +516,11 @@ static int snd_compress_check_input(struct snd_compr_params *params)
 {
 	/* first let's check the buffer parameter's */
 	if (params->buffer.fragment_size == 0 ||
+<<<<<<< HEAD
 			params->buffer.fragments > SIZE_MAX / params->buffer.fragment_size)
+=======
+			params->buffer.fragments > U32_MAX / params->buffer.fragment_size)
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		return -EINVAL;
 
 	/* now codec parameters */
@@ -506,9 +530,12 @@ static int snd_compress_check_input(struct snd_compr_params *params)
 	if (params->codec.ch_in == 0 || params->codec.ch_out == 0)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	if (!(params->codec.sample_rate & SNDRV_PCM_RATE_8000_192000))
 		return -EINVAL;
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	return 0;
 }
 
@@ -799,10 +826,18 @@ static int snd_compress_simple_ioctls(struct file *file,
 		retval = snd_compr_get_caps(stream, arg);
 		break;
 
+<<<<<<< HEAD
 	case _IOC_NR(SNDRV_COMPRESS_GET_CODEC_CAPS):
 		retval = snd_compr_get_codec_caps(stream, arg);
 		break;
 
+=======
+#ifndef COMPR_CODEC_CAPS_OVERFLOW
+	case _IOC_NR(SNDRV_COMPRESS_GET_CODEC_CAPS):
+		retval = snd_compr_get_codec_caps(stream, arg);
+		break;
+#endif
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	case _IOC_NR(SNDRV_COMPRESS_TSTAMP):
 		retval = snd_compr_tstamp(stream, arg);

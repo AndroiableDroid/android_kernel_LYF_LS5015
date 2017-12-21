@@ -200,15 +200,19 @@ enum qca_nl80211_vendor_subcmds {
 
     QCA_NL80211_VENDOR_SUBCMD_SETBAND = 105,
 
+<<<<<<< HEAD
     /* send BSS Information */
     QCA_NL80211_VENDOR_SUBCMD_GET_STATION = 121,
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
     /* Start / Stop the NUD stats collections */
     QCA_NL80211_VENDOR_SUBCMD_NUD_STATS_SET = 149,
     /* Get the NUD stats, represented by the enum qca_attr_nud_stats_get */
     QCA_NL80211_VENDOR_SUBCMD_NUD_STATS_GET = 150,
 };
 
+<<<<<<< HEAD
 /**
  * enum qca_wlan_vendor_attr_get_station - Sub commands used by
  * QCA_NL80211_VENDOR_SUBCMD_GET_STATION to get the corresponding
@@ -353,6 +357,8 @@ enum qca_wlan_vendor_attr_get_station_info {
 #define INFO_ASSOC_FAIL_REASON \
 	QCA_WLAN_VENDOR_ATTR_GET_STATION_INFO_ASSOC_FAIL_REASON
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 enum qca_nl80211_vendor_subcmds_index {
 #ifdef FEATURE_WLAN_CH_AVOID
     QCA_NL80211_VENDOR_SUBCMD_AVOID_FREQUENCY_INDEX,

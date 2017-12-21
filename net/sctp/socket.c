@@ -1231,9 +1231,18 @@ static int __sctp_connect(struct sock* sk,
 
 	timeo = sock_sndtimeo(sk, f_flags & O_NONBLOCK);
 
+<<<<<<< HEAD
 	err = sctp_wait_for_connect(asoc, &timeo);
 	if ((err == 0 || err == -EINPROGRESS) && assoc_id)
 		*assoc_id = asoc->assoc_id;
+=======
+	if (assoc_id)
+		*assoc_id = asoc->assoc_id;
+	err = sctp_wait_for_connect(asoc, &timeo);
+	/* Note: the asoc may be freed after the return of
+	 * sctp_wait_for_connect.
+	 */
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	/* Don't free association on exit. */
 	asoc = NULL;
@@ -4259,7 +4268,11 @@ static int sctp_getsockopt_disable_fragments(struct sock *sk, int len,
 static int sctp_getsockopt_events(struct sock *sk, int len, char __user *optval,
 				  int __user *optlen)
 {
+<<<<<<< HEAD
 	if (len <= 0)
+=======
+	if (len == 0)
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		return -EINVAL;
 	if (len > sizeof(struct sctp_event_subscribe))
 		len = sizeof(struct sctp_event_subscribe);
@@ -4307,6 +4320,15 @@ int sctp_do_peeloff(struct sock *sk, sctp_assoc_t id, struct socket **sockp)
 	if (!asoc)
 		return -EINVAL;
 
+<<<<<<< HEAD
+=======
+	/* If there is a thread waiting on more sndbuf space for
+	 * sending on this asoc, it cannot be peeled.
+	 */
+	if (waitqueue_active(&asoc->wait))
+		return -EBUSY;
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	/* An association cannot be branched off from an already peeled-off
 	 * socket, nor is this supported for tcp style sockets.
 	 */
@@ -5770,6 +5792,12 @@ SCTP_STATIC int sctp_getsockopt(struct sock *sk, int level, int optname,
 	if (get_user(len, optlen))
 		return -EFAULT;
 
+<<<<<<< HEAD
+=======
+	if (len < 0)
+		return -EINVAL;
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	sctp_lock_sock(sk);
 
 	switch (optname) {
@@ -6718,7 +6746,10 @@ static int sctp_wait_for_sndbuf(struct sctp_association *asoc, long *timeo_p,
 		 */
 		sctp_release_sock(sk);
 		current_timeo = schedule_timeout(current_timeo);
+<<<<<<< HEAD
 		BUG_ON(sk != asoc->base.sk);
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		sctp_lock_sock(sk);
 
 		*timeo_p = current_timeo;

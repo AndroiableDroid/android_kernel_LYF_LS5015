@@ -267,13 +267,17 @@ static void sem_rcu_free(struct rcu_head *head)
  * Caller must own sem_perm.lock.
  * New simple ops cannot start, because simple ops first check
  * that sem_perm.lock is free.
+<<<<<<< HEAD
  * that a) sem_perm.lock is free and b) complex_count is 0.
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  */
 static void sem_wait_array(struct sem_array *sma)
 {
 	int i;
 	struct sem *sem;
 
+<<<<<<< HEAD
 	if (sma->complex_count)  {
 		/* The thread that increased sma->complex_count waited on
 		 * all sem->lock locks. Thus we don't need to wait again.
@@ -281,6 +285,8 @@ static void sem_wait_array(struct sem_array *sma)
 		return;
 	}
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	for (i = 0; i < sma->sem_nsems; i++) {
 		sem = sma->sem_base + i;
 		spin_unlock_wait(&sem->lock);

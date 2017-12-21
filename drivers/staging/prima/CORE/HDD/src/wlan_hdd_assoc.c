@@ -266,6 +266,7 @@ static inline void hdd_connSaveConnectedBssType( hdd_station_ctx_t *pHddStaCtx, 
 
 }
 
+<<<<<<< HEAD
 /**
  * hdd_copy_vht_caps()- copy vht caps info from roam info to
  *  hdd station context.
@@ -747,6 +748,8 @@ static void hdd_save_bss_info(hdd_adapter_t *adapter,
     }
 }
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 void hdd_connSaveConnectInfo( hdd_adapter_t *pAdapter, tCsrRoamInfo *pRoamInfo, eCsrRoamBssType eBssType )
 {
    hdd_station_ctx_t *pHddStaCtx = WLAN_HDD_GET_STATION_CTX_PTR(pAdapter);
@@ -810,7 +813,10 @@ void hdd_connSaveConnectInfo( hdd_adapter_t *pAdapter, tCsrRoamInfo *pRoamInfo, 
 
           pHddStaCtx->conn_info.rate_flags = pRoamInfo->maxRateFlags;
       }
+<<<<<<< HEAD
       hdd_save_bss_info(pAdapter, pRoamInfo);
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
    }
 
    // save the connected BssType
@@ -1464,6 +1470,7 @@ static VOS_STATUS hdd_roamDeregisterSTA( hdd_adapter_t *pAdapter, tANI_U8 staId 
     return( vosStatus );
 }
 
+<<<<<<< HEAD
 /**
  * hdd_print_bss_info() - print bss info
  * @hdd_sta_ctx: pointer to hdd station context
@@ -1511,6 +1518,8 @@ void hdd_print_bss_info(hdd_station_ctx_t *hdd_sta_ctx)
               hdd_sta_ctx->conn_info.noise);
 }
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 static eHalStatus hdd_DisConnectHandler( hdd_adapter_t *pAdapter, tCsrRoamInfo *pRoamInfo,
                                             tANI_U32 roamId, eRoamCmdStatus roamStatus,
@@ -1814,7 +1823,10 @@ static eHalStatus hdd_DisConnectHandler( hdd_adapter_t *pAdapter, tCsrRoamInfo *
 
     //Unblock anyone waiting for disconnect to complete
     complete(&pAdapter->disconnect_comp_var);
+<<<<<<< HEAD
     hdd_print_bss_info(pHddStaCtx);
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
     return( status );
 }
 
@@ -2585,23 +2597,34 @@ static eHalStatus hdd_AssociationCompletionHandler( hdd_adapter_t *pAdapter, tCs
                 wlan_hdd_tdls_reenable(pHddCtx);
             }
 
+<<<<<<< HEAD
             if (pRoamInfo) {
+=======
+            if (pRoamInfo)
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
                 hddLog(VOS_TRACE_LEVEL_ERROR,
                      "%s: send connect failure to nl80211:"
                      " for bssid " MAC_ADDRESS_STR
                      " result:%d and Status:%d reasonCode %d" ,
                      __func__, MAC_ADDR_ARRAY(pRoamInfo->bssid),
                      roamResult, roamStatus, pRoamInfo->reasonCode);
+<<<<<<< HEAD
                 pHddStaCtx->conn_info.assoc_status_code =
                     pRoamInfo->statusCode;
              } else {
+=======
+             else
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
                  hddLog(VOS_TRACE_LEVEL_ERROR,
                      "%s: connect failed:"
                      " for bssid " MAC_ADDRESS_STR
                      " result:%d and Status:%d" ,
                      __func__, MAC_ADDR_ARRAY(pWextState->req_bssId),
                      roamResult, roamStatus);
+<<<<<<< HEAD
              }
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
             /* inform association failure event to nl80211 */
             if ( eCSR_ROAM_RESULT_ASSOC_FAIL_CON_CHANNEL == roamResult )

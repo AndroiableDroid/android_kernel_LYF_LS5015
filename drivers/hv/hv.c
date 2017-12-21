@@ -193,7 +193,11 @@ cleanup:
  *
  * This routine is called normally during driver unloading or exiting.
  */
+<<<<<<< HEAD
 void hv_cleanup(void)
+=======
+void hv_cleanup(bool crash)
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 {
 	union hv_x64_msr_hypercall_contents hypercall_msr;
 
@@ -203,7 +207,12 @@ void hv_cleanup(void)
 	if (hv_context.hypercall_page) {
 		hypercall_msr.as_uint64 = 0;
 		wrmsrl(HV_X64_MSR_HYPERCALL, hypercall_msr.as_uint64);
+<<<<<<< HEAD
 		vfree(hv_context.hypercall_page);
+=======
+		if (!crash)
+			vfree(hv_context.hypercall_page);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		hv_context.hypercall_page = NULL;
 	}
 }

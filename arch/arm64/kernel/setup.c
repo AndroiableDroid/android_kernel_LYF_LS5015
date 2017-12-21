@@ -45,6 +45,10 @@
 #include <linux/of_platform.h>
 #include <linux/dma-mapping.h>
 #include <linux/efi.h>
+<<<<<<< HEAD
+=======
+#include <linux/personality.h>
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 #include <asm/fixmap.h>
 #include <asm/cputype.h>
@@ -124,6 +128,22 @@ void __init early_print(const char *str, ...)
 	printk("%s", buf);
 }
 
+<<<<<<< HEAD
+=======
+struct cpuinfo_arm64 {
+	struct cpu	cpu;
+	u32		reg_midr;
+};
+
+static DEFINE_PER_CPU(struct cpuinfo_arm64, cpu_data);
+
+void cpuinfo_store_cpu(void)
+{
+	struct cpuinfo_arm64 *info = this_cpu_ptr(&cpu_data);
+	info->reg_midr = read_cpuid_id();
+}
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 void __init smp_setup_processor_id(void)
 {
 	/*
@@ -308,6 +328,11 @@ static void __init setup_processor(void)
 
 static void __init setup_machine_fdt(phys_addr_t dt_phys)
 {
+<<<<<<< HEAD
+=======
+	cpuinfo_store_cpu();
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	if (!dt_phys || !early_init_dt_scan(phys_to_virt(dt_phys))) {
 		early_print("\n"
 			"Error: invalid device tree blob at physical address 0x%p (virtual address 0x%p)\n"
@@ -434,14 +459,21 @@ static int __init arm64_device_init(void)
 }
 arch_initcall(arm64_device_init);
 
+<<<<<<< HEAD
 static DEFINE_PER_CPU(struct cpu, cpu_data);
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 static int __init topology_init(void)
 {
 	int i;
 
 	for_each_possible_cpu(i) {
+<<<<<<< HEAD
 		struct cpu *cpu = &per_cpu(cpu_data, i);
+=======
+		struct cpu *cpu = &per_cpu(cpu_data.cpu, i);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		cpu->hotpluggable = 1;
 		register_cpu(cpu, i);
 	}
@@ -462,6 +494,7 @@ static const char *hwcap_str[] = {
 	NULL
 };
 
+<<<<<<< HEAD
 static int c_show(struct seq_file *m, void *v)
 {
 	int i;
@@ -470,6 +503,43 @@ static int c_show(struct seq_file *m, void *v)
 		   cpu_name, read_cpuid_id() & 15, ELF_PLATFORM);
 
 	for_each_present_cpu(i) {
+=======
+#ifdef CONFIG_COMPAT
+static const char *compat_hwcap_str[] = {
+	"swp",
+	"half",
+	"thumb",
+	"26bit",
+	"fastmult",
+	"fpa",
+	"vfp",
+	"edsp",
+	"java",
+	"iwmmxt",
+	"crunch",
+	"thumbee",
+	"neon",
+	"vfpv3",
+	"vfpv3d16",
+	"tls",
+	"vfpv4",
+	"idiva",
+	"idivt",
+	"vfpd32",
+	"lpae",
+	"evtstrm"
+};
+#endif /* CONFIG_COMPAT */
+
+static int c_show(struct seq_file *m, void *v)
+{
+	int i, j;
+
+	for_each_present_cpu(i) {
+		struct cpuinfo_arm64 *cpuinfo = &per_cpu(cpu_data, i);
+		u32 midr = cpuinfo->reg_midr;
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		/*
 		 * glibc reads /proc/cpuinfo to determine the number of
 		 * online processors, looking for lines beginning with
@@ -478,6 +548,7 @@ static int c_show(struct seq_file *m, void *v)
 #ifdef CONFIG_SMP
 		seq_printf(m, "processor\t: %d\n", i);
 #endif
+<<<<<<< HEAD
 	}
 
 	/* dump out the processor features */
@@ -486,6 +557,35 @@ static int c_show(struct seq_file *m, void *v)
 	for (i = 0; hwcap_str[i]; i++)
 		if (elf_hwcap & (1 << i))
 			seq_printf(m, "%s ", hwcap_str[i]);
+=======
+
+		/*
+		 * Dump out the common processor features in a single line.
+		 * Userspace should read the hwcaps with getauxval(AT_HWCAP)
+		 * rather than attempting to parse this, but there's a body of
+		 * software which does already (at least for 32-bit).
+		 */
+		seq_puts(m, "Features\t:");
+		if (personality(current->personality) == PER_LINUX32) {
+#ifdef CONFIG_COMPAT
+			for (j = 0; compat_hwcap_str[j]; j++)
+				if (COMPAT_ELF_HWCAP & (1 << j))
+					seq_printf(m, " %s", compat_hwcap_str[j]);
+#endif /* CONFIG_COMPAT */
+		} else {
+			for (j = 0; hwcap_str[j]; j++)
+				if (elf_hwcap & (1 << j))
+					seq_printf(m, " %s", hwcap_str[j]);
+		}
+		seq_puts(m, "\n");
+
+		seq_printf(m, "CPU implementer\t: 0x%02x\n", (midr >> 24));
+		seq_printf(m, "CPU architecture: 8\n");
+		seq_printf(m, "CPU variant\t: 0x%x\n", ((midr >> 20) & 0xf));
+		seq_printf(m, "CPU part\t: 0x%03x\n", ((midr >> 4) & 0xfff));
+		seq_printf(m, "CPU revision\t: %d\n\n", (midr & 0xf));
+	}
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 #ifdef CONFIG_ARMV7_COMPAT_CPUINFO
 	if (is_compat_task()) {
 		/* Print out the non-optional ARMv8 HW capabilities */
@@ -494,6 +594,7 @@ static int c_show(struct seq_file *m, void *v)
 	}
 #endif
 
+<<<<<<< HEAD
 	seq_printf(m, "\nCPU implementer\t: 0x%02x\n", read_cpuid_id() >> 24);
 	seq_printf(m, "CPU architecture: 8\n");
 	seq_printf(m, "CPU variant\t: 0x%x\n", (read_cpuid_id() >> 20) & 15);
@@ -507,6 +608,8 @@ static int c_show(struct seq_file *m, void *v)
 	else
 		seq_printf(m, "Hardware\t: %s\n", arch_read_hardware_id());
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	return 0;
 }
 

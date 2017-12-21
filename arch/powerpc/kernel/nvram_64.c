@@ -280,7 +280,11 @@ int __init nvram_remove_partition(const char *name, int sig,
 
 		/* Make partition a free partition */
 		part->header.signature = NVRAM_SIG_FREE;
+<<<<<<< HEAD
 		strncpy(part->header.name, "wwwwwwwwwwww", 12);
+=======
+		memset(part->header.name, 'w', 12);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		part->header.checksum = nvram_checksum(&part->header);
 		rc = nvram_write_header(part);
 		if (rc <= 0) {
@@ -298,8 +302,13 @@ int __init nvram_remove_partition(const char *name, int sig,
 		}
 		if (prev) {
 			prev->header.length += part->header.length;
+<<<<<<< HEAD
 			prev->header.checksum = nvram_checksum(&part->header);
 			rc = nvram_write_header(part);
+=======
+			prev->header.checksum = nvram_checksum(&prev->header);
+			rc = nvram_write_header(prev);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			if (rc <= 0) {
 				printk(KERN_ERR "nvram_remove_partition: nvram_write failed (%d)\n", rc);
 				return rc;

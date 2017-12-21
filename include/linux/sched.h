@@ -741,10 +741,15 @@ struct user_struct {
 	unsigned long mq_bytes;	/* How many bytes can be allocated to mqueue? */
 #endif
 	unsigned long locked_shm; /* How many pages of mlocked shm ? */
+<<<<<<< HEAD
 
 	atomic_long_t pipe_bufs;  /* how many pages are allocated in pipe buffers */
 
 	unsigned long unix_inflight;	/* How many files in flight in unix sockets */
+=======
+	unsigned long unix_inflight;	/* How many files in flight in unix sockets */
+	atomic_long_t pipe_bufs;  /* how many pages are allocated in pipe buffers */
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 #ifdef CONFIG_KEYS
 	struct key *uid_keyring;	/* UID specific keyring */

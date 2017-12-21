@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 /* Copyright (c) 2012-2014, 2016 The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2012-2014, 2016-2017 The Linux Foundation. All rights 
+ * reserved.
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -23,12 +28,17 @@
 #include <sound/q6audio-v2.h>
 #include <sound/q6afe-v2.h>
 #include <sound/audio_cal_utils.h>
+<<<<<<< HEAD
 
 #include "msm-dts-srs-tm-config.h"
 
 
 #include <sound/asound.h>
 #include "msm-dts-eagle.h"
+=======
+#include "msm-dts-srs-tm-config.h"
+#include <sound/asound.h>
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 #define TIMEOUT_MS 1000
 
@@ -237,6 +247,7 @@ static int adm_get_next_available_copp(int port_idx)
 	return idx;
 }
 
+<<<<<<< HEAD
 int adm_dts_eagle_set(int port_id, int copp_idx, int param_id,
 		      void *data, uint32_t size)
 {
@@ -394,6 +405,8 @@ fail_cmd:
 	return ret;
 }
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 int srs_trumedia_open(int port_id, int copp_idx, __s32 srs_tech_id,
 		      void *srs_params)
 {
@@ -852,9 +865,16 @@ int adm_get_params_v2(int port_id, int copp_idx, uint32_t module_id,
 		      char *params, uint32_t client_id)
 {
 	struct adm_cmd_get_pp_params_v5 *adm_params = NULL;
+<<<<<<< HEAD
 	int sz, rc = 0, i = 0;
 	int port_idx, idx;
 	int *params_data = (int *)params;
+=======
+	int rc = 0, i = 0;
+	int port_idx, idx;
+	int *params_data = (int *)params;
+	uint64_t sz = 0;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	port_id = afe_convert_virtual_to_portid(port_id);
 	port_idx = adm_validate_and_get_port_index(port_id);
@@ -863,7 +883,20 @@ int adm_get_params_v2(int port_id, int copp_idx, uint32_t module_id,
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	sz = sizeof(struct adm_cmd_get_pp_params_v5) + params_length;
+=======
+	sz = (uint64_t)sizeof(struct adm_cmd_get_pp_params_v5) +
+				(uint64_t)params_length;
+	/*
+	 * Check if the value of "sz" (which is ultimately assigned to
+	 * "hdr.pkt_size") crosses U16_MAX.
+	 */
+	if (sz > U16_MAX) {
+		pr_err("%s: Invalid params_length\n", __func__);
+		return -EINVAL;
+	}
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	adm_params = kzalloc(sz, GFP_KERNEL);
 	if (!adm_params) {
 		pr_err("%s: adm params memory alloc failed", __func__);
@@ -2017,6 +2050,7 @@ int adm_open(int port_id, int path, int rate, int channel_mode, int topology,
 		}
 	}
 
+<<<<<<< HEAD
 	if ((topology == ADM_CMD_COPP_OPEN_TOPOLOGY_ID_DTS_HPX_0 ||
 	     topology == ADM_CMD_COPP_OPEN_TOPOLOGY_ID_DTS_HPX_1) &&
 	    !perf_mode) {
@@ -2028,6 +2062,8 @@ int adm_open(int port_id, int path, int rate, int channel_mode, int topology,
 		if (res < 0)
 			pr_err("%s: DTS_EAGLE mmap did not work!", __func__);
 	}
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	if (this_adm.copp.adm_delay[port_idx][copp_idx] &&
 		perf_mode == LEGACY_PCM_MODE) {
 		atomic_set(&this_adm.copp.adm_delay_stat[port_idx][copp_idx],
@@ -2097,14 +2133,24 @@ int adm_open(int port_id, int path, int rate, int channel_mode, int topology,
 		} else if (channel_mode == 4) {
 			open.dev_channel_mapping[0] = PCM_CHANNEL_FL;
 			open.dev_channel_mapping[1] = PCM_CHANNEL_FR;
+<<<<<<< HEAD
 			open.dev_channel_mapping[2] = PCM_CHANNEL_RB;
 			open.dev_channel_mapping[3] = PCM_CHANNEL_LB;
+=======
+			open.dev_channel_mapping[2] = PCM_CHANNEL_LS;
+			open.dev_channel_mapping[3] = PCM_CHANNEL_RS;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		} else if (channel_mode == 5) {
 			open.dev_channel_mapping[0] = PCM_CHANNEL_FL;
 			open.dev_channel_mapping[1] = PCM_CHANNEL_FR;
 			open.dev_channel_mapping[2] = PCM_CHANNEL_FC;
+<<<<<<< HEAD
 			open.dev_channel_mapping[3] = PCM_CHANNEL_LB;
 			open.dev_channel_mapping[4] = PCM_CHANNEL_RB;
+=======
+			open.dev_channel_mapping[3] = PCM_CHANNEL_LS;
+			open.dev_channel_mapping[4] = PCM_CHANNEL_RS;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		} else if (channel_mode == 6) {
 			open.dev_channel_mapping[0] = PCM_CHANNEL_FL;
 			open.dev_channel_mapping[1] = PCM_CHANNEL_FR;
@@ -2117,10 +2163,17 @@ int adm_open(int port_id, int path, int rate, int channel_mode, int topology,
 			open.dev_channel_mapping[1] = PCM_CHANNEL_FR;
 			open.dev_channel_mapping[2] = PCM_CHANNEL_LFE;
 			open.dev_channel_mapping[3] = PCM_CHANNEL_FC;
+<<<<<<< HEAD
 			open.dev_channel_mapping[4] = PCM_CHANNEL_LB;
 			open.dev_channel_mapping[5] = PCM_CHANNEL_RB;
 			open.dev_channel_mapping[6] = PCM_CHANNEL_FLC;
 			open.dev_channel_mapping[7] = PCM_CHANNEL_FRC;
+=======
+			open.dev_channel_mapping[4] = PCM_CHANNEL_LS;
+			open.dev_channel_mapping[5] = PCM_CHANNEL_RS;
+			open.dev_channel_mapping[6] = PCM_CHANNEL_LB;
+			open.dev_channel_mapping[7] = PCM_CHANNEL_RB;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		} else {
 			pr_err("%s: invalid num_chan %d\n", __func__,
 					channel_mode);
@@ -2135,8 +2188,13 @@ int adm_open(int port_id, int path, int rate, int channel_mode, int topology,
 			__func__, open.endpoint_id_1, open.sample_rate,
 			open.topology_id);
 
+<<<<<<< HEAD
 		if (open.topology_id == VPM_TX_LEC_STEREO_REF ||
 			open.topology_id == VPM_TX_LEC_MONO_REF) {
+=======
+		if ((this_adm.ec_ref_cfg.channel != 0) && (path != 1) &&
+			(open.endpoint_id_2 != 0xFFFF)) {
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			int ref_end_channel_mode = this_adm.ec_ref_cfg.channel;
 			use_open_v6 = true;
 			/* overwrite open opcode and pkt size here to use
@@ -2399,6 +2457,7 @@ int adm_close(int port_id, int perf_mode, int copp_idx)
 			}
 		}
 
+<<<<<<< HEAD
 		if ((!perf_mode) && (this_adm.outband_memmap.paddr != 0)) {
 			atomic_set(&this_adm.mem_map_index, ADM_DTS_EAGLE);
 			ret = adm_memory_unmap_regions();
@@ -2411,6 +2470,8 @@ int adm_close(int port_id, int perf_mode, int copp_idx)
 			}
 		}
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		if ((afe_get_port_type(port_id) == MSM_AFE_PORT_TYPE_TX) &&
 		    (this_adm.sourceTrackingData.memmap.paddr != 0)) {
 			atomic_set(&this_adm.mem_map_index,
@@ -2783,10 +2844,13 @@ static int adm_init_cal_data(void)
 		{NULL, NULL, NULL, NULL, NULL, NULL} },
 		{NULL, NULL, cal_utils_match_buf_num} },
 
+<<<<<<< HEAD
 		{{DTS_EAGLE_CAL_TYPE,
 		{NULL, NULL, NULL, NULL, NULL, NULL} },
 		{NULL, NULL, cal_utils_match_buf_num} },
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		{{SRS_TRUMEDIA_CAL_TYPE,
 		{NULL, NULL, NULL, NULL, NULL, NULL} },
 		{NULL, NULL, cal_utils_match_buf_num} }

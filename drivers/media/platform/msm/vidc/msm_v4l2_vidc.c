@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright (c) 2012-2014, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2012-2017, The Linux Foundation. All rights reserved.
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -296,7 +300,11 @@ static int read_platform_resources(struct msm_vidc_core *core,
 		struct platform_device *pdev)
 {
 	if (!core || !pdev) {
+<<<<<<< HEAD
 		dprintk(VIDC_ERR, "%s: Invalid params %p %p\n",
+=======
+		dprintk(VIDC_ERR, "%s: Invalid params %pK %pK\n",
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			__func__, core, pdev);
 		return -EINVAL;
 	}
@@ -641,7 +649,11 @@ static int msm_vidc_remove(struct platform_device *pdev)
 	struct msm_vidc_core *core;
 
 	if (!pdev) {
+<<<<<<< HEAD
 		dprintk(VIDC_ERR, "%s invalid input %p", __func__, pdev);
+=======
+		dprintk(VIDC_ERR, "%s invalid input %pK", __func__, pdev);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		return -EINVAL;
 	}
 	core = pdev->dev.platform_data;
@@ -737,6 +749,10 @@ static int __init msm_vidc_init(void)
 	if (rc) {
 		dprintk(VIDC_ERR,
 			"Failed to register platform driver\n");
+<<<<<<< HEAD
+=======
+		debugfs_remove_recursive(vidc_driver->debugfs_root);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		kfree(vidc_driver);
 		vidc_driver = NULL;
 	}

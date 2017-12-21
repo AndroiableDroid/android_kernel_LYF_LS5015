@@ -260,16 +260,27 @@
 		"MGETL	D0FrT, D0.5, D0.6, D0.7, [%1++]\n"		\
 		"22:\n"							\
 		"MSETL	[%0++], D0FrT, D0.5, D0.6, D0.7\n"		\
+<<<<<<< HEAD
 		"SUB	%3, %3, #32\n"					\
 		"23:\n"							\
 		"MGETL	D0FrT, D0.5, D0.6, D0.7, [%1++]\n"		\
 		"24:\n"							\
 		"MSETL	[%0++], D0FrT, D0.5, D0.6, D0.7\n"		\
+=======
+		"23:\n"							\
+		"SUB	%3, %3, #32\n"					\
+		"24:\n"							\
+		"MGETL	D0FrT, D0.5, D0.6, D0.7, [%1++]\n"		\
+		"25:\n"							\
+		"MSETL	[%0++], D0FrT, D0.5, D0.6, D0.7\n"		\
+		"26:\n"							\
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		"SUB	%3, %3, #32\n"					\
 		"DCACHE	[%1+#-64], D0Ar6\n"				\
 		"BR	$Lloop"id"\n"					\
 									\
 		"MOV	RAPF, %1\n"					\
+<<<<<<< HEAD
 		"25:\n"							\
 		"MGETL	D0FrT, D0.5, D0.6, D0.7, [%1++]\n"		\
 		"26:\n"							\
@@ -281,6 +292,21 @@
 		"MSETL	[%0++], D0FrT, D0.5, D0.6, D0.7\n"		\
 		"SUB	%0, %0, #8\n"					\
 		"29:\n"							\
+=======
+		"27:\n"							\
+		"MGETL	D0FrT, D0.5, D0.6, D0.7, [%1++]\n"		\
+		"28:\n"							\
+		"MSETL	[%0++], D0FrT, D0.5, D0.6, D0.7\n"		\
+		"29:\n"							\
+		"SUB	%3, %3, #32\n"					\
+		"30:\n"							\
+		"MGETL	D0FrT, D0.5, D0.6, D0.7, [%1++]\n"		\
+		"31:\n"							\
+		"MSETL	[%0++], D0FrT, D0.5, D0.6, D0.7\n"		\
+		"32:\n"							\
+		"SUB	%0, %0, #8\n"					\
+		"33:\n"							\
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		"SETL	[%0++], D0.7, D1.7\n"				\
 		"SUB	%3, %3, #32\n"					\
 		"1:"							\
@@ -312,11 +338,23 @@
 		"	.long 26b,3b\n"					\
 		"	.long 27b,3b\n"					\
 		"	.long 28b,3b\n"					\
+<<<<<<< HEAD
 		"	.long 29b,4b\n"					\
 		"	.previous\n"					\
 		: "=r" (to), "=r" (from), "=r" (ret), "=d" (n)		\
 		: "0" (to), "1" (from), "2" (ret), "3" (n)		\
 		: "D1Ar1", "D0Ar2", "memory")
+=======
+		"	.long 29b,3b\n"					\
+		"	.long 30b,3b\n"					\
+		"	.long 31b,3b\n"					\
+		"	.long 32b,3b\n"					\
+		"	.long 33b,4b\n"					\
+		"	.previous\n"					\
+		: "=r" (to), "=r" (from), "=r" (ret), "=d" (n)		\
+		: "0" (to), "1" (from), "2" (ret), "3" (n)		\
+		: "D1Ar1", "D0Ar2", "cc", "memory")
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 /*	rewind 'to' and 'from'  pointers when a fault occurs
  *
@@ -342,7 +380,11 @@
 #define __asm_copy_to_user_64bit_rapf_loop(to,	from, ret, n, id)\
 	__asm_copy_user_64bit_rapf_loop(to, from, ret, n, id,		\
 		"LSR	D0Ar2, D0Ar2, #8\n"				\
+<<<<<<< HEAD
 		"AND	D0Ar2, D0Ar2, #0x7\n"				\
+=======
+		"ANDS	D0Ar2, D0Ar2, #0x7\n"				\
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		"ADDZ	D0Ar2, D0Ar2, #4\n"				\
 		"SUB	D0Ar2, D0Ar2, #1\n"				\
 		"MOV	D1Ar1, #4\n"					\
@@ -403,6 +445,7 @@
 		"MGETD	D0FrT, D0.5, D0.6, D0.7, [%1++]\n"		\
 		"22:\n"							\
 		"MSETD	[%0++], D0FrT, D0.5, D0.6, D0.7\n"		\
+<<<<<<< HEAD
 		"SUB	%3, %3, #16\n"					\
 		"23:\n"							\
 		"MGETD	D0FrT, D0.5, D0.6, D0.7, [%1++]\n"		\
@@ -413,16 +456,36 @@
 		"MGETD	D0FrT, D0.5, D0.6, D0.7, [%1++]\n"		\
 		"26:\n"							\
 		"MSETD	[%0++], D0FrT, D0.5, D0.6, D0.7\n"		\
+=======
+		"23:\n"							\
+		"SUB	%3, %3, #16\n"					\
+		"24:\n"							\
+		"MGETD	D0FrT, D0.5, D0.6, D0.7, [%1++]\n"		\
+		"25:\n"							\
+		"MSETD	[%0++], D0FrT, D0.5, D0.6, D0.7\n"		\
+		"26:\n"							\
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		"SUB	%3, %3, #16\n"					\
 		"27:\n"							\
 		"MGETD	D0FrT, D0.5, D0.6, D0.7, [%1++]\n"		\
 		"28:\n"							\
 		"MSETD	[%0++], D0FrT, D0.5, D0.6, D0.7\n"		\
+<<<<<<< HEAD
+=======
+		"29:\n"							\
+		"SUB	%3, %3, #16\n"					\
+		"30:\n"							\
+		"MGETD	D0FrT, D0.5, D0.6, D0.7, [%1++]\n"		\
+		"31:\n"							\
+		"MSETD	[%0++], D0FrT, D0.5, D0.6, D0.7\n"		\
+		"32:\n"							\
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		"SUB	%3, %3, #16\n"					\
 		"DCACHE	[%1+#-64], D0Ar6\n"				\
 		"BR	$Lloop"id"\n"					\
 									\
 		"MOV	RAPF, %1\n"					\
+<<<<<<< HEAD
 		"29:\n"							\
 		"MGETD	D0FrT, D0.5, D0.6, D0.7, [%1++]\n"		\
 		"30:\n"							\
@@ -444,6 +507,33 @@
 		"MSETD	[%0++], D0FrT, D0.5, D0.6, D0.7\n"		\
 		"SUB	%0, %0, #4\n"					\
 		"37:\n"							\
+=======
+		"33:\n"							\
+		"MGETD	D0FrT, D0.5, D0.6, D0.7, [%1++]\n"		\
+		"34:\n"							\
+		"MSETD	[%0++], D0FrT, D0.5, D0.6, D0.7\n"		\
+		"35:\n"							\
+		"SUB	%3, %3, #16\n"					\
+		"36:\n"							\
+		"MGETD	D0FrT, D0.5, D0.6, D0.7, [%1++]\n"		\
+		"37:\n"							\
+		"MSETD	[%0++], D0FrT, D0.5, D0.6, D0.7\n"		\
+		"38:\n"							\
+		"SUB	%3, %3, #16\n"					\
+		"39:\n"							\
+		"MGETD	D0FrT, D0.5, D0.6, D0.7, [%1++]\n"		\
+		"40:\n"							\
+		"MSETD	[%0++], D0FrT, D0.5, D0.6, D0.7\n"		\
+		"41:\n"							\
+		"SUB	%3, %3, #16\n"					\
+		"42:\n"							\
+		"MGETD	D0FrT, D0.5, D0.6, D0.7, [%1++]\n"		\
+		"43:\n"							\
+		"MSETD	[%0++], D0FrT, D0.5, D0.6, D0.7\n"		\
+		"44:\n"							\
+		"SUB	%0, %0, #4\n"					\
+		"45:\n"							\
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		"SETD	[%0++], D0.7\n"					\
 		"SUB	%3, %3, #16\n"					\
 		"1:"							\
@@ -483,11 +573,27 @@
 		"	.long 34b,3b\n"					\
 		"	.long 35b,3b\n"					\
 		"	.long 36b,3b\n"					\
+<<<<<<< HEAD
 		"	.long 37b,4b\n"					\
 		"	.previous\n"					\
 		: "=r" (to), "=r" (from), "=r" (ret), "=d" (n)		\
 		: "0" (to), "1" (from), "2" (ret), "3" (n)		\
 		: "D1Ar1", "D0Ar2", "memory")
+=======
+		"	.long 37b,3b\n"					\
+		"	.long 38b,3b\n"					\
+		"	.long 39b,3b\n"					\
+		"	.long 40b,3b\n"					\
+		"	.long 41b,3b\n"					\
+		"	.long 42b,3b\n"					\
+		"	.long 43b,3b\n"					\
+		"	.long 44b,3b\n"					\
+		"	.long 45b,4b\n"					\
+		"	.previous\n"					\
+		: "=r" (to), "=r" (from), "=r" (ret), "=d" (n)		\
+		: "0" (to), "1" (from), "2" (ret), "3" (n)		\
+		: "D1Ar1", "D0Ar2", "cc", "memory")
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 /*	rewind 'to' and 'from'  pointers when a fault occurs
  *
@@ -513,7 +619,11 @@
 #define __asm_copy_to_user_32bit_rapf_loop(to, from, ret, n, id)\
 	__asm_copy_user_32bit_rapf_loop(to, from, ret, n, id,		\
 		"LSR	D0Ar2, D0Ar2, #8\n"				\
+<<<<<<< HEAD
 		"AND	D0Ar2, D0Ar2, #0x7\n"				\
+=======
+		"ANDS	D0Ar2, D0Ar2, #0x7\n"				\
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		"ADDZ	D0Ar2, D0Ar2, #4\n"				\
 		"SUB	D0Ar2, D0Ar2, #1\n"				\
 		"MOV	D1Ar1, #4\n"					\
@@ -538,23 +648,43 @@ unsigned long __copy_user(void __user *pdst, const void *psrc,
 	if ((unsigned long) src & 1) {
 		__asm_copy_to_user_1(dst, src, retn);
 		n--;
+<<<<<<< HEAD
+=======
+		if (retn)
+			return retn + n;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	}
 	if ((unsigned long) dst & 1) {
 		/* Worst case - byte copy */
 		while (n > 0) {
 			__asm_copy_to_user_1(dst, src, retn);
 			n--;
+<<<<<<< HEAD
+=======
+			if (retn)
+				return retn + n;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		}
 	}
 	if (((unsigned long) src & 2) && n >= 2) {
 		__asm_copy_to_user_2(dst, src, retn);
 		n -= 2;
+<<<<<<< HEAD
+=======
+		if (retn)
+			return retn + n;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	}
 	if ((unsigned long) dst & 2) {
 		/* Second worst case - word copy */
 		while (n >= 2) {
 			__asm_copy_to_user_2(dst, src, retn);
 			n -= 2;
+<<<<<<< HEAD
+=======
+			if (retn)
+				return retn + n;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		}
 	}
 
@@ -569,6 +699,11 @@ unsigned long __copy_user(void __user *pdst, const void *psrc,
 		while (n >= 8) {
 			__asm_copy_to_user_8x64(dst, src, retn);
 			n -= 8;
+<<<<<<< HEAD
+=======
+			if (retn)
+				return retn + n;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		}
 	}
 	if (n >= RAPF_MIN_BUF_SIZE) {
@@ -581,6 +716,11 @@ unsigned long __copy_user(void __user *pdst, const void *psrc,
 		while (n >= 8) {
 			__asm_copy_to_user_8x64(dst, src, retn);
 			n -= 8;
+<<<<<<< HEAD
+=======
+			if (retn)
+				return retn + n;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		}
 	}
 #endif
@@ -588,11 +728,21 @@ unsigned long __copy_user(void __user *pdst, const void *psrc,
 	while (n >= 16) {
 		__asm_copy_to_user_16(dst, src, retn);
 		n -= 16;
+<<<<<<< HEAD
+=======
+		if (retn)
+			return retn + n;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	}
 
 	while (n >= 4) {
 		__asm_copy_to_user_4(dst, src, retn);
 		n -= 4;
+<<<<<<< HEAD
+=======
+		if (retn)
+			return retn + n;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	}
 
 	switch (n) {
@@ -609,6 +759,13 @@ unsigned long __copy_user(void __user *pdst, const void *psrc,
 		break;
 	}
 
+<<<<<<< HEAD
+=======
+	/*
+	 * If we get here, retn correctly reflects the number of failing
+	 * bytes.
+	 */
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	return retn;
 }
 EXPORT_SYMBOL(__copy_user);
@@ -789,6 +946,7 @@ EXPORT_SYMBOL(__copy_user);
  *
  *	Rationale:
  *		A fault occurs while reading from user buffer, which is the
+<<<<<<< HEAD
  *		source. Since the fault is at a single address, we only
  *		need to rewind by 8 bytes.
  *		Since we don't write to kernel buffer until we read first,
@@ -798,11 +956,33 @@ EXPORT_SYMBOL(__copy_user);
 #define __asm_copy_from_user_64bit_rapf_loop(to, from, ret, n, id)	\
 	__asm_copy_user_64bit_rapf_loop(to, from, ret, n, id,		\
 		"SUB	%1, %1, #8\n")
+=======
+ *		source.
+ *		Since we don't write to kernel buffer until we read first,
+ *		the kernel buffer is at the right state and needn't be
+ *		corrected, but the source must be rewound to the beginning of
+ *		the block, which is LSM_STEP*8 bytes.
+ *		LSM_STEP is bits 10:8 in TXSTATUS which is already read
+ *		and stored in D0Ar2
+ *
+ *		NOTE: If a fault occurs at the last operation in M{G,S}ETL
+ *			LSM_STEP will be 0. ie: we do 4 writes in our case, if
+ *			a fault happens at the 4th write, LSM_STEP will be 0
+ *			instead of 4. The code copes with that.
+ */
+#define __asm_copy_from_user_64bit_rapf_loop(to, from, ret, n, id)	\
+	__asm_copy_user_64bit_rapf_loop(to, from, ret, n, id,		\
+		"LSR	D0Ar2, D0Ar2, #5\n"				\
+		"ANDS	D0Ar2, D0Ar2, #0x38\n"				\
+		"ADDZ	D0Ar2, D0Ar2, #32\n"				\
+		"SUB	%1, %1, D0Ar2\n")
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 /*	rewind 'from' pointer when a fault occurs
  *
  *	Rationale:
  *		A fault occurs while reading from user buffer, which is the
+<<<<<<< HEAD
  *		source. Since the fault is at a single address, we only
  *		need to rewind by 4 bytes.
  *		Since we don't write to kernel buffer until we read first,
@@ -812,6 +992,27 @@ EXPORT_SYMBOL(__copy_user);
 #define __asm_copy_from_user_32bit_rapf_loop(to, from, ret, n, id)	\
 	__asm_copy_user_32bit_rapf_loop(to, from, ret, n, id,		\
 		"SUB	%1, %1, #4\n")
+=======
+ *		source.
+ *		Since we don't write to kernel buffer until we read first,
+ *		the kernel buffer is at the right state and needn't be
+ *		corrected, but the source must be rewound to the beginning of
+ *		the block, which is LSM_STEP*4 bytes.
+ *		LSM_STEP is bits 10:8 in TXSTATUS which is already read
+ *		and stored in D0Ar2
+ *
+ *		NOTE: If a fault occurs at the last operation in M{G,S}ETL
+ *			LSM_STEP will be 0. ie: we do 4 writes in our case, if
+ *			a fault happens at the 4th write, LSM_STEP will be 0
+ *			instead of 4. The code copes with that.
+ */
+#define __asm_copy_from_user_32bit_rapf_loop(to, from, ret, n, id)	\
+	__asm_copy_user_32bit_rapf_loop(to, from, ret, n, id,		\
+		"LSR	D0Ar2, D0Ar2, #6\n"				\
+		"ANDS	D0Ar2, D0Ar2, #0x1c\n"				\
+		"ADDZ	D0Ar2, D0Ar2, #16\n"				\
+		"SUB	%1, %1, D0Ar2\n")
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 
 /* Copy from user to kernel, zeroing the bytes that were inaccessible in
@@ -830,6 +1031,11 @@ unsigned long __copy_user_zeroing(void *pdst, const void __user *psrc,
 	if ((unsigned long) src & 1) {
 		__asm_copy_from_user_1(dst, src, retn);
 		n--;
+<<<<<<< HEAD
+=======
+		if (retn)
+			goto copy_exception_bytes;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	}
 	if ((unsigned long) dst & 1) {
 		/* Worst case - byte copy */
@@ -843,6 +1049,11 @@ unsigned long __copy_user_zeroing(void *pdst, const void __user *psrc,
 	if (((unsigned long) src & 2) && n >= 2) {
 		__asm_copy_from_user_2(dst, src, retn);
 		n -= 2;
+<<<<<<< HEAD
+=======
+		if (retn)
+			goto copy_exception_bytes;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	}
 	if ((unsigned long) dst & 2) {
 		/* Second worst case - word copy */
@@ -854,12 +1065,15 @@ unsigned long __copy_user_zeroing(void *pdst, const void __user *psrc,
 		}
 	}
 
+<<<<<<< HEAD
 	/* We only need one check after the unalignment-adjustments,
 	   because if both adjustments were done, either both or
 	   neither reference had an exception.  */
 	if (retn != 0)
 		goto copy_exception_bytes;
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 #ifdef USE_RAPF
 	/* 64 bit copy loop */
 	if (!(((unsigned long) src | (unsigned long) dst) & 7)) {

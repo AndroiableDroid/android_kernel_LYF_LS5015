@@ -688,6 +688,7 @@
  *	QoS mapping is relevant for IP packets, it is only valid during an
  *	association. This is cleared on disassociation and AP restart.
  *
+<<<<<<< HEAD
  * @NL80211_CMD_AUTHORIZATION_EVENT: Indicates that the device offloaded
  *	the establishment of temporal keys for an RSN connection.  This is
  *	used as part of key managment offload, where a device operating as a
@@ -708,6 +709,8 @@
  *	is FT (802.11r) enabled with 802.1X, then the second 256 bits of the
  *	MSK is passed instead of the PMK.
  *
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  * @NL80211_CMD_MAX: highest used command number
  * @__NL80211_CMD_AFTER_LAST: internal use
  */
@@ -879,9 +882,12 @@ enum nl80211_commands {
 
 	NL80211_CMD_SET_QOS_MAP,
 
+<<<<<<< HEAD
 	NL80211_CMD_AUTHORIZATION_EVENT,
 	NL80211_CMD_KEY_MGMT_SET_PMK,
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	/* add new commands above here */
 
 	/* used to define NL80211_CMD_MAX below */
@@ -1562,6 +1568,7 @@ enum nl80211_commands {
  * @NL80211_ATTR_TDLS_PEER_CAPABILITY: flags for TDLS peer capabilities, u32.
  *	As specified in the &enum nl80211_tdls_peer_capability.
  *
+<<<<<<< HEAD
  * @NL80211_ATTR_AUTHORIZATION_STATUS: Status of key management offload.
  * @NL80211_ATTR_KEY_REPLAY_CTR: Key Replay Counter value last used in a
  *	valid EAPOL-Key frame.
@@ -1578,6 +1585,8 @@ enum nl80211_commands {
  * @NL80211_ATTR_PTK_KCK: Pairwise Transient Key, Key Confirmation Key.
  * @NL80211_ATTR_PTK_KEK: Pairwise Transient Key, Key Encryption Key.
  *
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  * @NL80211_ATTR_MAX: highest attribute number currently defined
  * @__NL80211_ATTR_AFTER_LAST: internal use
  */
@@ -1914,6 +1923,7 @@ enum nl80211_attrs {
 
 	NL80211_ATTR_TDLS_PEER_CAPABILITY,
 
+<<<<<<< HEAD
 	NL80211_ATTR_AUTHORIZATION_STATUS,
 	NL80211_ATTR_KEY_REPLAY_CTR,
 	NL80211_ATTR_PSK,
@@ -1925,6 +1935,8 @@ enum nl80211_attrs {
 	NL80211_ATTR_PTK_KCK,
 	NL80211_ATTR_PTK_KEK,
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	/* add attributes here, update the policy in nl80211.c */
 
 	__NL80211_ATTR_AFTER_LAST,
@@ -2341,9 +2353,38 @@ enum nl80211_band_attr {
  * @NL80211_FREQUENCY_ATTR_NO_160MHZ: any 160 MHz (but not 80+80) channel
  *	using this channel as the primary or any of the secondary channels
  *	isn't possible
+<<<<<<< HEAD
  * @NL80211_FREQUENCY_ATTR_MAX: highest frequency attribute number
  *	currently defined
  * @__NL80211_FREQUENCY_ATTR_AFTER_LAST: internal use
+=======
+ * @NL80211_FREQUENCY_ATTR_DFS_CAC_TIME: DFS CAC time in milliseconds.
+ * @NL80211_FREQUENCY_ATTR_INDOOR_ONLY: Only indoor use is permitted on this
+ *	channel. A channel that has the INDOOR_ONLY attribute can only be
+ *	used when there is a clear assessment that the device is operating in
+ *	an indoor surroundings, i.e., it is connected to AC power (and not
+ *	through portable DC inverters) or is under the control of a master
+ *	that is acting as an AP and is connected to AC power.
+ * @NL80211_FREQUENCY_ATTR_GO_CONCURRENT: GO operation is allowed on this
+ *	channel if it's connected concurrently to a BSS on the same channel on
+ *	the 2 GHz band or to a channel in the same UNII band (on the 5 GHz
+ *	band), and IEEE80211_CHAN_RADAR is not set. Instantiating a GO on a
+ *	channel that has the GO_CONCURRENT attribute set can be done when there
+ *	is a clear assessment that the device is operating under the guidance of
+ *	an authorized master, i.e., setting up a GO while the device is also
+ *	connected to an AP with DFS and radar detection on the UNII band (it is
+ *	up to user-space, i.e., wpa_supplicant to perform the required
+ *	verifications)
+ * @NL80211_FREQUENCY_ATTR_MAX: highest frequency attribute number
+ *	currently defined
+ * @__NL80211_FREQUENCY_ATTR_AFTER_LAST: internal use
+ *
+ * See
+ * https://apps.fcc.gov/eas/comments/GetPublishedDocument.html?id=327&tn=528122
+ * for more information on the FCC description of the relaxations allowed
+ * by NL80211_FREQUENCY_ATTR_INDOOR_ONLY and
+ * NL80211_FREQUENCY_ATTR_GO_CONCURRENT.
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  */
 enum nl80211_frequency_attr {
 	__NL80211_FREQUENCY_ATTR_INVALID,
@@ -2359,6 +2400,12 @@ enum nl80211_frequency_attr {
 	NL80211_FREQUENCY_ATTR_NO_HT40_PLUS,
 	NL80211_FREQUENCY_ATTR_NO_80MHZ,
 	NL80211_FREQUENCY_ATTR_NO_160MHZ,
+<<<<<<< HEAD
+=======
+	NL80211_FREQUENCY_ATTR_DFS_CAC_TIME,
+	NL80211_FREQUENCY_ATTR_INDOOR_ONLY,
+	NL80211_FREQUENCY_ATTR_GO_CONCURRENT,
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	/* keep last */
 	__NL80211_FREQUENCY_ATTR_AFTER_LAST,
@@ -4008,6 +4055,7 @@ enum nl80211_tdls_peer_capability {
 	NL80211_TDLS_PEER_WMM = 1<<2,
 };
 
+<<<<<<< HEAD
 #define NL80211_KEY_LEN_PSK		32
 #define NL80211_KEY_LEN_PMK		32
 #define NL80211_KEY_REPLAY_CTR_LEN	8
@@ -4076,4 +4124,6 @@ enum nl80211_authorization_status {
 	NL80211_AUTHORIZED,
 };
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 #endif /* __LINUX_NL80211_H */

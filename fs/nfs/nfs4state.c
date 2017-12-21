@@ -1464,6 +1464,12 @@ restart:
 					"Zeroing state\n", __func__, status);
 			case -ENOENT:
 			case -ENOMEM:
+<<<<<<< HEAD
+=======
+			case -EACCES:
+			case -EROFS:
+			case -EIO:
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			case -ESTALE:
 				/*
 				 * Open state on this file cannot be recovered

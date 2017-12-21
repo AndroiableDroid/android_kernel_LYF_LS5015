@@ -350,7 +350,12 @@ static unsigned int vfs_dent_type(uint8_t type)
  */
 static int ubifs_readdir(struct file *file, void *dirent, filldir_t filldir)
 {
+<<<<<<< HEAD
 	int err, over = 0;
+=======
+	int err = 0;
+	int over = 0;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	loff_t pos = file->f_pos;
 	struct qstr nm;
 	union ubifs_key key;
@@ -469,6 +474,7 @@ static int ubifs_readdir(struct file *file, void *dirent, filldir_t filldir)
 	}
 
 out:
+<<<<<<< HEAD
 	if (err != -ENOENT) {
 		ubifs_err("cannot find next direntry, error %d", c->vi.ubi_num,
 				err);
@@ -480,6 +486,26 @@ out:
 	/* 2 is a special value indicating that there are no more direntries */
 	file->f_pos = 2;
 	return 0;
+=======
+	kfree(file->private_data);
+	file->private_data = NULL;
+
+	if (err != -ENOENT)
+		ubifs_err("cannot find next direntry, error %d", c->vi.ubi_num,
+				err);
+	else
+		/*
+		 * -ENOENT is a non-fatal error in this context, the TNC uses
+		 * it to indicate that the cursor moved past the current directory
+		 * and readdir() has to stop.
+		 */
+		err = 0;
+
+
+	/* 2 is a special value indicating that there are no more direntries */
+	file->f_pos = 2;
+	return err;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 static loff_t ubifs_dir_llseek(struct file *file, loff_t offset, int whence)

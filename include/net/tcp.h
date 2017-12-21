@@ -1044,6 +1044,10 @@ static inline void tcp_prequeue_init(struct tcp_sock *tp)
 }
 
 extern bool tcp_prequeue(struct sock *sk, struct sk_buff *skb);
+<<<<<<< HEAD
+=======
+int tcp_filter(struct sock *sk, struct sk_buff *skb);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 #undef STATE_TRACE
 
@@ -1409,6 +1413,11 @@ static inline void tcp_check_send_head(struct sock *sk, struct sk_buff *skb_unli
 {
 	if (sk->sk_send_head == skb_unlinked)
 		sk->sk_send_head = NULL;
+<<<<<<< HEAD
+=======
+	if (tcp_sk(sk)->highest_sack == skb_unlinked)
+		tcp_sk(sk)->highest_sack = NULL;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 static inline void tcp_init_send_head(struct sock *sk)

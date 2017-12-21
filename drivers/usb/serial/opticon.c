@@ -143,7 +143,11 @@ static int opticon_open(struct tty_struct *tty, struct usb_serial_port *port)
 	usb_clear_halt(port->serial->dev, port->read_urb->pipe);
 
 	res = usb_serial_generic_open(tty, port);
+<<<<<<< HEAD
 	if (!res)
+=======
+	if (res)
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		return res;
 
 	/* Request CTS line state, sometimes during opening the current

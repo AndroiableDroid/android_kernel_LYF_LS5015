@@ -69,7 +69,11 @@ static const unsigned freqs[] = { 400000, 300000, 200000, 100000 };
  * performance cost, and for other reasons may not always be desired.
  * So we allow it it to be disabled.
  */
+<<<<<<< HEAD
 bool use_spi_crc = 0;
+=======
+bool use_spi_crc = 1;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 module_param(use_spi_crc, bool, 0);
 
 /*
@@ -540,8 +544,13 @@ static void mmc_wait_data_done(struct mmc_request *mrq)
 	struct mmc_context_info *context_info = &mrq->host->context_info;
 
 	spin_lock_irqsave(&context_info->lock, flags);
+<<<<<<< HEAD
 	mrq->host->context_info.is_done_rcv = true;
 	wake_up_interruptible(&mrq->host->context_info.wait);
+=======
+	context_info->is_done_rcv = true;
+	wake_up_interruptible(&context_info->wait);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	spin_unlock_irqrestore(&context_info->lock, flags);
 }
 

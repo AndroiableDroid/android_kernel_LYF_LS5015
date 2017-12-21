@@ -389,6 +389,7 @@ static const struct nla_policy nl80211_policy[NL80211_ATTR_MAX+1] = {
 	[NL80211_ATTR_MAC_HINT] = { .len = ETH_ALEN },
 	[NL80211_ATTR_WIPHY_FREQ_HINT] = { .type = NLA_U32 },
 	[NL80211_ATTR_TDLS_PEER_CAPABILITY] = { .type = NLA_U32 },
+<<<<<<< HEAD
 	[NL80211_ATTR_AUTHORIZATION_STATUS] = { .type = NLA_U8 },
 	[NL80211_ATTR_KEY_REPLAY_CTR] = { .type = NLA_BINARY,
 				   .len = NL80211_KEY_REPLAY_CTR_LEN },
@@ -404,6 +405,8 @@ static const struct nla_policy nl80211_policy[NL80211_ATTR_MAX+1] = {
 				   .len = NL80211_KEY_LEN_PTK_KCK },
 	[NL80211_ATTR_PTK_KEK] = { .type = NLA_BINARY,
 				   .len = NL80211_KEY_LEN_PTK_KEK },
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 };
 
 /* policy for the key attributes */
@@ -628,6 +631,15 @@ static int nl80211_msg_put_channel(struct sk_buff *msg,
 		if ((chan->flags & IEEE80211_CHAN_NO_160MHZ) &&
 		    nla_put_flag(msg, NL80211_FREQUENCY_ATTR_NO_160MHZ))
 			goto nla_put_failure;
+<<<<<<< HEAD
+=======
+		if ((chan->flags & IEEE80211_CHAN_INDOOR_ONLY) &&
+		    nla_put_flag(msg, NL80211_FREQUENCY_ATTR_INDOOR_ONLY))
+			goto nla_put_failure;
+		if ((chan->flags & IEEE80211_CHAN_GO_CONCURRENT) &&
+		    nla_put_flag(msg, NL80211_FREQUENCY_ATTR_GO_CONCURRENT))
+			goto nla_put_failure;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	}
 
 	if (nla_put_u32(msg, NL80211_FREQUENCY_ATTR_MAX_TX_POWER,
@@ -1256,12 +1268,15 @@ static int nl80211_send_wiphy(struct cfg80211_registered_device *dev,
 		if ((dev->wiphy.flags & WIPHY_FLAG_TDLS_EXTERNAL_SETUP) &&
 		    nla_put_flag(msg, NL80211_ATTR_TDLS_EXTERNAL_SETUP))
 			goto nla_put_failure;
+<<<<<<< HEAD
 		if ((dev->wiphy.flags & WIPHY_FLAG_HAS_KEY_MGMT_OFFLOAD) &&
 		    (nla_put_u32(msg, NL80211_ATTR_KEY_MGMT_OFFLOAD_SUPPORT,
 				 dev->wiphy.key_mgmt_offload_support) ||
 		     nla_put_u32(msg, NL80211_ATTR_KEY_DERIVE_OFFLOAD_SUPPORT,
 				 dev->wiphy.key_derive_offload_support)))
 			goto nla_put_failure;
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 		(*split_start)++;
 		if (split)
@@ -6868,6 +6883,12 @@ void __cfg80211_send_event_skb(struct sk_buff *skb, gfp_t gfp)
 	void *hdr = ((void **)skb->cb)[1];
 	struct nlattr *data = ((void **)skb->cb)[2];
 
+<<<<<<< HEAD
+=======
+	/* clear CB data for netlink core to own from now on */
+	memset(skb->cb, 0, sizeof(skb->cb));
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	nla_nest_end(skb, data);
 	genlmsg_end(skb, hdr);
 
@@ -6880,7 +6901,10 @@ void __cfg80211_send_event_skb(struct sk_buff *skb, gfp_t gfp)
 }
 EXPORT_SYMBOL(__cfg80211_send_event_skb);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 static int nl80211_connect(struct sk_buff *skb, struct genl_info *info)
 {
 	struct cfg80211_registered_device *rdev = info->user_ptr[0];
@@ -7010,12 +7034,15 @@ static int nl80211_connect(struct sk_buff *skb, struct genl_info *info)
 		       sizeof(connect.vht_capa));
 	}
 
+<<<<<<< HEAD
 	if (nla_get_flag(info->attrs[NL80211_ATTR_OFFLOAD_KEY_MGMT]))
 		connect.flags |= ASSOC_REQ_OFFLOAD_KEY_MGMT;
 
 	if (info->attrs[NL80211_ATTR_PSK])
 		connect.psk = nla_data(info->attrs[NL80211_ATTR_PSK]);
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	err = cfg80211_connect(rdev, dev, &connect, connkeys);
 	if (err)
 		kfree(connkeys);
@@ -8742,6 +8769,7 @@ static int nl80211_set_qos_map(struct sk_buff *skb,
 	return ret;
 }
 
+<<<<<<< HEAD
 static int nl80211_key_mgmt_set_pmk(struct sk_buff *skb, struct genl_info *info)
 {
 	struct cfg80211_registered_device *rdev = info->user_ptr[0];
@@ -8764,6 +8792,8 @@ static int nl80211_key_mgmt_set_pmk(struct sk_buff *skb, struct genl_info *info)
 	return rdev_key_mgmt_set_pmk(rdev, dev, pmk, pmk_len);
 }
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 #define NL80211_FLAG_NEED_WIPHY		0x01
 #define NL80211_FLAG_NEED_NETDEV	0x02
 #define NL80211_FLAG_NEED_RTNL		0x04
@@ -9485,6 +9515,7 @@ static struct genl_ops nl80211_ops[] = {
 		.internal_flags = NL80211_FLAG_NEED_NETDEV_UP |
 				  NL80211_FLAG_NEED_RTNL,
 	},
+<<<<<<< HEAD
 	{
 		.cmd = NL80211_CMD_KEY_MGMT_SET_PMK,
 		.doit = nl80211_key_mgmt_set_pmk,
@@ -9493,6 +9524,8 @@ static struct genl_ops nl80211_ops[] = {
 		.internal_flags = NL80211_FLAG_NEED_NETDEV_UP |
 				  NL80211_FLAG_NEED_RTNL,
 	},
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 };
 
 static struct genl_multicast_group nl80211_mlme_mcgrp = {
@@ -11300,6 +11333,7 @@ void cfg80211_ap_stopped(struct net_device *netdev, gfp_t gfp)
 }
 EXPORT_SYMBOL(cfg80211_ap_stopped);
 
+<<<<<<< HEAD
 void __cfg80211_authorization_event(struct net_device *dev,
 			    enum nl80211_authorization_status auth_status,
 			    const u8 *key_replay_ctr, const u8 *ptk_kck,
@@ -11421,6 +11455,8 @@ void cfg80211_key_mgmt_auth(struct net_device *dev,
 }
 EXPORT_SYMBOL(cfg80211_key_mgmt_auth);
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 /* initialisation/exit functions */
 
 int nl80211_init(void)

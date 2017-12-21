@@ -176,6 +176,7 @@ extern unsigned long __copy_user(void __user *to, const void *from, unsigned lon
 extern unsigned long __copy_user_zeroing(void *to, const void __user *from, unsigned long n);
 extern unsigned long __do_clear_user(void __user *to, unsigned long n);
 
+<<<<<<< HEAD
 static inline unsigned long
 __generic_copy_to_user(void __user *to, const void *from, unsigned long n)
 {
@@ -200,6 +201,8 @@ __generic_clear_user(void __user *to, unsigned long n)
 	return n;
 }
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 static inline long
 __strncpy_from_user(char *dst, const char __user *src, long count)
 {
@@ -262,7 +265,11 @@ __constant_copy_from_user(void *to, const void __user *from, unsigned long n)
 	else if (n == 24)
 		__asm_copy_from_user_24(to, from, ret);
 	else
+<<<<<<< HEAD
 		ret = __generic_copy_from_user(to, from, n);
+=======
+		ret = __copy_user_zeroing(to, from, n);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	return ret;
 }
@@ -312,7 +319,11 @@ __constant_copy_to_user(void __user *to, const void *from, unsigned long n)
 	else if (n == 24)
 		__asm_copy_to_user_24(to, from, ret);
 	else
+<<<<<<< HEAD
 		ret = __generic_copy_to_user(to, from, n);
+=======
+		ret = __copy_user(to, from, n);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	return ret;
 }
@@ -344,12 +355,17 @@ __constant_clear_user(void __user *to, unsigned long n)
 	else if (n == 24)
 		__asm_clear_24(to, ret);
 	else
+<<<<<<< HEAD
 		ret = __generic_clear_user(to, n);
+=======
+		ret = __do_clear_user(to, n);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	return ret;
 }
 
 
+<<<<<<< HEAD
 #define clear_user(to, n)			\
 (__builtin_constant_p(n) ?			\
  __constant_clear_user(to, n) :			\
@@ -364,6 +380,39 @@ __constant_clear_user(void __user *to, unsigned long n)
 (__builtin_constant_p(n) ?			\
  __constant_copy_to_user(to, from, n) :		\
  __generic_copy_to_user(to, from, n))
+=======
+static inline size_t clear_user(void __user *to, size_t n)
+{
+	if (unlikely(!access_ok(VERIFY_WRITE, to, n)))
+		return n;
+	if (__builtin_constant_p(n))
+		return __constant_clear_user(to, n);
+	else
+		return __do_clear_user(to, n);
+}
+
+static inline size_t copy_from_user(void *to, const void __user *from, size_t n)
+{
+	if (unlikely(!access_ok(VERIFY_READ, from, n))) {
+		memset(to, 0, n);
+		return n;
+	}
+	if (__builtin_constant_p(n))
+		return __constant_copy_from_user(to, from, n);
+	else
+		return __copy_user_zeroing(to, from, n);
+}
+
+static inline size_t copy_to_user(void __user *to, const void *from, size_t n)
+{
+	if (unlikely(!access_ok(VERIFY_WRITE, to, n)))
+		return n;
+	if (__builtin_constant_p(n))
+		return __constant_copy_to_user(to, from, n);
+	else
+		return __copy_user(to, from, n);
+}
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 /* We let the __ versions of copy_from/to_user inline, because they're often
  * used in fast paths and have only a small space overhead.

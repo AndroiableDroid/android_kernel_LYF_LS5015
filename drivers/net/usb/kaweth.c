@@ -1031,6 +1031,10 @@ static int kaweth_probe(
 	kaweth = netdev_priv(netdev);
 	kaweth->dev = udev;
 	kaweth->net = netdev;
+<<<<<<< HEAD
+=======
+	kaweth->intf = intf;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	spin_lock_init(&kaweth->device_lock);
 	init_waitqueue_head(&kaweth->term_wait);
@@ -1141,8 +1145,11 @@ err_fw:
 
 	dev_dbg(dev, "Initializing net device.\n");
 
+<<<<<<< HEAD
 	kaweth->intf = intf;
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	kaweth->tx_urb = usb_alloc_urb(0, GFP_KERNEL);
 	if (!kaweth->tx_urb)
 		goto err_free_netdev;

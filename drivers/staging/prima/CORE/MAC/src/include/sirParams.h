@@ -145,7 +145,11 @@ typedef enum {
    PER_BASED_ROAMING = 63,
 #endif
    NUD_DEBUG = 68,
+<<<<<<< HEAD
    FATAL_EVENT_LOGGING = 69,
+=======
+   /*69 reserved for FATAL_EVENT_LOGGING */
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
    /*70 reserved for WIFI_DUAL_BAND_ENABLE */
    PROBE_RSP_TEMPLATE_VER1 = 71,
    //MAX_FEATURE_SUPPORTED = 128

@@ -1328,8 +1328,13 @@ int freeze_super(struct super_block *sb)
 		}
 	}
 	/*
+<<<<<<< HEAD
 	 * This is just for debugging purposes so that fs can warn if it
 	 * sees write activity when frozen is set to SB_FREEZE_COMPLETE.
+=======
+	 * For debugging purposes so that fs can warn if it sees write activity
+	 * when frozen is set to SB_FREEZE_COMPLETE, and for thaw_super().
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	 */
 	sb->s_writers.frozen = SB_FREEZE_COMPLETE;
 	up_write(&sb->s_umount);
@@ -1348,7 +1353,11 @@ int thaw_super(struct super_block *sb)
 	int error;
 
 	down_write(&sb->s_umount);
+<<<<<<< HEAD
 	if (sb->s_writers.frozen == SB_UNFROZEN) {
+=======
+	if (sb->s_writers.frozen != SB_FREEZE_COMPLETE) {
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		up_write(&sb->s_umount);
 		return -EINVAL;
 	}

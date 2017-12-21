@@ -906,6 +906,23 @@ static int segmented_read_std(struct x86_emulate_ctxt *ctxt,
 	return ctxt->ops->read_std(ctxt, linear, data, size, &ctxt->exception);
 }
 
+<<<<<<< HEAD
+=======
+static int segmented_write_std(struct x86_emulate_ctxt *ctxt,
+			       struct segmented_address addr,
+			       void *data,
+			       unsigned int size)
+{
+	int rc;
+	ulong linear;
+
+	rc = linearize(ctxt, addr, size, true, &linear);
+	if (rc != X86EMUL_CONTINUE)
+		return rc;
+	return ctxt->ops->write_std(ctxt, linear, data, size, &ctxt->exception);
+}
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 /*
  * Fetch the next byte of the instruction being emulated which is pointed to
  * by ctxt->_eip, then increment ctxt->_eip.
@@ -1599,7 +1616,10 @@ static int write_segment_descriptor(struct x86_emulate_ctxt *ctxt,
 				    &ctxt->exception);
 }
 
+<<<<<<< HEAD
 /* Does not support long mode */
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 static int load_segment_descriptor(struct x86_emulate_ctxt *ctxt,
 				   u16 selector, int seg)
 {
@@ -1612,6 +1632,24 @@ static int load_segment_descriptor(struct x86_emulate_ctxt *ctxt,
 	int ret;
 	u16 dummy;
 
+<<<<<<< HEAD
+=======
+
+	/*
+	 * None of MOV, POP and LSS can load a NULL selector in CPL=3, but
+	 * they can load it at CPL<3 (Intel's manual says only LSS can,
+	 * but it's wrong).
+	 *
+	 * However, the Intel manual says that putting IST=1/DPL=3 in
+	 * an interrupt gate will result in SS=3 (the AMD manual instead
+	 * says it doesn't), so allow SS=3 in __load_segment_descriptor
+	 * and only forbid it here.
+	 */
+	if (seg == VCPU_SREG_SS && selector == 3 &&
+	    ctxt->mode == X86EMUL_MODE_PROT64)
+		return emulate_exception(ctxt, GP_VECTOR, 0, true);
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	memset(&seg_desc, 0, sizeof seg_desc);
 
 	if (ctxt->mode == X86EMUL_MODE_REAL) {
@@ -1634,6 +1672,7 @@ static int load_segment_descriptor(struct x86_emulate_ctxt *ctxt,
 	rpl = selector & 3;
 	cpl = ctxt->ops->cpl(ctxt);
 
+<<<<<<< HEAD
 	/* NULL selector is not valid for TR, CS and SS (except for long mode) */
 	if ((seg == VCPU_SREG_CS
 	     || (seg == VCPU_SREG_SS
@@ -1642,12 +1681,41 @@ static int load_segment_descriptor(struct x86_emulate_ctxt *ctxt,
 	    && null_selector)
 		goto exception;
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	/* TR should be in GDT only */
 	if (seg == VCPU_SREG_TR && (selector & (1 << 2)))
 		goto exception;
 
+<<<<<<< HEAD
 	if (null_selector) /* for NULL selector skip all following checks */
 		goto load;
+=======
+	/* NULL selector is not valid for TR, CS and (except for long mode) SS */
+	if (null_selector) {
+		if (seg == VCPU_SREG_CS || seg == VCPU_SREG_TR)
+			goto exception;
+
+		if (seg == VCPU_SREG_SS) {
+			if (ctxt->mode != X86EMUL_MODE_PROT64 || rpl != cpl)
+				goto exception;
+
+			/*
+			 * ctxt->ops->set_segment expects the CPL to be in
+			 * SS.DPL, so fake an expand-up 32-bit data segment.
+			 */
+			seg_desc.type = 3;
+			seg_desc.p = 1;
+			seg_desc.s = 1;
+			seg_desc.dpl = cpl;
+			seg_desc.d = 1;
+			seg_desc.g = 1;
+		}
+
+		/* Skip all following checks */
+		goto load;
+	}
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	ret = read_segment_descriptor(ctxt, selector, &seg_desc, &desc_addr);
 	if (ret != X86EMUL_CONTINUE)
@@ -3333,8 +3401,13 @@ static int emulate_store_desc_ptr(struct x86_emulate_ctxt *ctxt,
 	}
 	/* Disable writeback. */
 	ctxt->dst.type = OP_NONE;
+<<<<<<< HEAD
 	return segmented_write(ctxt, ctxt->dst.addr.mem,
 			       &desc_ptr, 2 + ctxt->op_bytes);
+=======
+	return segmented_write_std(ctxt, ctxt->dst.addr.mem,
+				   &desc_ptr, 2 + ctxt->op_bytes);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 static int em_sgdt(struct x86_emulate_ctxt *ctxt)

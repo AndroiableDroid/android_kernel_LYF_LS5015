@@ -1015,7 +1015,11 @@ idle_timeout:
 		/* caller was supposed to have unlinked any requests;
 		 * that's not our job.  just leak this memory.
 		 */
+<<<<<<< HEAD
 		ehci_err (ehci, "qh %p (#%02x) state %d%s\n",
+=======
+		ehci_err (ehci, "qh %pK (#%02x) state %d%s\n",
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			qh, ep->desc.bEndpointAddress, qh->qh_state,
 			list_empty (&qh->qtd_list) ? "" : "(has tds)");
 		break;

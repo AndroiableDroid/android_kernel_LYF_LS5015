@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright (c) 2012-2014, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2012-2016, The Linux Foundation. All rights reserved.
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License version 2 and
@@ -332,9 +336,23 @@ static long avtimer_ioctl(struct file *file, unsigned int ioctl_num,
 	switch (ioctl_num) {
 	case IOCTL_GET_AVTIMER_TICK:
 	{
+<<<<<<< HEAD
 		uint64_t avtimer_tick;
 
 		avcs_core_query_timer(&avtimer_tick);
+=======
+		uint64_t avtimer_tick = 0;
+		int rc;
+
+		rc = avcs_core_query_timer(&avtimer_tick);
+
+		if (rc) {
+			pr_err("%s: Error: Invalid AV Timer tick, rc = %d\n",
+				__func__, rc);
+			return rc;
+		}
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		pr_debug_ratelimited("%s: AV Timer tick: time %llx\n",
 		__func__, avtimer_tick);
 		if (copy_to_user((void *) ioctl_param, &avtimer_tick,

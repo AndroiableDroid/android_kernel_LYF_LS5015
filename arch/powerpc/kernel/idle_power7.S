@@ -94,7 +94,11 @@ _GLOBAL(power7_nap)
 	std	r0,0(r1)
 	ptesync
 	ld	r0,0(r1)
+<<<<<<< HEAD
 1:	cmp	cr0,r0,r0
+=======
+1:	cmpd	cr0,r0,r0
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	bne	1b
 	PPC_NAP
 	b	.

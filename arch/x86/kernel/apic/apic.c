@@ -1581,6 +1581,12 @@ void __init enable_IR_x2apic(void)
 	int ret, x2apic_enabled = 0;
 	int hardware_init_ret;
 
+<<<<<<< HEAD
+=======
+	if (skip_ioapic_setup)
+		return;
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	/* Make sure irq_remap_ops are initialized */
 	setup_irq_remapping_ops();
 

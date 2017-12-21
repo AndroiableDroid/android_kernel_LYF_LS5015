@@ -582,7 +582,10 @@ static void vti_tunnel_setup(struct net_device *dev)
 	dev->type		= ARPHRD_TUNNEL;
 	dev->destructor		= vti_dev_free;
 
+<<<<<<< HEAD
 	dev->hard_header_len	= LL_MAX_HEADER + sizeof(struct iphdr);
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	dev->mtu		= ETH_DATA_LEN;
 	dev->flags		= IFF_NOARP;
 	dev->iflink		= 0;

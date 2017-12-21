@@ -301,7 +301,11 @@ static int bcl_add_sysfs_nodes(enum bcl_param param_type)
 		return ret;
 	}
 	bcl[param_type]->bcl_attr_gp.attrs = kzalloc(sizeof(struct attribute *)
+<<<<<<< HEAD
 		* BCL_PARAM_MAX_ATTR + 1, GFP_KERNEL);
+=======
+		* (BCL_PARAM_MAX_ATTR + 1), GFP_KERNEL);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	if (!bcl[param_type]->bcl_attr_gp.attrs) {
 		pr_err("Sysfs attribute create failed.\n");
 		ret = -ENOMEM;

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright (c) 2011-2016, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2011-2016,2017  The Linux Foundation. All rights reserved.
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -1304,11 +1308,19 @@ static void ngd_adsp_down(struct work_struct *work)
 	struct slim_controller *ctrl = &dev->ctrl;
 	struct slim_device *sbdev;
 
+<<<<<<< HEAD
+=======
+	mutex_lock(&dev->ssr_lock);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	ngd_slim_enable(dev, false);
 	/* device up should be called again after SSR */
 	list_for_each_entry(sbdev, &ctrl->devs, dev_list)
 		slim_report_absent(sbdev);
 	SLIM_INFO(dev, "SLIM ADSP SSR (DOWN) done\n");
+<<<<<<< HEAD
+=======
+	mutex_unlock(&dev->ssr_lock);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 static void ngd_adsp_up(struct work_struct *work)
@@ -1317,7 +1329,13 @@ static void ngd_adsp_up(struct work_struct *work)
 		container_of(work, struct msm_slim_qmi, ssr_up);
 	struct msm_slim_ctrl *dev =
 		container_of(qmi, struct msm_slim_ctrl, qmi);
+<<<<<<< HEAD
 	ngd_slim_enable(dev, true);
+=======
+	mutex_lock(&dev->ssr_lock);
+	ngd_slim_enable(dev, true);
+	mutex_unlock(&dev->ssr_lock);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 static ssize_t show_mask(struct device *device, struct device_attribute *attr,
@@ -1471,6 +1489,10 @@ static int ngd_slim_probe(struct platform_device *pdev)
 	init_completion(&dev->ctrl_up);
 	mutex_init(&dev->tx_lock);
 	mutex_init(&dev->tx_buf_lock);
+<<<<<<< HEAD
+=======
+	mutex_init(&dev->ssr_lock);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	spin_lock_init(&dev->rx_lock);
 	dev->ee = 1;
 	dev->irq = irq->start;

@@ -1437,6 +1437,13 @@ static int ims_pcu_parse_cdc_data(struct usb_interface *intf, struct ims_pcu *pc
 		return -EINVAL;
 
 	alt = pcu->ctrl_intf->cur_altsetting;
+<<<<<<< HEAD
+=======
+
+	if (alt->desc.bNumEndpoints < 1)
+		return -ENODEV;
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	pcu->ep_ctrl = &alt->endpoint[0].desc;
 	pcu->max_ctrl_size = usb_endpoint_maxp(pcu->ep_ctrl);
 

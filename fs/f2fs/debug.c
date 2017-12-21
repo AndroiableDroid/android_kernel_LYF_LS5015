@@ -45,19 +45,47 @@ static void update_general_status(struct f2fs_sb_info *sbi)
 	si->ndirty_dent = get_pages(sbi, F2FS_DIRTY_DENTS);
 	si->ndirty_meta = get_pages(sbi, F2FS_DIRTY_META);
 	si->ndirty_data = get_pages(sbi, F2FS_DIRTY_DATA);
+<<<<<<< HEAD
 	si->ndirty_dirs = sbi->ndirty_inode[DIR_INODE];
 	si->ndirty_files = sbi->ndirty_inode[FILE_INODE];
 	si->inmem_pages = get_pages(sbi, F2FS_INMEM_PAGES);
 	si->wb_pages = get_pages(sbi, F2FS_WRITEBACK);
+=======
+	si->ndirty_imeta = get_pages(sbi, F2FS_DIRTY_IMETA);
+	si->ndirty_dirs = sbi->ndirty_inode[DIR_INODE];
+	si->ndirty_files = sbi->ndirty_inode[FILE_INODE];
+	si->ndirty_all = sbi->ndirty_inode[DIRTY_META];
+	si->inmem_pages = get_pages(sbi, F2FS_INMEM_PAGES);
+	si->aw_cnt = atomic_read(&sbi->aw_cnt);
+	si->max_aw_cnt = atomic_read(&sbi->max_aw_cnt);
+	si->nr_wb_cp_data = get_pages(sbi, F2FS_WB_CP_DATA);
+	si->nr_wb_data = get_pages(sbi, F2FS_WB_DATA);
+	if (SM_I(sbi) && SM_I(sbi)->fcc_info)
+		si->nr_flush =
+			atomic_read(&SM_I(sbi)->fcc_info->submit_flush);
+	if (SM_I(sbi) && SM_I(sbi)->dcc_info)
+		si->nr_discard =
+			atomic_read(&SM_I(sbi)->dcc_info->submit_discard);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	si->total_count = (int)sbi->user_block_count / sbi->blocks_per_seg;
 	si->rsvd_segs = reserved_segments(sbi);
 	si->overp_segs = overprovision_segments(sbi);
 	si->valid_count = valid_user_blocks(sbi);
+<<<<<<< HEAD
+=======
+	si->discard_blks = discard_blocks(sbi);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	si->valid_node_count = valid_node_count(sbi);
 	si->valid_inode_count = valid_inode_count(sbi);
 	si->inline_xattr = atomic_read(&sbi->inline_xattr);
 	si->inline_inode = atomic_read(&sbi->inline_inode);
 	si->inline_dir = atomic_read(&sbi->inline_dir);
+<<<<<<< HEAD
+=======
+	si->append = sbi->im[APPEND_INO].ino_num;
+	si->update = sbi->im[UPDATE_INO].ino_num;
+	si->orphans = sbi->im[ORPHAN_INO].ino_num;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	si->utilization = utilization(sbi);
 
 	si->free_segs = free_segments(sbi);
@@ -70,7 +98,12 @@ static void update_general_status(struct f2fs_sb_info *sbi)
 	si->dirty_nats = NM_I(sbi)->dirty_nat_cnt;
 	si->sits = MAIN_SEGS(sbi);
 	si->dirty_sits = SIT_I(sbi)->dirty_sentries;
+<<<<<<< HEAD
 	si->fnids = NM_I(sbi)->fcnt;
+=======
+	si->free_nids = NM_I(sbi)->nid_cnt[FREE_NID_LIST];
+	si->alloc_nids = NM_I(sbi)->nid_cnt[ALLOC_NID_LIST];
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	si->bg_gc = sbi->bg_gc;
 	si->util_free = (int)(free_user_blocks(sbi) >> sbi->log_blocks_per_seg)
 		* 100 / (int)(sbi->user_block_count >> sbi->log_blocks_per_seg)
@@ -143,6 +176,10 @@ static void update_mem_info(struct f2fs_sb_info *sbi)
 	si->base_mem = sizeof(struct f2fs_sb_info) + sbi->sb->s_blocksize;
 	si->base_mem += 2 * sizeof(struct f2fs_inode_info);
 	si->base_mem += sizeof(*sbi->ckpt);
+<<<<<<< HEAD
+=======
+	si->base_mem += sizeof(struct percpu_counter) * NR_COUNT_TYPE;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	/* build sm */
 	si->base_mem += sizeof(struct f2fs_sm_info);
@@ -151,7 +188,13 @@ static void update_mem_info(struct f2fs_sb_info *sbi)
 	si->base_mem += sizeof(struct sit_info);
 	si->base_mem += MAIN_SEGS(sbi) * sizeof(struct seg_entry);
 	si->base_mem += f2fs_bitmap_size(MAIN_SEGS(sbi));
+<<<<<<< HEAD
 	si->base_mem += 3 * SIT_VBLOCK_MAP_SIZE * MAIN_SEGS(sbi);
+=======
+	si->base_mem += 2 * SIT_VBLOCK_MAP_SIZE * MAIN_SEGS(sbi);
+	if (f2fs_discard_en(sbi))
+		si->base_mem += SIT_VBLOCK_MAP_SIZE * MAIN_SEGS(sbi);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	si->base_mem += SIT_VBLOCK_MAP_SIZE;
 	if (sbi->segs_per_sec > 1)
 		si->base_mem += MAIN_SECS(sbi) * sizeof(struct sec_entry);
@@ -164,7 +207,11 @@ static void update_mem_info(struct f2fs_sb_info *sbi)
 
 	/* build curseg */
 	si->base_mem += sizeof(struct curseg_info) * NR_CURSEG_TYPE;
+<<<<<<< HEAD
 	si->base_mem += PAGE_CACHE_SIZE * NR_CURSEG_TYPE;
+=======
+	si->base_mem += PAGE_SIZE * NR_CURSEG_TYPE;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	/* build dirty segmap */
 	si->base_mem += sizeof(struct dirty_seglist_info);
@@ -174,6 +221,12 @@ static void update_mem_info(struct f2fs_sb_info *sbi)
 	/* build nm */
 	si->base_mem += sizeof(struct f2fs_nm_info);
 	si->base_mem += __bitmap_size(sbi, NAT_BITMAP);
+<<<<<<< HEAD
+=======
+	si->base_mem += (NM_I(sbi)->nat_bits_blocks << F2FS_BLKSIZE_BITS);
+	si->base_mem += NM_I(sbi)->nat_blocks * NAT_ENTRY_BITMAP_SIZE;
+	si->base_mem += NM_I(sbi)->nat_blocks / 8;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 get_cache:
 	si->cache_mem = 0;
@@ -183,16 +236,32 @@ get_cache:
 		si->cache_mem += sizeof(struct f2fs_gc_kthread);
 
 	/* build merge flush thread */
+<<<<<<< HEAD
 	if (SM_I(sbi)->cmd_control_info)
 		si->cache_mem += sizeof(struct flush_cmd_control);
 
 	/* free nids */
 	si->cache_mem += NM_I(sbi)->fcnt * sizeof(struct free_nid);
+=======
+	if (SM_I(sbi)->fcc_info)
+		si->cache_mem += sizeof(struct flush_cmd_control);
+	if (SM_I(sbi)->dcc_info)
+		si->cache_mem += sizeof(struct discard_cmd_control);
+
+	/* free nids */
+	si->cache_mem += (NM_I(sbi)->nid_cnt[FREE_NID_LIST] +
+				NM_I(sbi)->nid_cnt[ALLOC_NID_LIST]) *
+				sizeof(struct free_nid);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	si->cache_mem += NM_I(sbi)->nat_cnt * sizeof(struct nat_entry);
 	si->cache_mem += NM_I(sbi)->dirty_nat_cnt *
 					sizeof(struct nat_entry_set);
 	si->cache_mem += si->inmem_pages * sizeof(struct inmem_pages);
+<<<<<<< HEAD
 	for (i = 0; i <= UPDATE_INO; i++)
+=======
+	for (i = 0; i <= ORPHAN_INO; i++)
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		si->cache_mem += sbi->im[i].ino_num * sizeof(struct ino_entry);
 	si->cache_mem += atomic_read(&sbi->total_ext_tree) *
 						sizeof(struct extent_tree);
@@ -201,9 +270,15 @@ get_cache:
 
 	si->page_mem = 0;
 	npages = NODE_MAPPING(sbi)->nrpages;
+<<<<<<< HEAD
 	si->page_mem += (unsigned long long)npages << PAGE_CACHE_SHIFT;
 	npages = META_MAPPING(sbi)->nrpages;
 	si->page_mem += (unsigned long long)npages << PAGE_CACHE_SHIFT;
+=======
+	si->page_mem += (unsigned long long)npages << PAGE_SHIFT;
+	npages = META_MAPPING(sbi)->nrpages;
+	si->page_mem += (unsigned long long)npages << PAGE_SHIFT;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 static int stat_show(struct seq_file *s, void *v)
@@ -218,16 +293,32 @@ static int stat_show(struct seq_file *s, void *v)
 
 		update_general_status(si->sbi);
 
+<<<<<<< HEAD
 		seq_printf(s, "\n=====[ partition info(%s). #%d ]=====\n",
 			bdevname(si->sbi->sb->s_bdev, devname), i++);
+=======
+		seq_printf(s, "\n=====[ partition info(%s). #%d, %s]=====\n",
+			bdevname(si->sbi->sb->s_bdev, devname), i++,
+			f2fs_readonly(si->sbi->sb) ? "RO": "RW");
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		seq_printf(s, "[SB: 1] [CP: 2] [SIT: %d] [NAT: %d] ",
 			   si->sit_area_segs, si->nat_area_segs);
 		seq_printf(s, "[SSA: %d] [MAIN: %d",
 			   si->ssa_area_segs, si->main_area_segs);
 		seq_printf(s, "(OverProv:%d Resv:%d)]\n\n",
 			   si->overp_segs, si->rsvd_segs);
+<<<<<<< HEAD
 		seq_printf(s, "Utilization: %d%% (%d valid blocks)\n",
 			   si->utilization, si->valid_count);
+=======
+		if (test_opt(si->sbi, DISCARD))
+			seq_printf(s, "Utilization: %u%% (%u valid blocks, %u discard blocks)\n",
+				si->utilization, si->valid_count, si->discard_blks);
+		else
+			seq_printf(s, "Utilization: %u%% (%u valid blocks)\n",
+				si->utilization, si->valid_count);
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		seq_printf(s, "  - Node: %u (Inode: %u, ",
 			   si->valid_node_count, si->valid_inode_count);
 		seq_printf(s, "Other: %u)\n  - Data: %u\n",
@@ -239,6 +330,11 @@ static int stat_show(struct seq_file *s, void *v)
 			   si->inline_inode);
 		seq_printf(s, "  - Inline_dentry Inode: %u\n",
 			   si->inline_dir);
+<<<<<<< HEAD
+=======
+		seq_printf(s, "  - Orphan/Append/Update Inode: %u, %u, %u\n",
+			   si->orphans, si->append, si->update);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		seq_printf(s, "\nMain area: %d segs, %d secs %d zones\n",
 			   si->main_area_segs, si->main_area_sections,
 			   si->main_area_zones);
@@ -297,20 +393,41 @@ static int stat_show(struct seq_file *s, void *v)
 		seq_printf(s, "  - Inner Struct Count: tree: %d(%d), node: %d\n",
 				si->ext_tree, si->zombie_tree, si->ext_node);
 		seq_puts(s, "\nBalancing F2FS Async:\n");
+<<<<<<< HEAD
 		seq_printf(s, "  - inmem: %4d, wb: %4d\n",
 			   si->inmem_pages, si->wb_pages);
 		seq_printf(s, "  - nodes: %4d in %4d\n",
 			   si->ndirty_node, si->node_pages);
 		seq_printf(s, "  - dents: %4d in dirs:%4d\n",
 			   si->ndirty_dent, si->ndirty_dirs);
+=======
+		seq_printf(s, "  - IO (CP: %4d, Data: %4d, Flush: %4d, Discard: %4d)\n",
+			   si->nr_wb_cp_data, si->nr_wb_data,
+			   si->nr_flush, si->nr_discard);
+		seq_printf(s, "  - inmem: %4d, atomic IO: %4d (Max. %4d)\n",
+			   si->inmem_pages, si->aw_cnt, si->max_aw_cnt);
+		seq_printf(s, "  - nodes: %4d in %4d\n",
+			   si->ndirty_node, si->node_pages);
+		seq_printf(s, "  - dents: %4d in dirs:%4d (%4d)\n",
+			   si->ndirty_dent, si->ndirty_dirs, si->ndirty_all);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		seq_printf(s, "  - datas: %4d in files:%4d\n",
 			   si->ndirty_data, si->ndirty_files);
 		seq_printf(s, "  - meta: %4d in %4d\n",
 			   si->ndirty_meta, si->meta_pages);
+<<<<<<< HEAD
 		seq_printf(s, "  - NATs: %9d/%9d\n  - SITs: %9d/%9d\n",
 			   si->dirty_nats, si->nats, si->dirty_sits, si->sits);
 		seq_printf(s, "  - free_nids: %9d\n",
 			   si->fnids);
+=======
+		seq_printf(s, "  - imeta: %4d\n",
+			   si->ndirty_imeta);
+		seq_printf(s, "  - NATs: %9d/%9d\n  - SITs: %9d/%9d\n",
+			   si->dirty_nats, si->nats, si->dirty_sits, si->sits);
+		seq_printf(s, "  - free_nids: %9d, alloc_nids: %9d\n",
+			   si->free_nids, si->alloc_nids);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		seq_puts(s, "\nDistribution of User Blocks:");
 		seq_puts(s, " [ valid | invalid | free ]\n");
 		seq_puts(s, "  [");
@@ -358,6 +475,10 @@ static int stat_open(struct inode *inode, struct file *file)
 }
 
 static const struct file_operations stat_fops = {
+<<<<<<< HEAD
+=======
+	.owner = THIS_MODULE,
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	.open = stat_open,
 	.read = seq_read,
 	.llseek = seq_lseek,
@@ -394,6 +515,12 @@ int f2fs_build_stats(struct f2fs_sb_info *sbi)
 	atomic_set(&sbi->inline_dir, 0);
 	atomic_set(&sbi->inplace_count, 0);
 
+<<<<<<< HEAD
+=======
+	atomic_set(&sbi->aw_cnt, 0);
+	atomic_set(&sbi->max_aw_cnt, 0);
+
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	mutex_lock(&f2fs_stat_mutex);
 	list_add_tail(&si->stat_list, &f2fs_stat_list);
 	mutex_unlock(&f2fs_stat_mutex);

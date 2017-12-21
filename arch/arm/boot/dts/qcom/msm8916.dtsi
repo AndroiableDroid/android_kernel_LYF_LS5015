@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright (c) 2013-2015, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2013-2016, The Linux Foundation. All rights reserved.
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -114,6 +118,10 @@
 #include "msm8916-iommu-domains.dtsi"
 #include "msm8916-bus.dtsi"
 #include "msm8916-camera.dtsi"
+<<<<<<< HEAD
+=======
+#include "msm8916-drm.dtsi"
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 &soc {
 	#address-cells = <1>;
@@ -374,7 +382,11 @@
 
 	cpubw: qcom,cpubw {
 		compatible = "qcom,devbw";
+<<<<<<< HEAD
 		governor = "performance";
+=======
+		governor = "cpufreq";
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		qcom,src-dst-ports = <1 512>;
 		qcom,active-only;
 		qcom,bw-tbl =
@@ -739,6 +751,11 @@
 		qcom,use-sw-aes-xts-algo;
 		qcom,use-sw-aes-ccm-algo;
 		qcom,use-sw-ahash-algo;
+<<<<<<< HEAD
+=======
+		qcom,use-sw-hmac-algo;
+		qcom,use-sw-aead-algo;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		status = "disabled";
 		qcom,ce-opp-freq = <100000000>;
 	};

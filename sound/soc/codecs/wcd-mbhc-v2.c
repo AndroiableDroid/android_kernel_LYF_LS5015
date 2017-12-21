@@ -30,10 +30,13 @@
 #include <sound/jack.h>
 #include "wcd-mbhc-v2.h"
 #include "wcdcal-hwdep.h"
+<<<<<<< HEAD
 /*
  *2016.03.23 add for FM test item of FFBM.
  */
 #include <linux/switch.h>
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 #define WCD_MBHC_JACK_MASK (SND_JACK_HEADSET | SND_JACK_OC_HPHL | \
 			   SND_JACK_OC_HPHR | SND_JACK_LINEOUT | \
@@ -55,6 +58,7 @@
 #define MAX_IMPED 60000
 
 #define WCD_MBHC_BTN_PRESS_COMPL_TIMEOUT_MS  50
+<<<<<<< HEAD
 /*
  *2016.03.23 add for FM test item of FFBM.
  */
@@ -68,6 +72,8 @@ static struct headset_switch_t headset_switch = {
 		.state = 0,
 	},
 };
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 static int det_extn_cable_en;
 module_param(det_extn_cable_en, int,
@@ -85,6 +91,7 @@ static void wcd_mbhc_jack_report(struct wcd_mbhc *mbhc,
 				struct snd_soc_jack *jack, int status, int mask)
 {
 	snd_soc_jack_report(jack, status, mask);
+<<<<<<< HEAD
 	/*
 	 *2016.03.23 add for FM test item of FFBM.
 	 */
@@ -95,6 +102,8 @@ static void wcd_mbhc_jack_report(struct wcd_mbhc *mbhc,
 	else if (status == 0) {
 		switch_set_state(&headset_switch.sdev, 0);
 	}
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 static void __hphocp_off_report(struct wcd_mbhc *mbhc, u32 jack_status,
@@ -340,12 +349,26 @@ out_micb_en:
 			  mbhc->is_hs_recording);
 		break;
 	case WCD_EVENT_POST_MICBIAS_2_OFF:
+<<<<<<< HEAD
 		if (mbhc->mbhc_cb->set_auto_zeroing)
 			mbhc->mbhc_cb->set_auto_zeroing(codec, false);
 		if (mbhc->mbhc_cb->set_micbias_value)
 			mbhc->mbhc_cb->set_micbias_value(codec);
 		if (!mbhc->mbhc_cb->mbhc_micbias_control)
 			mbhc->is_hs_recording = false;
+=======
+		if (!mbhc->mbhc_cb->mbhc_micbias_control)
+			mbhc->is_hs_recording = false;
+		if (mbhc->micbias_enable) {
+			wcd_enable_curr_micbias(mbhc, WCD_MBHC_EN_MB);
+			break;
+		}
+
+		if (mbhc->mbhc_cb->set_auto_zeroing)
+			mbhc->mbhc_cb->set_auto_zeroing(codec, false);
+		if (mbhc->mbhc_cb->set_micbias_value && !mbhc->micbias_enable)
+			mbhc->mbhc_cb->set_micbias_value(codec);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		/* Enable PULL UP if PA's are enabled */
 		if ((test_bit(WCD_MBHC_EVENT_PA_HPHL, &mbhc->event_state)) ||
 				(test_bit(WCD_MBHC_EVENT_PA_HPHR,
@@ -575,6 +598,13 @@ static void wcd_mbhc_report_plug(struct wcd_mbhc *mbhc, int insertion,
 				mbhc->mbhc_cb->mbhc_micb_ctrl_thr_mic(
 						mbhc->codec,
 						MIC_BIAS_2, false);
+<<<<<<< HEAD
+=======
+			if (mbhc->mbhc_cb->set_micbias_value) {
+				mbhc->mbhc_cb->set_micbias_value(mbhc->codec);
+				WCD_MBHC_REG_UPDATE_BITS(WCD_MBHC_MICB_CTRL, 0);
+			}
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			mbhc->micbias_enable = false;
 		}
 
@@ -584,7 +614,11 @@ static void wcd_mbhc_report_plug(struct wcd_mbhc *mbhc, int insertion,
 			 jack_type, mbhc->hph_status);
 		wcd_mbhc_jack_report(mbhc, &mbhc->headset_jack,
 				mbhc->hph_status, WCD_MBHC_JACK_MASK);
+<<<<<<< HEAD
 		//wcd_mbhc_set_and_turnoff_hph_padac(mbhc);
+=======
+		wcd_mbhc_set_and_turnoff_hph_padac(mbhc);
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		hphrocp_off_report(mbhc, SND_JACK_OC_HPHR);
 		hphlocp_off_report(mbhc, SND_JACK_OC_HPHL);
 		mbhc->current_plug = MBHC_PLUG_TYPE_NONE;
@@ -599,7 +633,11 @@ static void wcd_mbhc_report_plug(struct wcd_mbhc *mbhc, int insertion,
 		    jack_type == SND_JACK_LINEOUT) &&
 		    (mbhc->hph_status && mbhc->hph_status != jack_type)) {
 
+<<<<<<< HEAD
 			if (mbhc->micbias_enable && mbhc->current_plug == MBHC_PLUG_TYPE_HEADSET) {
+=======
+			if (mbhc->micbias_enable) {
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				if (mbhc->mbhc_cb->mbhc_micbias_control)
 					mbhc->mbhc_cb->mbhc_micbias_control(
 							mbhc->codec,
@@ -608,6 +646,15 @@ static void wcd_mbhc_report_plug(struct wcd_mbhc *mbhc, int insertion,
 					mbhc->mbhc_cb->mbhc_micb_ctrl_thr_mic(
 							mbhc->codec,
 							MIC_BIAS_2, false);
+<<<<<<< HEAD
+=======
+				if (mbhc->mbhc_cb->set_micbias_value) {
+					mbhc->mbhc_cb->set_micbias_value(
+							mbhc->codec);
+					WCD_MBHC_REG_UPDATE_BITS(
+							WCD_MBHC_MICB_CTRL, 0);
+				}
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				mbhc->micbias_enable = false;
 			}
 			mbhc->hph_type = WCD_MBHC_HPH_NONE;
@@ -876,7 +923,11 @@ static bool wcd_is_special_headset(struct wcd_mbhc *mbhc)
 		mbhc->mbhc_cb->mbhc_common_micb_ctrl(codec,
 				MBHC_COMMON_MICB_PRECHARGE,
 				false);
+<<<<<<< HEAD
 	if (mbhc->mbhc_cb->set_micbias_value)
+=======
+	if (mbhc->mbhc_cb->set_micbias_value && !mbhc->micbias_enable)
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		mbhc->mbhc_cb->set_micbias_value(codec);
 	if (mbhc->mbhc_cb->set_auto_zeroing)
 		mbhc->mbhc_cb->set_auto_zeroing(codec, false);
@@ -935,7 +986,11 @@ static void wcd_enable_mbhc_supply(struct wcd_mbhc *mbhc,
 			wcd_enable_curr_micbias(mbhc, WCD_MBHC_EN_MB);
 	} else {
 		if (plug_type == MBHC_PLUG_TYPE_HEADSET) {
+<<<<<<< HEAD
 			if (mbhc->is_hs_recording)
+=======
+			if (mbhc->is_hs_recording || mbhc->micbias_enable)
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				wcd_enable_curr_micbias(mbhc,
 							WCD_MBHC_EN_MB);
 			else if ((test_bit(WCD_MBHC_EVENT_PA_HPHL,
@@ -1037,6 +1092,17 @@ correct_plug_type:
 					mbhc->hs_detect_work_stop);
 			wcd_enable_curr_micbias(mbhc,
 						WCD_MBHC_EN_NONE);
+<<<<<<< HEAD
+=======
+			if (mbhc->micbias_enable) {
+				mbhc->mbhc_cb->mbhc_micb_ctrl_thr_mic(
+					mbhc->codec, MIC_BIAS_2, false);
+				if (mbhc->mbhc_cb->set_micbias_value)
+					mbhc->mbhc_cb->set_micbias_value(
+							mbhc->codec);
+				mbhc->micbias_enable = false;
+			}
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			goto exit;
 		}
 		if (mbhc->btn_press_intr) {
@@ -1054,6 +1120,17 @@ correct_plug_type:
 					mbhc->hs_detect_work_stop);
 			wcd_enable_curr_micbias(mbhc,
 						WCD_MBHC_EN_NONE);
+<<<<<<< HEAD
+=======
+			if (mbhc->micbias_enable) {
+				mbhc->mbhc_cb->mbhc_micb_ctrl_thr_mic(
+					mbhc->codec, MIC_BIAS_2, false);
+				if (mbhc->mbhc_cb->set_micbias_value)
+					mbhc->mbhc_cb->set_micbias_value(
+							mbhc->codec);
+				mbhc->micbias_enable = false;
+			}
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			goto exit;
 		}
 		WCD_MBHC_REG_READ(WCD_MBHC_HS_COMP_RESULT, hs_comp_res);
@@ -2059,7 +2136,11 @@ int wcd_mbhc_start(struct wcd_mbhc *mbhc,
 			schedule_delayed_work(&mbhc->mbhc_firmware_dwork,
 				      usecs_to_jiffies(FW_READ_TIMEOUT));
 		else
+<<<<<<< HEAD
 			pr_err("%s: Skipping to read mbhc fw, 0x%p %p\n",
+=======
+			pr_err("%s: Skipping to read mbhc fw, 0x%pK %pK\n",
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				 __func__, mbhc->mbhc_fw, mbhc->mbhc_cal);
 	}
 	pr_debug("%s: leave %d\n", __func__, rc);
@@ -2284,6 +2365,7 @@ int wcd_mbhc_init(struct wcd_mbhc *mbhc, struct snd_soc_codec *codec,
 		goto err_hphr_ocp_irq;
 	}
 
+<<<<<<< HEAD
 	/*
 	 *2016.03.23 add for FM test item of FFBM.
 	 */
@@ -2293,6 +2375,8 @@ int wcd_mbhc_init(struct wcd_mbhc *mbhc, struct snd_soc_codec *codec,
 		goto err_hphr_ocp_irq;
 	}
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	pr_debug("%s: leave ret %d\n", __func__, ret);
 	return ret;
 
@@ -2324,8 +2408,11 @@ void wcd_mbhc_deinit(struct wcd_mbhc *mbhc)
 {
 	struct snd_soc_codec *codec = mbhc->codec;
 
+<<<<<<< HEAD
     switch_dev_unregister(&headset_switch.sdev);
 	
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	mbhc->mbhc_cb->free_irq(codec, mbhc->intr_ids->mbhc_sw_intr, mbhc);
 	mbhc->mbhc_cb->free_irq(codec, mbhc->intr_ids->mbhc_btn_press_intr,
 				mbhc);

@@ -23,6 +23,7 @@
 
 &soc {
 	i2c@78b6000 { /* BLSP1 QUP2 */
+<<<<<<< HEAD
 		mpu6050@68 { /* Gyroscope and accelerometer sensor combo */
 			compatible = "invn,mpu6050";
 			reg = <0x68>;
@@ -38,6 +39,8 @@
 			invn,place = "Portrait Down Back Side";
 		};
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		avago@39 { /* Ambient light and proximity sensor */
 			compatible = "avago,apds9900";
 			reg = <0x39>;
@@ -96,6 +99,7 @@
 		};
 	};
 
+<<<<<<< HEAD
 	i2c@78b9000 { /* BLSP1 QUP5 */
 		synaptics@20 {
 			compatible = "synaptics,rmi4";
@@ -123,6 +127,8 @@
 		};
 	};
 
+=======
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	i2c@78ba000 { /* BLSP1 QUP6 */
         /*insert i2c_6 states expansion connector  */
 	};
@@ -240,8 +246,13 @@
 		general1 {
 			gpios = <&msm_gpio 21 0>;
 			label = "led1";
+<<<<<<< HEAD
 			linux,default-trigger = "none";
 			default-state = "off";
+=======
+			linux,default-trigger = "boot-indication";
+			default-state = "on";
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			retain-state-suspended;
 		};
 
@@ -793,18 +804,30 @@
 			status = "okay";
 			qcom,led_gpio_2 {
 				label = "gpio";
+<<<<<<< HEAD
 				linux,name = "boot";
 				qcom,max-current = <40>;
 				qcom,id = <8>;
 				linux,default-trigger =
 						"boot-indication";
 				qcom,default-state = "on";
+=======
+				linux,name = "led4";
+				qcom,max-current = <40>;
+				qcom,id = <8>;
+				linux,default-trigger = "none";
+				qcom,default-state = "off";
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				qcom,source-sel = <1>;
 				qcom,mode-ctrl = <0x10>;
 				qcom,vin-ctrl = <0x03>;
 			};
 		};
 		pm8916_pon: qcom,power-on@800 {
+<<<<<<< HEAD
+=======
+			qcom,pon-reset-off;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			qcom,pon_1 {
 				qcom,s2-type = <7>;
 			};

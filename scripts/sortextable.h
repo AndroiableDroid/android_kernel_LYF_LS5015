@@ -101,7 +101,11 @@ do_func(Elf_Ehdr *ehdr, char const *const fname, table_sort_t custom_sort)
 	Elf_Sym *sort_needed_sym;
 	Elf_Shdr *sort_needed_sec;
 	Elf_Rel *relocs = NULL;
+<<<<<<< HEAD
 	int relocs_size;
+=======
+	int relocs_size = 0;
+>>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	uint32_t *sort_done_location;
 	const char *secstrtab;
 	const char *strtab;
