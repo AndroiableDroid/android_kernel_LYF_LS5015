@@ -178,22 +178,7 @@ static void kvm_on_user_return(struct user_return_notifier *urn)
 	struct kvm_shared_msrs *locals
 		= container_of(urn, struct kvm_shared_msrs, urn);
 	struct kvm_shared_msr_values *values;
-<<<<<<< HEAD
 
-=======
-	unsigned long flags;
-
-	/*
-	 * Disabling irqs at this point since the following code could be
-	 * interrupted and executed through kvm_arch_hardware_disable()
-	 */
-	local_irq_save(flags);
-	if (locals->registered) {
-		locals->registered = false;
-		user_return_notifier_unregister(urn);
-	}
-	local_irq_restore(flags);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	for (slot = 0; slot < shared_msrs_global.nr; ++slot) {
 		values = &locals->values[slot];
 		if (values->host != values->curr) {
@@ -201,11 +186,8 @@ static void kvm_on_user_return(struct user_return_notifier *urn)
 			values->curr = values->host;
 		}
 	}
-<<<<<<< HEAD
 	locals->registered = false;
 	user_return_notifier_unregister(urn);
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 static void shared_msr_update(unsigned slot, u32 msr)
@@ -3200,10 +3182,6 @@ long kvm_arch_vcpu_ioctl(struct file *filp,
 	};
 	case KVM_SET_VAPIC_ADDR: {
 		struct kvm_vapic_addr va;
-<<<<<<< HEAD
-=======
-		int idx;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 		r = -EINVAL;
 		if (!irqchip_in_kernel(vcpu->kvm))
@@ -3211,13 +3189,7 @@ long kvm_arch_vcpu_ioctl(struct file *filp,
 		r = -EFAULT;
 		if (copy_from_user(&va, argp, sizeof va))
 			goto out;
-<<<<<<< HEAD
 		r = kvm_lapic_set_vapic_addr(vcpu, va.vapic_addr);
-=======
-		idx = srcu_read_lock(&vcpu->kvm->srcu);
-		r = kvm_lapic_set_vapic_addr(vcpu, va.vapic_addr);
-		srcu_read_unlock(&vcpu->kvm->srcu, idx);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		break;
 	}
 	case KVM_X86_SETUP_MCE: {
@@ -6537,21 +6509,11 @@ void kvm_put_guest_fpu(struct kvm_vcpu *vcpu)
 
 void kvm_arch_vcpu_free(struct kvm_vcpu *vcpu)
 {
-<<<<<<< HEAD
 	kvmclock_reset(vcpu);
 
 	free_cpumask_var(vcpu->arch.wbinvd_dirty_mask);
 	fx_free(vcpu);
 	kvm_x86_ops->vcpu_free(vcpu);
-=======
-	void *wbinvd_dirty_mask = vcpu->arch.wbinvd_dirty_mask;
-
-	kvmclock_reset(vcpu);
-
-	fx_free(vcpu);
-	kvm_x86_ops->vcpu_free(vcpu);
-	free_cpumask_var(wbinvd_dirty_mask);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 struct kvm_vcpu *kvm_arch_vcpu_create(struct kvm *kvm,

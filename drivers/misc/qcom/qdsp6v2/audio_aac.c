@@ -218,17 +218,10 @@ static long audio_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 		break;
 	}
 	default: {
-<<<<<<< HEAD
 		pr_debug("%s[%p]: Calling utils ioctl\n", __func__, audio);
 		rc = audio->codec_ioctl(file, cmd, arg);
 		if (rc)
 			pr_err("%s[%p]:Failed in utils_ioctl: %d\n",
-=======
-		pr_debug("%s[%pK]: Calling utils ioctl\n", __func__, audio);
-		rc = audio->codec_ioctl(file, cmd, arg);
-		if (rc)
-			pr_err("%s[%pK]:Failed in utils_ioctl: %d\n",
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				__func__, audio, rc);
 	}
 	}
@@ -332,17 +325,10 @@ static long audio_compat_ioctl(struct file *file, unsigned int cmd,
 		break;
 	}
 	default: {
-<<<<<<< HEAD
 		pr_debug("%s[%p]: Calling utils ioctl\n", __func__, audio);
 		rc = audio->codec_compat_ioctl(file, cmd, arg);
 		if (rc)
 			pr_err("%s[%p]:Failed in utils_ioctl: %d\n",
-=======
-		pr_debug("%s[%pK]: Calling utils ioctl\n", __func__, audio);
-		rc = audio->codec_compat_ioctl(file, cmd, arg);
-		if (rc)
-			pr_err("%s[%pK]:Failed in utils_ioctl: %d\n",
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				__func__, audio, rc);
 	}
 	}

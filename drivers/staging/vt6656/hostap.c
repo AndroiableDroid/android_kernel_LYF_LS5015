@@ -133,12 +133,7 @@ static int hostap_disable_hostapd(struct vnt_private *pDevice, int rtnl_locked)
             DBG_PRT(MSG_LEVEL_DEBUG, KERN_INFO "%s: Netdevice %s unregistered\n",
 		       pDevice->dev->name, pDevice->apdev->name);
 	}
-<<<<<<< HEAD
 	free_netdev(pDevice->apdev);
-=======
-	if (pDevice->apdev)
-		free_netdev(pDevice->apdev);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	pDevice->apdev = NULL;
     pDevice->bEnable8021x = false;
     pDevice->bEnableHostWEP = false;

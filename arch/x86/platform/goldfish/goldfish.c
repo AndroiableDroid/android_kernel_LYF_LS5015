@@ -42,29 +42,10 @@ static struct resource goldfish_pdev_bus_resources[] = {
 	}
 };
 
-<<<<<<< HEAD
 static int __init goldfish_init(void)
 {
 	platform_device_register_simple("goldfish_pdev_bus", -1,
 						goldfish_pdev_bus_resources, 2);
-=======
-static bool goldfish_enable __initdata;
-
-static int __init goldfish_setup(char *str)
-{
-	goldfish_enable = true;
-	return 0;
-}
-__setup("goldfish", goldfish_setup);
-
-static int __init goldfish_init(void)
-{
-	if (!goldfish_enable)
-		return -ENODEV;
-
-	platform_device_register_simple("goldfish_pdev_bus", -1,
-					goldfish_pdev_bus_resources, 2);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	return 0;
 }
 device_initcall(goldfish_init);

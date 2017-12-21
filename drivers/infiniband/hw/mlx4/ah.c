@@ -118,13 +118,7 @@ static struct ib_ah *create_iboe_ah(struct ib_pd *pd, struct ib_ah_attr *ah_attr
 		       !(1 << ah->av.eth.stat_rate & dev->caps.stat_rate_support))
 			--ah->av.eth.stat_rate;
 	}
-<<<<<<< HEAD
 
-=======
-	ah->av.eth.sl_tclass_flowlabel |=
-			cpu_to_be32((ah_attr->grh.traffic_class << 20) |
-				    ah_attr->grh.flow_label);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	/*
 	 * HW requires multicast LID so we just choose one.
 	 */
@@ -132,11 +126,7 @@ static struct ib_ah *create_iboe_ah(struct ib_pd *pd, struct ib_ah_attr *ah_attr
 		ah->av.ib.dlid = cpu_to_be16(0xc000);
 
 	memcpy(ah->av.eth.dgid, ah_attr->grh.dgid.raw, 16);
-<<<<<<< HEAD
 	ah->av.eth.sl_tclass_flowlabel = cpu_to_be32(ah_attr->sl << 29);
-=======
-	ah->av.eth.sl_tclass_flowlabel |= cpu_to_be32(ah_attr->sl << 29);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	return &ah->ibah;
 }

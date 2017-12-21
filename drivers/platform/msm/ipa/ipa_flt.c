@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 /* Copyright (c) 2012-2014, The Linux Foundation. All rights reserved.
-=======
-/* Copyright (c) 2012-2016, The Linux Foundation. All rights reserved.
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -239,11 +235,7 @@ static int ipa_generate_flt_hw_rule(enum ipa_ip_type ip,
  * @ip: the ip address family type
  * @hdr_sz: header size
  *
-<<<<<<< HEAD
  * Returns:	0 on success, negative on failure
-=======
- * Returns:	size on success, negative on failure
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * caller needs to hold any needed locks to ensure integrity
  *
@@ -381,16 +373,7 @@ static int ipa_generate_flt_hw_tbl_common(enum ipa_ip_type ip, u8 *base,
 					((long)body &
 					IPA_FLT_ENTRY_MEMORY_ALLIGNMENT));
 		} else {
-<<<<<<< HEAD
 			WARN_ON(tbl->sz == 0);
-=======
-			if (tbl->sz == 0) {
-				IPAERR("tbl size is 0\n");
-				WARN_ON(1);
-				goto proc_err;
-			}
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			/* allocate memory for the flt tbl */
 			flt_tbl_mem.size = tbl->sz;
 			flt_tbl_mem.base =
@@ -477,16 +460,7 @@ static int ipa_generate_flt_hw_tbl_common(enum ipa_ip_type ip, u8 *base,
 						((long)body &
 					IPA_FLT_ENTRY_MEMORY_ALLIGNMENT));
 			} else {
-<<<<<<< HEAD
 				WARN_ON(tbl->sz == 0);
-=======
-				if (tbl->sz == 0) {
-					IPAERR("tbl size is 0\n");
-					WARN_ON(1);
-					goto proc_err;
-				}
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				/* allocate memory for the flt tbl */
 				flt_tbl_mem.size = tbl->sz;
 				flt_tbl_mem.base =
@@ -560,20 +534,8 @@ static int ipa_generate_flt_hw_tbl_v1(enum ipa_ip_type ip,
 	u8 *hdr;
 	u8 *body;
 	u8 *base;
-<<<<<<< HEAD
 
 	mem->size = ipa_get_flt_hw_tbl_size(ip, &hdr_sz);
-=======
-	int res;
-
-	res = ipa_get_flt_hw_tbl_size(ip, &hdr_sz);
-	if (res < 0) {
-		IPAERR("ipa_get_flt_hw_tbl_size failed %d\n", res);
-		return res;
-	}
-
-	mem->size = res;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	mem->size = IPA_HW_TABLE_ALIGNMENT(mem->size);
 
 	if (mem->size == 0) {
@@ -758,10 +720,6 @@ static int ipa_generate_flt_hw_tbl_v2(enum ipa_ip_type ip,
 	u32 *entr;
 	u32 body_start_offset;
 	u32 hdr_top;
-<<<<<<< HEAD
-=======
-	int res;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	if (ip == IPA_IP_v4)
 		body_start_offset = IPA_MEM_PART(apps_v4_flt_ofst) -
@@ -798,17 +756,7 @@ static int ipa_generate_flt_hw_tbl_v2(enum ipa_ip_type ip,
 		entr++;
 	}
 
-<<<<<<< HEAD
 	mem->size = ipa_get_flt_hw_tbl_size(ip, &hdr_sz);
-=======
-	res = ipa_get_flt_hw_tbl_size(ip, &hdr_sz);
-	if (res < 0) {
-		IPAERR("ipa_get_flt_hw_tbl_size failed %d\n", res);
-		goto body_err;
-	}
-
-	mem->size = res;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	mem->size -= hdr_sz;
 	mem->size = IPA_HW_TABLE_ALIGNMENT(mem->size);
 

@@ -402,11 +402,7 @@ static const struct file_operations codec_debug_ops = {
 	.read = codec_debug_read,
 };
 
-<<<<<<< HEAD
 static const struct reg_default wsa881x_pre_pmu_pa[] = {
-=======
-static const struct reg_sequence wsa881x_pre_pmu_pa[] = {
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	{WSA881X_SPKR_DRV_GAIN, 0x41},
 	{WSA881X_SPKR_MISC_CTL1, 0x01},
 	{WSA881X_ADC_EN_DET_TEST_I, 0x01},
@@ -415,41 +411,25 @@ static const struct reg_sequence wsa881x_pre_pmu_pa[] = {
 	{WSA881X_SPKR_PWRSTG_DBG, 0xA0},
 };
 
-<<<<<<< HEAD
 static const struct reg_default wsa881x_pre_pmu_pa_2_0[] = {
-=======
-static const struct reg_sequence wsa881x_pre_pmu_pa_2_0[] = {
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	{WSA881X_SPKR_DRV_GAIN, 0x41},
 	{WSA881X_SPKR_MISC_CTL1, 0x87},
 };
 
-<<<<<<< HEAD
 static const struct reg_default wsa881x_post_pmu_pa[] = {
-=======
-static const struct reg_sequence wsa881x_post_pmu_pa[] = {
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	{WSA881X_SPKR_PWRSTG_DBG, 0x00},
 	{WSA881X_ADC_EN_DET_TEST_V, 0x00},
 	{WSA881X_ADC_EN_MODU_V, 0x00},
 	{WSA881X_ADC_EN_DET_TEST_I, 0x00},
 };
 
-<<<<<<< HEAD
 static const struct reg_default wsa881x_vi_txfe_en[] = {
-=======
-static const struct reg_sequence wsa881x_vi_txfe_en[] = {
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	{WSA881X_SPKR_PROT_FE_VSENSE_VCM, 0x85},
 	{WSA881X_SPKR_PROT_ATEST2, 0x0A},
 	{WSA881X_SPKR_PROT_FE_GAIN, 0xCF},
 };
 
-<<<<<<< HEAD
 static const struct reg_default wsa881x_vi_txfe_en_2_0[] = {
-=======
-static const struct reg_sequence wsa881x_vi_txfe_en_2_0[] = {
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	{WSA881X_SPKR_PROT_FE_VSENSE_VCM, 0x85},
 	{WSA881X_SPKR_PROT_ATEST2, 0x0A},
 	{WSA881X_SPKR_PROT_FE_GAIN, 0xCF},
@@ -908,11 +888,7 @@ int wsa881x_set_channel_map(struct snd_soc_codec *codec, u8 *port, u8 num_port,
 	if (!port || !ch_mask || !ch_rate ||
 		(num_port > WSA881X_MAX_SWR_PORTS)) {
 		dev_err(codec->dev,
-<<<<<<< HEAD
 			"%s: Invalid port=%p, ch_mask=%p, ch_rate=%p\n",
-=======
-			"%s: Invalid port=%pK, ch_mask=%pK, ch_rate=%pK\n",
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			__func__, port, ch_mask, ch_rate);
 		return -EINVAL;
 	}

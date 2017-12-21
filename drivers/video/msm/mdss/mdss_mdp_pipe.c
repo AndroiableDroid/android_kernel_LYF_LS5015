@@ -805,7 +805,6 @@ static void mdss_mdp_fixed_qos_arbiter_setup(struct mdss_data_type *mdata,
 	mdss_mdp_clk_ctrl(MDP_BLOCK_POWER_OFF);
 }
 
-<<<<<<< HEAD
 static struct mdss_mdp_pipe *mdss_mdp_pipe_init(struct mdss_mdp_mixer *mixer,
 	u32 type, u32 off, struct mdss_mdp_pipe *left_blend_pipe)
 {
@@ -825,30 +824,15 @@ static struct mdss_mdp_pipe *mdss_mdp_pipe_init(struct mdss_mdp_mixer *mixer,
 	switch (type) {
 	case MDSS_MDP_PIPE_TYPE_VIG:
 		pipe_pool = mdata->vig_pipes;
-=======
-int mdss_mdp_get_pipe_info(struct mdss_data_type *mdata, u32 type,
-	struct mdss_mdp_pipe **pipe_pool)
-{
-	int npipes;
-
-	switch (type) {
-	case MDSS_MDP_PIPE_TYPE_VIG:
-		*pipe_pool = mdata->vig_pipes;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		npipes = mdata->nvig_pipes;
 		break;
 
 	case MDSS_MDP_PIPE_TYPE_RGB:
-<<<<<<< HEAD
 		pipe_pool = mdata->rgb_pipes;
-=======
-		*pipe_pool = mdata->rgb_pipes;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		npipes = mdata->nrgb_pipes;
 		break;
 
 	case MDSS_MDP_PIPE_TYPE_DMA:
-<<<<<<< HEAD
 		pipe_pool = mdata->dma_pipes;
 		npipes = mdata->ndma_pipes;
 		if ((mdata->wfd_mode == MDSS_MDP_WFD_SHARED) &&
@@ -858,14 +842,6 @@ int mdss_mdp_get_pipe_info(struct mdss_data_type *mdata, u32 type,
 
 	case MDSS_MDP_PIPE_TYPE_CURSOR:
 		pipe_pool = mdata->cursor_pipes;
-=======
-		*pipe_pool = mdata->dma_pipes;
-		npipes = mdata->ndma_pipes;
-		break;
-
-	case MDSS_MDP_PIPE_TYPE_CURSOR:
-		*pipe_pool = mdata->cursor_pipes;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		npipes = mdata->ncursor_pipes;
 		break;
 
@@ -873,43 +849,7 @@ int mdss_mdp_get_pipe_info(struct mdss_data_type *mdata, u32 type,
 		npipes = 0;
 		pr_err("invalid pipe type %d\n", type);
 		break;
-<<<<<<< HEAD
 	}
-=======
-}
-
-	return npipes;
-}
-
-static void mdss_mdp_init_pipe_params(struct mdss_mdp_pipe *pipe)
-{
-	kref_init(&pipe->kref);
-	init_waitqueue_head(&pipe->free_waitq);
-}
-
-static struct mdss_mdp_pipe *mdss_mdp_pipe_init(struct mdss_mdp_mixer *mixer,
-	u32 type, u32 off, struct mdss_mdp_pipe *left_blend_pipe)
-{
-	struct mdss_mdp_pipe *pipe = NULL;
-	struct mdss_data_type *mdata;
-	struct mdss_mdp_pipe *pipe_pool = NULL;
-	u32 npipes = 0;
-	bool pipe_share = false;
-	bool is_realtime;
-	u32 i, reg_val, force_off_mask;
-
-	if (!mixer || !mixer->ctl || !mixer->ctl->mdata)
-		return NULL;
-
-	mdata = mixer->ctl->mdata;
-
-	npipes = mdss_mdp_get_pipe_info(mdata, type, &pipe_pool);
-
-	if (type == MDSS_MDP_PIPE_TYPE_DMA &&
-		(mdata->wfd_mode == MDSS_MDP_WFD_SHARED) &&
-			(mixer->type == MDSS_MDP_MIXER_TYPE_WRITEBACK))
-		pipe_share = true;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	for (i = off; i < npipes; i++) {
 		pipe = pipe_pool + i;
@@ -921,11 +861,7 @@ static struct mdss_mdp_pipe *mdss_mdp_pipe_init(struct mdss_mdp_mixer *mixer,
 	}
 
 	if (pipe && type == MDSS_MDP_PIPE_TYPE_CURSOR) {
-<<<<<<< HEAD
 		kref_init(&pipe->kref);
-=======
-		mdss_mdp_init_pipe_params(pipe);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		goto cursor_done;
 	}
 
@@ -964,11 +900,7 @@ static struct mdss_mdp_pipe *mdss_mdp_pipe_init(struct mdss_mdp_mixer *mixer,
 		pr_debug("type=%x   pnum=%d\n", pipe->type, pipe->num);
 		mutex_init(&pipe->pp_res.hist.hist_mutex);
 		spin_lock_init(&pipe->pp_res.hist.hist_lock);
-<<<<<<< HEAD
 		kref_init(&pipe->kref);
-=======
-		mdss_mdp_init_pipe_params(pipe);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		is_realtime = !((mixer->ctl->intf_num == MDSS_MDP_NO_INTF)
 				|| mixer->rotator_mode);
 		mdss_mdp_qos_vbif_remapper_setup(mdata, pipe, is_realtime);
@@ -1306,10 +1238,6 @@ int mdss_mdp_pipe_destroy(struct mdss_mdp_pipe *pipe)
 		return -EBUSY;
 	}
 
-<<<<<<< HEAD
-=======
-	wake_up_all(&pipe->free_waitq);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	mutex_unlock(&mdss_mdp_sspp_lock);
 
 	return 0;
@@ -1377,11 +1305,7 @@ int mdss_mdp_pipe_handoff(struct mdss_mdp_pipe *pipe)
 
 	pipe->is_handed_off = true;
 	pipe->play_cnt = 1;
-<<<<<<< HEAD
 	kref_init(&pipe->kref);
-=======
-	mdss_mdp_init_pipe_params(pipe);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 error:
 	return rc;
@@ -1796,11 +1720,7 @@ int mdss_mdp_pipe_queue_data(struct mdss_mdp_pipe *pipe,
 	}
 
 	if (src_data == NULL) {
-<<<<<<< HEAD
 		pr_debug("src_data=%p pipe num=%dx\n",
-=======
-		pr_debug("src_data=%pK pipe num=%dx\n",
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				src_data, pipe->num);
 		goto update_nobuf;
 	}

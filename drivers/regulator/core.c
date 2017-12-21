@@ -1566,11 +1566,6 @@ static void regulator_ena_gpio_free(struct regulator_dev *rdev)
 				gpio_free(pin->gpio);
 				list_del(&pin->list);
 				kfree(pin);
-<<<<<<< HEAD
-=======
-				rdev->ena_pin = NULL;
-				return;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			} else {
 				pin->request_count--;
 			}

@@ -26,7 +26,6 @@ config WAKELOCK
 	bool
 	default y
 
-<<<<<<< HEAD
 config POWERSUSPEND
 	bool "Power suspend"
 	default y
@@ -34,8 +33,6 @@ config POWERSUSPEND
 	  Call early suspend handlers when the user requested sleep state
 	  changes.
 
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 config HIBERNATE_CALLBACKS
 	bool
 

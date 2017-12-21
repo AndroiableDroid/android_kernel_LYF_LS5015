@@ -31,15 +31,8 @@
 #define IF_PREFIX_AUTOCONF	0x02
 
 enum {
-<<<<<<< HEAD
 	INET6_IFADDR_STATE_DAD,
 	INET6_IFADDR_STATE_POSTDAD,
-=======
-	INET6_IFADDR_STATE_PREDAD,
-	INET6_IFADDR_STATE_DAD,
-	INET6_IFADDR_STATE_POSTDAD,
-	INET6_IFADDR_STATE_ERRDAD,
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	INET6_IFADDR_STATE_UP,
 	INET6_IFADDR_STATE_DEAD,
 };
@@ -57,11 +50,7 @@ struct inet6_ifaddr {
 
 	int			state;
 
-<<<<<<< HEAD
 	__u8			probes;
-=======
-	__u8			dad_probes;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	__u8			flags;
 
 	__u16			scope;
@@ -69,11 +58,7 @@ struct inet6_ifaddr {
 	unsigned long		cstamp;	/* created timestamp */
 	unsigned long		tstamp; /* updated timestamp */
 
-<<<<<<< HEAD
 	struct timer_list	timer;
-=======
-	struct delayed_work	dad_work;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	struct inet6_dev	*idev;
 	struct rt6_info		*rt;
@@ -210,13 +195,6 @@ struct inet6_dev {
 	struct inet6_dev	*next;
 	struct ipv6_devconf	cnf;
 	struct ipv6_devstat	stats;
-<<<<<<< HEAD
-=======
-
-	struct timer_list	rs_timer;
-	__u8			rs_probes;
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	unsigned long		tstamp; /* ipv6InterfaceTable update timestamp */
 	struct rcu_head		rcu;
 };

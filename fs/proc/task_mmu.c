@@ -1166,25 +1166,9 @@ out:
 	return ret;
 }
 
-<<<<<<< HEAD
 const struct file_operations proc_pagemap_operations = {
 	.llseek		= mem_lseek, /* borrow this */
 	.read		= pagemap_read,
-=======
-static int pagemap_open(struct inode *inode, struct file *file)
-{
-	/* do not disclose physical addresses to unprivileged
-	   userspace (closes a rowhammer attack vector) */
-	if (!capable(CAP_SYS_ADMIN))
-		return -EPERM;
-	return 0;
-}
-
-const struct file_operations proc_pagemap_operations = {
-	.llseek		= mem_lseek, /* borrow this */
-	.read		= pagemap_read,
-	.open		= pagemap_open,
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 };
 #endif /* CONFIG_PROC_PAGE_MONITOR */
 

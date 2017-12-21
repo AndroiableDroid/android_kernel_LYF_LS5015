@@ -537,24 +537,10 @@ int kgsl_cache_range_op(struct kgsl_memdesc *memdesc, size_t offset,
 	void *addr = (memdesc->hostptr) ?
 		memdesc->hostptr : (void *) memdesc->useraddr;
 
-<<<<<<< HEAD
 	/* Make sure that size is non-zero */
 	if (!size)
 		return -EINVAL;
 
-=======
-	if (size == 0 || size > UINT_MAX)
-		return -EINVAL;
-
-	/* Make sure that the offset + size does not overflow */
-	if ((offset + size < offset) || (offset + size < size))
-		return -ERANGE;
-
-	/* Make sure the offset + size do not overflow the address */
-	if ((addr + offset + size) < addr)
-		return -ERANGE;
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	/* Check that offset+length does not exceed memdesc->size */
 	if ((offset + size) > memdesc->size)
 		return -ERANGE;
@@ -639,12 +625,6 @@ _kgsl_sharedmem_page_alloc(struct kgsl_memdesc *memdesc,
 	memdesc->pagetable = pagetable;
 	memdesc->ops = &kgsl_page_alloc_ops;
 
-<<<<<<< HEAD
-=======
-	/* Check for integer overflow */
-	if (sglen_alloc && (sizeof(struct scatterlist) > INT_MAX / sglen_alloc))
-		return -EINVAL;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	memdesc->sg = kgsl_malloc(sglen_alloc * sizeof(struct scatterlist));
 
 	if (memdesc->sg == NULL) {

@@ -435,11 +435,7 @@ static inline int cgw_register_filter(struct cgw_job *gwj)
 {
 	return can_rx_register(gwj->src.dev, gwj->ccgw.filter.can_id,
 			       gwj->ccgw.filter.can_mask, can_can_gw_rcv,
-<<<<<<< HEAD
 			       gwj, "gw");
-=======
-			       gwj, "gw", NULL);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 static inline void cgw_unregister_filter(struct cgw_job *gwj)

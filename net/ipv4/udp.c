@@ -1296,15 +1296,10 @@ csum_copy_err:
 	}
 	unlock_sock_fast(sk, slow);
 
-<<<<<<< HEAD
 	if (noblock)
 		return -EAGAIN;
 
 	/* starting over for a new packet */
-=======
-	/* starting over for a new packet, but check if we need to yield */
-	cond_resched();
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	msg->msg_flags &= ~MSG_TRUNC;
 	goto try_again;
 }
@@ -2160,11 +2155,6 @@ static void udp4_format_sock(struct sock *sp, struct seq_file *f,
 	__u8 state = sp->sk_state;
 	if (up->encap_rcv)
 		state |= 0xF0;
-<<<<<<< HEAD
-=======
-	else if (inet->transparent)
-		state |= 0x80;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	seq_printf(f, "%5d: %08X:%04X %08X:%04X"
 		" %02X %08X:%08X %02X:%08lX %08X %5d %8d %lu %d %pK %d",

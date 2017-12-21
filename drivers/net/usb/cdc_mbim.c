@@ -305,11 +305,7 @@ next_ndp:
 		/* sanity checking */
 		if (((offset + len) > skb_in->len) || (len > ctx->rx_max)) {
 			netif_dbg(dev, rx_err, dev->net,
-<<<<<<< HEAD
 				  "invalid frame detected (ignored) offset[%u]=%u, length=%u, skb=%p\n",
-=======
-				  "invalid frame detected (ignored) offset[%u]=%u, length=%u, skb=%pK\n",
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				  x, offset, len, skb_in);
 			if (!x)
 				goto err_ndp;

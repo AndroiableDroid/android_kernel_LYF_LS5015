@@ -1235,21 +1235,6 @@ out_unlock:
 	return ret;
 }
 
-<<<<<<< HEAD
-=======
-/*
- * foll_force can write to even unwritable pmd's, but only
- * after we've gone through a cow cycle and they are dirty.
- */
-static inline bool can_follow_write_pmd(pmd_t pmd, struct page *page,
-					unsigned int flags)
-{
-	return pmd_write(pmd) ||
-		((flags & FOLL_FORCE) && (flags & FOLL_COW) &&
-		 page && PageAnon(page));
-}
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 struct page *follow_trans_huge_pmd(struct vm_area_struct *vma,
 				   unsigned long addr,
 				   pmd_t *pmd,
@@ -1260,25 +1245,15 @@ struct page *follow_trans_huge_pmd(struct vm_area_struct *vma,
 
 	assert_spin_locked(&mm->page_table_lock);
 
-<<<<<<< HEAD
 	if (flags & FOLL_WRITE && !pmd_write(*pmd))
 		goto out;
 
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	/* Avoid dumping huge zero page */
 	if ((flags & FOLL_DUMP) && is_huge_zero_pmd(*pmd))
 		return ERR_PTR(-EFAULT);
 
 	page = pmd_page(*pmd);
 	VM_BUG_ON(!PageHead(page));
-<<<<<<< HEAD
-=======
-
-	if (flags & FOLL_WRITE && !can_follow_write_pmd(*pmd, page, flags))
-		return NULL;
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	if (flags & FOLL_TOUCH) {
 		pmd_t _pmd;
 		/*

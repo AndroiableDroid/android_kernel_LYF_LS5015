@@ -95,10 +95,7 @@ struct acm {
 	struct urb *read_urbs[ACM_NR];
 	struct acm_rb read_buffers[ACM_NR];
 	int rx_buflimit;
-<<<<<<< HEAD
 	int rx_endpoint;
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	spinlock_t read_lock;
 	int write_used;					/* number of non-empty write buffers */
 	int transmitting;

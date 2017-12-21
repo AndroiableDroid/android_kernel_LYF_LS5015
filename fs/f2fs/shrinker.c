@@ -13,10 +13,6 @@
 #include <linux/f2fs_fs.h>
 
 #include "f2fs.h"
-<<<<<<< HEAD
-=======
-#include "node.h"
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 static LIST_HEAD(f2fs_list);
 static DEFINE_SPINLOCK(f2fs_list_lock);
@@ -24,26 +20,14 @@ static unsigned int shrinker_run_no;
 
 static unsigned long __count_nat_entries(struct f2fs_sb_info *sbi)
 {
-<<<<<<< HEAD
 	return NM_I(sbi)->nat_cnt - NM_I(sbi)->dirty_nat_cnt;
-=======
-	long count = NM_I(sbi)->nat_cnt - NM_I(sbi)->dirty_nat_cnt;
-
-	return count > 0 ? count : 0;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 static unsigned long __count_free_nids(struct f2fs_sb_info *sbi)
 {
-<<<<<<< HEAD
 	if (NM_I(sbi)->fcnt > NAT_ENTRY_PER_BLOCK)
 		return NM_I(sbi)->fcnt - NAT_ENTRY_PER_BLOCK;
 	return 0;
-=======
-	long count = NM_I(sbi)->nid_cnt[FREE_NID_LIST] - MAX_FREE_NIDS;
-
-	return count > 0 ? count : 0;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 static unsigned long __count_extent_cache(struct f2fs_sb_info *sbi)

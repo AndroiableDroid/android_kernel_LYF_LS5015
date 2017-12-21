@@ -1,9 +1,5 @@
 /*
-<<<<<<< HEAD
  * Copyright (c) 2012-2015, The Linux Foundation. All rights reserved.
-=======
- * Copyright (c) 2012-2017, The Linux Foundation. All rights reserved.
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -2228,11 +2224,7 @@ static int pp_ad_calc_bl(struct msm_fb_data_type *mfd, int bl_in, int *bl_out,
 		pr_debug("AD not supported on device.\n");
 		return ret;
 	} else if (ret || !ad) {
-<<<<<<< HEAD
 		pr_err("Failed to get ad info: ret = %d, ad = 0x%p.\n",
-=======
-		pr_err("Failed to get ad info: ret = %d, ad = 0x%pK.\n",
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			ret, ad);
 		return ret;
 	}
@@ -2248,11 +2240,7 @@ static int pp_ad_calc_bl(struct msm_fb_data_type *mfd, int bl_in, int *bl_out,
 
 	if (!ad->bl_mfd || !ad->bl_mfd->panel_info ||
 		!ad->bl_att_lut) {
-<<<<<<< HEAD
 		pr_err("Invalid ad info: bl_mfd = 0x%p, ad->bl_mfd->panel_info = 0x%p, bl_att_lut = 0x%p\n",
-=======
-		pr_err("Invalid ad info: bl_mfd = 0x%pK, ad->bl_mfd->panel_info = 0x%pK, bl_att_lut = 0x%pK\n",
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			ad->bl_mfd,
 			(!ad->bl_mfd) ? NULL : ad->bl_mfd->panel_info,
 			ad->bl_att_lut);
@@ -3519,11 +3507,7 @@ static int pp_hist_enable(struct pp_hist_col_info *hist_info,
 	spin_lock_irqsave(&hist_info->hist_lock, flag);
 	if (hist_info->col_en) {
 		spin_unlock_irqrestore(&hist_info->hist_lock, flag);
-<<<<<<< HEAD
 		pr_info("%s Hist collection has already been enabled %p\n",
-=======
-		pr_info("%s Hist collection has already been enabled %pK\n",
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			__func__, hist_info->base);
 		goto exit;
 	}
@@ -3660,7 +3644,6 @@ static int pp_hist_disable(struct pp_hist_col_info *hist_info)
 	spin_lock_irqsave(&hist_info->hist_lock, flag);
 	if (hist_info->col_en == false) {
 		spin_unlock_irqrestore(&hist_info->hist_lock, flag);
-<<<<<<< HEAD
 		pr_debug("Histogram already disabled (%p)\n", hist_info->base);
 		ret = -EINVAL;
 		goto exit;
@@ -3670,19 +3653,6 @@ static int pp_hist_disable(struct pp_hist_col_info *hist_info)
 	spin_unlock_irqrestore(&hist_info->hist_lock, flag);
 	mdss_mdp_hist_intr_req(&mdata->hist_intr,
 				intr_mask << hist_info->intr_shift, false);
-=======
-		pr_debug("Histogram already disabled (%pK)\n", hist_info->base);
-		ret = -EINVAL;
-		goto exit;
-	}
-	spin_unlock_irqrestore(&hist_info->hist_lock, flag);
-	mdss_mdp_hist_intr_req(&mdata->hist_intr,
-				intr_mask << hist_info->intr_shift, false);
-	spin_lock_irqsave(&hist_info->hist_lock, flag);
-	hist_info->col_en = false;
-	hist_info->col_state = HIST_UNKNOWN;
-	spin_unlock_irqrestore(&hist_info->hist_lock, flag);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	complete_all(&hist_info->first_kick);
 	complete_all(&hist_info->comp);
 	/* if hist v2, make sure HW is unlocked */
@@ -3788,11 +3758,7 @@ int mdss_mdp_hist_intr_req(struct mdss_intr *intr, u32 bits, bool en)
 	unsigned long flag;
 	int ret = 0;
 	if (!intr) {
-<<<<<<< HEAD
 		pr_err("NULL addr passed, %p\n", intr);
-=======
-		pr_err("NULL addr passed, %pK\n", intr);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		return -EINVAL;
 	}
 
@@ -4352,10 +4318,6 @@ void mdss_mdp_hist_intr_done(u32 isr)
 	bool need_complete = false;
 	u32 isr_mask = (is_hist_v2) ? HIST_V2_INTR_BIT_MASK :
 			HIST_V1_INTR_BIT_MASK;
-<<<<<<< HEAD
-=======
-	u32 intr_mask = is_hist_v2 ? 1 : 3;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	isr &= isr_mask;
 	while (isr != 0) {
@@ -4390,20 +4352,7 @@ void mdss_mdp_hist_intr_done(u32 isr)
 			 * Histogram collection is disabled yet we got an
 			 * interrupt somehow.
 			 */
-<<<<<<< HEAD
 			pr_err("hist Done interrupt, col_en=false!\n");
-=======
-			if (mdata->mdp_hist_irq_mask ==
-					(intr_mask << hist_info->intr_shift)) {
-				mdss_mdp_hist_intr_req(&mdata->hist_intr,
-					intr_mask << hist_info->intr_shift,
-					false);
-				pr_err("Disable hist interrupt,	irq mask=%x\n",
-						mdata->mdp_hist_irq_mask);
-			} else {
-				pr_err("hist Done interrupt, col_en=false!\n");
-			}
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		}
 		/* Histogram Reset Done Interrupt */
 		if (hist_info && is_hist_reset_done && (hist_info->col_en)) {
@@ -4563,11 +4512,7 @@ static int pp_ad_invalidate_input(struct msm_fb_data_type *mfd)
 
 	ret = mdss_mdp_get_ad(mfd, &ad);
 	if (ret || !ad) {
-<<<<<<< HEAD
 		pr_err("Fail to get ad: ret = %d, ad = 0x%p\n", ret, ad);
-=======
-		pr_err("Fail to get ad: ret = %d, ad = 0x%pK\n", ret, ad);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		return -EINVAL;
 	}
 	pr_debug("AD backlight level changed (%d), trigger update to AD\n",
@@ -5660,12 +5605,9 @@ static int is_valid_calib_addr(void *addr, u32 operation)
 	int ret = 0;
 	char __iomem *ptr = addr;
 	char __iomem *mixer_base = mdss_res->mixer_intf->base;
-<<<<<<< HEAD
 	char __iomem *rgb_base   = mdss_res->rgb_pipes->base;
 	char __iomem *dma_base   = mdss_res->dma_pipes->base;
 	char __iomem *vig_base   = mdss_res->vig_pipes->base;
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	char __iomem *ctl_base   = mdss_res->ctl_off->base;
 	char __iomem *dspp_base  = mdss_res->mixer_intf->dspp_base;
 
@@ -5697,32 +5639,17 @@ static int is_valid_calib_addr(void *addr, u32 operation)
 			if (ret)
 				goto valid_addr;
 		}
-<<<<<<< HEAD
 		if (ptr >= vig_base) {
-=======
-		if (mdss_res->vig_pipes &&
-		    ptr >= mdss_res->vig_pipes->base) {
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			ret = is_valid_calib_vig_addr(ptr);
 			if (ret)
 				goto valid_addr;
 		}
-<<<<<<< HEAD
 		if (ptr >= rgb_base) {
-=======
-		if (mdss_res->rgb_pipes &&
-		    ptr >= mdss_res->rgb_pipes->base) {
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			ret = is_valid_calib_rgb_addr(ptr);
 			if (ret)
 				goto valid_addr;
 		}
-<<<<<<< HEAD
 		if (ptr >= dma_base) {
-=======
-		if (mdss_res->dma_pipes &&
-		    ptr >= mdss_res->dma_pipes->base) {
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			ret = is_valid_calib_dma_addr(ptr);
 			if (ret)
 				goto valid_addr;

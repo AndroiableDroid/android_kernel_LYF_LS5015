@@ -4,10 +4,6 @@
  * Copyright (C) 1998, 1999  Frodo Looijaard <frodol@dds.nl>
  *			     and Philip Edelbrock <phil@netroedge.com>
  *
-<<<<<<< HEAD
-=======
- * Ported to Linux 2.6 by Tiago Sousa <mirage@kaotik.org>
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

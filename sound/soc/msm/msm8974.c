@@ -2163,11 +2163,7 @@ static struct snd_soc_dai_link msm8974_common_dai_links[] = {
 		.name = "MSM8974 Compr8",
 		.stream_name = "COMPR8",
 		.cpu_dai_name	= "MultiMedia8",
-<<<<<<< HEAD
 		.platform_name  = "msm-compr-dsp",
-=======
-		.platform_name  = "msm-compress-dsp",
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		.dynamic = 1,
 		.trigger = {SND_SOC_DPCM_TRIGGER_POST,
 			 SND_SOC_DPCM_TRIGGER_POST},

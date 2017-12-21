@@ -569,12 +569,6 @@ struct sk_buff *nf_ct_frag6_gather(struct sk_buff *skb, u32 user)
 	if (find_prev_fhdr(skb, &prevhdr, &nhoff, &fhoff) < 0)
 		return skb;
 
-<<<<<<< HEAD
-=======
-	if (!net->nf_frag.frags.high_thresh)
-		return skb;
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	clone = skb_clone(skb, GFP_ATOMIC);
 	if (clone == NULL) {
 		pr_debug("Can't clone skb\n");

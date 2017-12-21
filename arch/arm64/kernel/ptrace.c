@@ -447,11 +447,6 @@ static int hw_break_set(struct task_struct *target,
 	/* (address, ctrl) registers */
 	limit = regset->n * regset->size;
 	while (count && offset < limit) {
-<<<<<<< HEAD
-=======
-		if (count < PTRACE_HBP_ADDR_SZ)
-			return -EINVAL;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		ret = user_regset_copyin(&pos, &count, &kbuf, &ubuf, &addr,
 					 offset, offset + PTRACE_HBP_ADDR_SZ);
 		if (ret)
@@ -461,11 +456,6 @@ static int hw_break_set(struct task_struct *target,
 			return ret;
 		offset += PTRACE_HBP_ADDR_SZ;
 
-<<<<<<< HEAD
-=======
-		if (!count)
-			break;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		ret = user_regset_copyin(&pos, &count, &kbuf, &ubuf, &ctrl,
 					 offset, offset + PTRACE_HBP_CTRL_SZ);
 		if (ret)
@@ -502,11 +492,7 @@ static int gpr_set(struct task_struct *target, const struct user_regset *regset,
 		   const void *kbuf, const void __user *ubuf)
 {
 	int ret;
-<<<<<<< HEAD
 	struct user_pt_regs newregs;
-=======
-	struct user_pt_regs newregs = task_pt_regs(target)->user_regs;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	ret = user_regset_copyin(&pos, &count, &kbuf, &ubuf, &newregs, 0, -1);
 	if (ret)
@@ -536,12 +522,7 @@ static int fpr_set(struct task_struct *target, const struct user_regset *regset,
 		   const void *kbuf, const void __user *ubuf)
 {
 	int ret;
-<<<<<<< HEAD
 	struct user_fpsimd_state newstate;
-=======
-	struct user_fpsimd_state newstate =
-		target->thread.fpsimd_state.user_fpsimd;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	ret = user_regset_copyin(&pos, &count, &kbuf, &ubuf, &newstate, 0, -1);
 	if (ret)
@@ -564,11 +545,7 @@ static int tls_set(struct task_struct *target, const struct user_regset *regset,
 		   const void *kbuf, const void __user *ubuf)
 {
 	int ret;
-<<<<<<< HEAD
 	unsigned long tls;
-=======
-	unsigned long tls = target->thread.tp_value;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	ret = user_regset_copyin(&pos, &count, &kbuf, &ubuf, &tls, 0, -1);
 	if (ret)

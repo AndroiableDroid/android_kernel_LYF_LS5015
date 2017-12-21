@@ -446,13 +446,7 @@ static void msm_dai_slim_remove_dai_data(
 		dai_data_t = &drv_data->slim_dai_data[i];
 
 		kfree(dai_data_t->chan_h);
-<<<<<<< HEAD
 		kfree(dai_data_t->sh_ch);
-=======
-		dai_data_t->chan_h = NULL;
-		kfree(dai_data_t->sh_ch);
-		dai_data_t->sh_ch = NULL;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	}
 }
 

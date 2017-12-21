@@ -1813,11 +1813,8 @@ static int ftdi_sio_port_probe(struct usb_serial_port *port)
 
 	mutex_init(&priv->cfg_lock);
 
-<<<<<<< HEAD
 	priv->flags = ASYNC_LOW_LATENCY;
 
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	if (quirk && quirk->port_probe)
 		quirk->port_probe(priv);
 
@@ -2094,23 +2091,6 @@ static int ftdi_process_packet(struct usb_serial_port *port,
 		priv->prev_status = status;
 	}
 
-<<<<<<< HEAD
-=======
-	/* save if the transmitter is empty or not */
-	if (packet[1] & FTDI_RS_TEMT)
-		priv->transmit_empty = 1;
-	else
-		priv->transmit_empty = 0;
-
-	len -= 2;
-	if (!len)
-		return 0;	/* status only */
-
-	/*
-	 * Break and error status must only be processed for packets with
-	 * data payload to avoid over-reporting.
-	 */
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	flag = TTY_NORMAL;
 	if (packet[1] & FTDI_RS_ERR_MASK) {
 		/* Break takes precedence over parity, which takes precedence
@@ -2133,7 +2113,6 @@ static int ftdi_process_packet(struct usb_serial_port *port,
 		}
 	}
 
-<<<<<<< HEAD
 	/* save if the transmitter is empty or not */
 	if (packet[1] & FTDI_RS_TEMT)
 		priv->transmit_empty = 1;
@@ -2143,8 +2122,6 @@ static int ftdi_process_packet(struct usb_serial_port *port,
 	len -= 2;
 	if (!len)
 		return 0;	/* status only */
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	port->icount.rx += len;
 	ch = packet + 2;
 
@@ -2475,17 +2452,8 @@ static int ftdi_get_modem_status(struct usb_serial_port *port,
 			FTDI_SIO_GET_MODEM_STATUS_REQUEST_TYPE,
 			0, priv->interface,
 			buf, len, WDR_TIMEOUT);
-<<<<<<< HEAD
 	if (ret < 0) {
 		dev_err(&port->dev, "failed to get modem status: %d\n", ret);
-=======
-
-	/* NOTE: We allow short responses and handle that below. */
-	if (ret < 1) {
-		dev_err(&port->dev, "failed to get modem status: %d\n", ret);
-		if (ret >= 0)
-			ret = -EIO;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		ret = usb_translate_errors(ret);
 		goto out;
 	}

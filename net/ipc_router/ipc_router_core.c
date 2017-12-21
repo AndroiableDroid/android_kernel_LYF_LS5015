@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 /* Copyright (c) 2011-2014, 2016, The Linux Foundation. All rights reserved.
-=======
-/* Copyright (c) 2011-2016, The Linux Foundation. All rights reserved.
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -2507,12 +2503,6 @@ int msm_ipc_router_register_server(struct msm_ipc_port *port_ptr,
 	if (!port_ptr || !name)
 		return -EINVAL;
 
-<<<<<<< HEAD
-=======
-	if (port_ptr->type != CLIENT_PORT)
-		return -EINVAL;
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	if (name->addrtype != MSM_IPC_ADDR_NAME)
 		return -EINVAL;
 

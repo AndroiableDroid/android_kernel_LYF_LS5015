@@ -61,11 +61,6 @@ config FILE_LOCKING
           for filesystems like NFS and for the flock() system
           call. Disabling this option saves about 11k.
 
-<<<<<<< HEAD
-=======
-source "fs/crypto/Kconfig"
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 source "fs/notify/Kconfig"
 
 source "fs/quota/Kconfig"

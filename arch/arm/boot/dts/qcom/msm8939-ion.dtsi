@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 /* Copyright (c) 2014, Linux Foundation. All rights reserved.
-=======
-/* Copyright (c) 2014,2016, Linux Foundation. All rights reserved.
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -25,14 +21,11 @@
 			qcom,ion-heap-type = "SYSTEM";
 		};
 
-<<<<<<< HEAD
 		qcom,ion-heap@21 {
 			reg = <21>;
 			qcom,ion-heap-type = "SYSTEM_CONTIG";
 		};
 
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		qcom,ion-heap@8 { /* CP_MM HEAP */
 			compatible = "qcom,msm-ion-reserve";
 			reg = <8>;

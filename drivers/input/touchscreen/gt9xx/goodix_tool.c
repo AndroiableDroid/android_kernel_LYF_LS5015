@@ -1,11 +1,7 @@
 /* drivers/input/touchscreen/goodix_tool.c
  *
  * 2010 - 2012 Goodix Technology.
-<<<<<<< HEAD
  * Copyright (c) 2013, The Linux Foundation. All rights reserved.
-=======
- * Copyright (c) 2013-2017, The Linux Foundation. All rights reserved.
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,11 +27,7 @@
 #include <linux/debugfs.h>
 
 #define DATA_LENGTH_UINT    512
-<<<<<<< HEAD
 #define CMD_HEAD_LENGTH     (sizeof(struct st_cmd_head) - sizeof(u8 *))
-=======
-#define CMD_HEAD_LENGTH     (sizeof(struct st_cmd_head))
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 static char procname[20] = {0};
 
 struct st_cmd_head {
@@ -52,17 +44,10 @@ struct st_cmd_head {
 	u8  addr_len;	/* address length */
 	u8  addr[2];	/* address */
 	u8  res[3];	/* reserved */
-<<<<<<< HEAD
 	u8  *data;	/* data pointer */
 } __packed;
 
 static struct st_cmd_head cmd_head;
-=======
-} __packed;
-
-static struct st_cmd_head cmd_head;
-static u8 *cmd_data;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 static struct i2c_client *gt_client;
 
@@ -209,11 +194,7 @@ static void unregister_i2c_func(void)
 
 void uninit_wr_node(void)
 {
-<<<<<<< HEAD
 	cmd_head.data = NULL;
-=======
-	cmd_data = NULL;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	unregister_i2c_func();
 	proc_remove(goodix_proc_entry);
 }
@@ -326,11 +307,7 @@ nput:
 Output:
     Return write length.
 ********************************************************/
-<<<<<<< HEAD
 static ssize_t goodix_tool_write(struct file *filp, const char __user *userbuf,
-=======
-static s32 goodix_tool_write(struct file *filp, const char __user *userbuf,
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 						size_t count, loff_t *ppos)
 {
 	s32 ret = 0;
@@ -365,22 +342,14 @@ static s32 goodix_tool_write(struct file *filp, const char __user *userbuf,
 	}
 
 	if (cmd_head.wr == GTP_RW_WRITE) {
-<<<<<<< HEAD
 		ret = copy_from_user(&cmd_head.data[GTP_ADDR_LENGTH],
-=======
-		ret = copy_from_user(&cmd_data[GTP_ADDR_LENGTH],
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				&userbuf[CMD_HEAD_LENGTH], cmd_head.data_len);
 		if (ret) {
 			dev_err(&gt_client->dev, "copy_from_user failed.");
 			goto exit;
 		}
 
-<<<<<<< HEAD
 		memcpy(&cmd_head.data[GTP_ADDR_LENGTH - cmd_head.addr_len],
-=======
-		memcpy(&cmd_data[GTP_ADDR_LENGTH - cmd_head.addr_len],
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 					cmd_head.addr, cmd_head.addr_len);
 
 		if (cmd_head.flag == GTP_NEED_FLAG) {
@@ -393,11 +362,7 @@ static s32 goodix_tool_write(struct file *filp, const char __user *userbuf,
 			/* Need interrupt! */
 		}
 		if (tool_i2c_write(
-<<<<<<< HEAD
 		&cmd_head.data[GTP_ADDR_LENGTH - cmd_head.addr_len],
-=======
-		&cmd_data[GTP_ADDR_LENGTH - cmd_head.addr_len],
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		cmd_head.data_len + cmd_head.addr_len) <= 0) {
 			dev_err(&gt_client->dev, "Write data failed!");
 			ret = -EIO;
@@ -410,11 +375,7 @@ static s32 goodix_tool_write(struct file *filp, const char __user *userbuf,
 		ret = cmd_head.data_len + CMD_HEAD_LENGTH;
 		goto exit;
 	} else if (cmd_head.wr == GTP_RW_WRITE_IC_TYPE) {  /* Write ic type */
-<<<<<<< HEAD
 		ret = copy_from_user(&cmd_head.data[0],
-=======
-		ret = copy_from_user(&cmd_data[0],
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				&userbuf[CMD_HEAD_LENGTH],
 				cmd_head.data_len);
 		if (ret) {
@@ -425,19 +386,11 @@ static s32 goodix_tool_write(struct file *filp, const char __user *userbuf,
 		if (cmd_head.data_len > sizeof(ic_type)) {
 			dev_err(&gt_client->dev,
 				"data len %d > data buff %d, rejected!\n",
-<<<<<<< HEAD
 				cmd_head.data_len, (int)sizeof(ic_type));
 			ret = -EINVAL;
 			goto exit;
 		}
 		memcpy(ic_type, cmd_head.data, cmd_head.data_len);
-=======
-				cmd_head.data_len, sizeof(ic_type));
-			ret = -EINVAL;
-			goto exit;
-		}
-		memcpy(ic_type, cmd_data, cmd_head.data_len);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 		register_i2c_func();
 
@@ -464,22 +417,13 @@ static s32 goodix_tool_write(struct file *filp, const char __user *userbuf,
 		goto exit;
 	} else if (cmd_head.wr == GTP_RW_CHECK_RAWDIFF_MODE) {
 		struct goodix_ts_data *ts = i2c_get_clientdata(gt_client);
-<<<<<<< HEAD
 		ret = copy_from_user(&cmd_head.data[GTP_ADDR_LENGTH],
-=======
-
-		ret = copy_from_user(&cmd_data[GTP_ADDR_LENGTH],
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				&userbuf[CMD_HEAD_LENGTH], cmd_head.data_len);
 		if (ret) {
 			pr_debug("copy_from_user failed.");
 			goto exit;
 		}
-<<<<<<< HEAD
 		if (cmd_head.data[GTP_ADDR_LENGTH]) {
-=======
-		if (cmd_data[GTP_ADDR_LENGTH]) {
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			pr_debug("gtp enter rawdiff.");
 			ts->gtp_rawdiff_mode = true;
 		} else {
@@ -507,19 +451,11 @@ static s32 goodix_tool_write(struct file *filp, const char __user *userbuf,
 			ret = -EINVAL;
 			goto exit;
 		}
-<<<<<<< HEAD
 		memset(cmd_head.data, 0, cmd_head.data_len + 1);
 		memcpy(cmd_head.data, &userbuf[CMD_HEAD_LENGTH],
 					cmd_head.data_len);
 
 		if (gup_update_proc((void *)cmd_head.data) == FAIL) {
-=======
-		memset(cmd_data, 0, cmd_head.data_len + 1);
-		memcpy(cmd_data, &userbuf[CMD_HEAD_LENGTH],
-					cmd_head.data_len);
-
-		if (gup_update_proc((void *)cmd_data) == FAIL) {
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			ret = -EBUSY;
 			goto exit;
 		}
@@ -527,12 +463,6 @@ static s32 goodix_tool_write(struct file *filp, const char __user *userbuf,
 	ret = CMD_HEAD_LENGTH;
 
 exit:
-<<<<<<< HEAD
-=======
-	memset(&cmd_head, 0, sizeof(cmd_head));
-	cmd_head.wr = 0xFF;
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	mutex_unlock(&lock);
 	return ret;
 }
@@ -545,11 +475,7 @@ Input:
 Output:
     Return read length.
 ********************************************************/
-<<<<<<< HEAD
 static ssize_t goodix_tool_read(struct file *file, char __user *user_buf,
-=======
-static s32 goodix_tool_read(struct file *file, char __user *user_buf,
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 					size_t count, loff_t *ppos)
 {
 	u16 data_len = 0;
@@ -575,17 +501,10 @@ static s32 goodix_tool_read(struct file *file, char __user *user_buf,
 			/* Need interrupt! */
 		}
 
-<<<<<<< HEAD
 		memcpy(cmd_head.data, cmd_head.addr, cmd_head.addr_len);
 
 		pr_debug("[CMD HEAD DATA] ADDR:0x%02x%02x.", cmd_head.data[0],
 							cmd_head.data[1]);
-=======
-		memcpy(cmd_data, cmd_head.addr, cmd_head.addr_len);
-
-		pr_debug("[CMD HEAD DATA] ADDR:0x%02x%02x.", cmd_data[0],
-							cmd_data[1]);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		pr_debug("[CMD HEAD ADDR] ADDR:0x%02x%02x.", cmd_head.addr[0],
 							cmd_head.addr[1]);
 
@@ -602,21 +521,13 @@ static s32 goodix_tool_read(struct file *file, char __user *user_buf,
 		if (data_len > count)
 			data_len = count;
 
-<<<<<<< HEAD
 		if (tool_i2c_read(cmd_head.data, data_len) <= 0) {
-=======
-		if (tool_i2c_read(cmd_data, data_len) <= 0) {
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			dev_err(&gt_client->dev, "Read data failed!\n");
 			ret = -EIO;
 			goto exit;
 		}
 		ret = simple_read_from_buffer(user_buf, count, ppos,
-<<<<<<< HEAD
 			&cmd_head.data[GTP_ADDR_LENGTH], data_len);
-=======
-			&cmd_data[GTP_ADDR_LENGTH], data_len);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		break;
 	case GTP_RW_FILL_INFO:
 		ret = fill_update_info(user_buf, count, ppos);
@@ -651,7 +562,6 @@ s32 init_wr_node(struct i2c_client *client)
 
 	gt_client = client;
 	memset(&cmd_head, 0, sizeof(cmd_head));
-<<<<<<< HEAD
 	cmd_head.data = NULL;
 
 	i = GTP_I2C_RETRY_5;
@@ -659,15 +569,6 @@ s32 init_wr_node(struct i2c_client *client)
 		cmd_head.data = devm_kzalloc(&client->dev,
 				i * DATA_LENGTH_UINT, GFP_KERNEL);
 		if (cmd_head.data)
-=======
-	cmd_data = NULL;
-
-	i = GTP_I2C_RETRY_5;
-	while ((!cmd_data) && i) {
-		cmd_data = devm_kzalloc(&client->dev,
-				i * DATA_LENGTH_UINT, GFP_KERNEL);
-		if (cmd_data)
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			break;
 		i--;
 	}

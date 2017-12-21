@@ -618,11 +618,7 @@ err_unregister:
 	bus_unregister(&hv_bus);
 
 err_cleanup:
-<<<<<<< HEAD
 	hv_cleanup();
-=======
-	hv_cleanup(false);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	return ret;
 }
@@ -845,11 +841,7 @@ static void __exit vmbus_exit(void)
 	free_irq(irq, hv_acpi_dev);
 	vmbus_free_channels();
 	bus_unregister(&hv_bus);
-<<<<<<< HEAD
 	hv_cleanup();
-=======
-	hv_cleanup(false);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	acpi_bus_unregister_driver(&vmbus_acpi_driver);
 	hv_cpu_hotplug_quirk(false);
 }

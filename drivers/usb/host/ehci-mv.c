@@ -263,11 +263,7 @@ static int mv_ehci_probe(struct platform_device *pdev)
 		pdata->private_init(ehci_mv->op_regs, ehci_mv->phy_regs);
 
 	dev_info(&pdev->dev,
-<<<<<<< HEAD
 		 "successful find EHCI device with regs 0x%p irq %d"
-=======
-		 "successful find EHCI device with regs 0x%pK irq %d"
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		 " working in %s mode\n", hcd->regs, hcd->irq,
 		 ehci_mv->mode == MV_USB_MODE_OTG ? "OTG" : "Host");
 

@@ -7,8 +7,5 @@ f2fs-$(CONFIG_F2FS_STAT_FS) += debug.o
 f2fs-$(CONFIG_F2FS_FS_XATTR) += xattr.o
 f2fs-$(CONFIG_F2FS_FS_POSIX_ACL) += acl.o
 f2fs-$(CONFIG_F2FS_IO_TRACE) += trace.o
-<<<<<<< HEAD
 f2fs-$(CONFIG_F2FS_FS_ENCRYPTION) += crypto_policy.o crypto.o \
 		crypto_key.o crypto_fname.o
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147

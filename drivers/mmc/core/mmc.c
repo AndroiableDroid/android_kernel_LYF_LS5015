@@ -80,11 +80,8 @@ static const struct mmc_fixup mmc_fixups[] = {
 		  MMC_QUIRK_CACHE_DISABLE),
 	MMC_FIXUP(CID_NAME_ANY, CID_MANFID_NUMONYX_MICRON, CID_OEMID_ANY,
 		add_quirk_mmc, MMC_QUIRK_CACHE_DISABLE),
-<<<<<<< HEAD
         MMC_FIXUP(CID_NAME_ANY, CID_MANFID_SAMSUNG, CID_OEMID_ANY,
                 add_quirk_mmc, MMC_QUIRK_CACHE_DISABLE),
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	MMC_FIXUP("MMC16G", CID_MANFID_KINGSTON, CID_OEMID_ANY, add_quirk_mmc,
 		  MMC_QUIRK_CACHE_DISABLE),
 

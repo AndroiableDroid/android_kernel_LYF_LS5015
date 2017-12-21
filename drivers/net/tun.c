@@ -1272,23 +1272,12 @@ static ssize_t tun_put_user(struct tun_struct *tun,
 {
 	struct tun_pi pi = { 0, skb->protocol };
 	ssize_t total = 0;
-<<<<<<< HEAD
-=======
-	int vnet_hdr_sz = 0;
-
-	if (tun->flags & TUN_VNET_HDR)
-		vnet_hdr_sz = tun->vnet_hdr_sz;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	if (!(tun->flags & TUN_NO_PI)) {
 		if ((len -= sizeof(pi)) < 0)
 			return -EINVAL;
 
-<<<<<<< HEAD
 		if (len < skb->len) {
-=======
-		if (len < skb->len + vnet_hdr_sz) {
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			/* Packet will be striped */
 			pi.flags |= TUN_PKT_STRIP;
 		}
@@ -1298,15 +1287,9 @@ static ssize_t tun_put_user(struct tun_struct *tun,
 		total += sizeof(pi);
 	}
 
-<<<<<<< HEAD
 	if (tun->flags & TUN_VNET_HDR) {
 		struct virtio_net_hdr gso = { 0 }; /* no info leak */
 		if ((len -= tun->vnet_hdr_sz) < 0)
-=======
-	if (vnet_hdr_sz) {
-		struct virtio_net_hdr gso = { 0 }; /* no info leak */
-		if ((len -= vnet_hdr_sz) < 0)
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			return -EINVAL;
 
 		if (skb_is_gso(skb)) {
@@ -1349,11 +1332,7 @@ static ssize_t tun_put_user(struct tun_struct *tun,
 		if (unlikely(memcpy_toiovecend(iv, (void *)&gso, total,
 					       sizeof(gso))))
 			return -EFAULT;
-<<<<<<< HEAD
 		total += tun->vnet_hdr_sz;
-=======
-		total += vnet_hdr_sz;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	}
 
 	len = min_t(int, skb->len, len);

@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 /* Copyright (c) 2010-2014, The Linux Foundation. All rights reserved.
-=======
-/* Copyright (c) 2010-2014,2016, The Linux Foundation. All rights reserved.
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -228,11 +224,6 @@ static long evrc_in_compat_ioctl(struct file *file,
 		struct msm_audio_evrc_enc_config32 cfg_32;
 		struct msm_audio_evrc_enc_config *enc_cfg;
 
-<<<<<<< HEAD
-=======
-		memset(&cfg_32, 0, sizeof(cfg_32));
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		enc_cfg = audio->enc_cfg;
 		cfg_32.cdma_rate = enc_cfg->cdma_rate;
 		cfg_32.min_bit_rate = enc_cfg->min_bit_rate;

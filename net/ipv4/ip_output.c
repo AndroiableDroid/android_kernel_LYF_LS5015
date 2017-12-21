@@ -97,12 +97,6 @@ int __ip_local_out(struct sk_buff *skb)
 
 	iph->tot_len = htons(skb->len);
 	ip_send_check(iph);
-<<<<<<< HEAD
-=======
-
-	skb->protocol = htons(ETH_P_IP);
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	return nf_hook(NFPROTO_IPV4, NF_INET_LOCAL_OUT, skb, NULL,
 		       skb_dst(skb)->dev, dst_output);
 }

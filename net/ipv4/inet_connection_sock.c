@@ -692,11 +692,6 @@ struct sock *inet_csk_clone_lock(const struct sock *sk,
 
 		newsk->sk_mark = inet_rsk(req)->ir_mark;
 
-<<<<<<< HEAD
-=======
-		inet_sk(newsk)->mc_list = NULL;
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		newicsk->icsk_retransmits = 0;
 		newicsk->icsk_backoff	  = 0;
 		newicsk->icsk_probes_out  = 0;

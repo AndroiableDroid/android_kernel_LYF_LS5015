@@ -202,10 +202,7 @@ int kgsl_add_fence_event(struct kgsl_device *device,
 		ret = priv.fence_fd;
 		goto unlock;
 	}
-<<<<<<< HEAD
 	sync_fence_install(fence, priv.fence_fd);
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	/*
 	 * If the timestamp hasn't expired yet create an event to trigger it.
@@ -232,10 +229,6 @@ int kgsl_add_fence_event(struct kgsl_device *device,
 		ret = -EFAULT;
 		goto out;
 	}
-<<<<<<< HEAD
-=======
-	sync_fence_install(fence, priv.fence_fd);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	return 0;
 
@@ -613,12 +606,6 @@ out:
 	if (ret) {
 		if (fence)
 			sync_fence_put(fence);
-<<<<<<< HEAD
-=======
-		if (fd >= 0)
-			put_unused_fd(fd);
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	}
 	kgsl_syncsource_put(syncsource);
 	return ret;

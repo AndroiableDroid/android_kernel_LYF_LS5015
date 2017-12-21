@@ -1402,11 +1402,7 @@ struct megasas_instance_template {
 };
 
 #define MEGASAS_IS_LOGICAL(scp)						\
-<<<<<<< HEAD
 	(scp->device->channel < MEGASAS_MAX_PD_CHANNELS) ? 0 : 1
-=======
-	((scp->device->channel < MEGASAS_MAX_PD_CHANNELS) ? 0 : 1)
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 #define MEGASAS_DEV_INDEX(inst, scp)					\
 	((scp->device->channel % 2) * MEGASAS_MAX_DEV_PER_CHANNEL) + 	\

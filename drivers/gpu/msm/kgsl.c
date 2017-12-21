@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 /* Copyright (c) 2008-2016, The Linux Foundation. All rights reserved.
-=======
-/* Copyright (c) 2008-2017, The Linux Foundation. All rights reserved.
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -213,16 +209,8 @@ kgsl_mem_entry_create(void)
 {
 	struct kgsl_mem_entry *entry = kzalloc(sizeof(*entry), GFP_KERNEL);
 
-<<<<<<< HEAD
 	if (entry)
 		kref_init(&entry->refcount);
-=======
-	if (entry) {
-		kref_init(&entry->refcount);
-		/* put this ref in the caller functions after init */
-		kref_get(&entry->refcount);
-	}
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	return entry;
 }
@@ -531,33 +519,21 @@ void kgsl_context_dump(struct kgsl_context *context)
 EXPORT_SYMBOL(kgsl_context_dump);
 
 /* Allocate a new context ID */
-<<<<<<< HEAD
 int _kgsl_get_context_id(struct kgsl_device *device,
 		struct kgsl_context *context)
-=======
-int _kgsl_get_context_id(struct kgsl_device *device)
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 {
 	int id;
 
 	idr_preload(GFP_KERNEL);
 	write_lock(&device->context_lock);
-<<<<<<< HEAD
 	id = idr_alloc(&device->context_idr, context, 1,
-=======
-	/* Allocate the slot but don't put a pointer in it yet */
-	id = idr_alloc(&device->context_idr, NULL, 1,
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		KGSL_MEMSTORE_MAX, GFP_NOWAIT);
 	write_unlock(&device->context_lock);
 	idr_preload_end();
 
-<<<<<<< HEAD
 	if (id > 0)
 		context->id = id;
 
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	return id;
 }
 
@@ -581,11 +557,7 @@ int kgsl_context_init(struct kgsl_device_private *dev_priv,
 	char name[64];
 	int ret = 0, id;
 
-<<<<<<< HEAD
 	id = _kgsl_get_context_id(device, context);
-=======
-	id = _kgsl_get_context_id(device);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	if (id == -ENOSPC) {
 		/*
 		 * Before declaring that there are no contexts left try
@@ -596,11 +568,7 @@ int kgsl_context_init(struct kgsl_device_private *dev_priv,
 		mutex_unlock(&device->mutex);
 		flush_workqueue(device->events_wq);
 		mutex_lock(&device->mutex);
-<<<<<<< HEAD
 		id = _kgsl_get_context_id(device, context);
-=======
-		id = _kgsl_get_context_id(device);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	}
 
 	if (id < 0) {
@@ -612,11 +580,6 @@ int kgsl_context_init(struct kgsl_device_private *dev_priv,
 		return id;
 	}
 
-<<<<<<< HEAD
-=======
-	context->id = id;
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	kref_init(&context->refcount);
 	/*
 	 * Get a refernce to the process private so its not destroyed, until
@@ -1407,27 +1370,16 @@ kgsl_sharedmem_region_empty(struct kgsl_process_private *private,
 static inline struct kgsl_mem_entry * __must_check
 kgsl_sharedmem_find_id(struct kgsl_process_private *process, unsigned int id)
 {
-<<<<<<< HEAD
 	int result = 0;
-=======
-	int result;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	struct kgsl_mem_entry *entry;
 
 	spin_lock(&process->mem_lock);
 	entry = idr_find(&process->mem_idr, id);
-<<<<<<< HEAD
 	if (entry)
 		result = kgsl_mem_entry_get(entry);
 	spin_unlock(&process->mem_lock);
 
 	if (!result)
-=======
-	result = kgsl_mem_entry_get(entry);
-	spin_unlock(&process->mem_lock);
-
-	if (result == 0)
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		return NULL;
 	return entry;
 }
@@ -1643,11 +1595,7 @@ void kgsl_dump_syncpoints(struct kgsl_device *device,
 		}
 		case KGSL_CMD_SYNCPOINT_TYPE_FENCE:
 			if (event->handle)
-<<<<<<< HEAD
 				dev_err(device->dev, "  fence: [%p] %s\n",
-=======
-				dev_err(device->dev, "  fence: [%pK] %s\n",
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 					event->handle->fence,
 					event->handle->name);
 			else
@@ -2637,15 +2585,6 @@ long kgsl_ioctl_drawctxt_create(struct kgsl_device_private *dev_priv,
 		goto done;
 	}
 	trace_kgsl_context_create(dev_priv->device, context, param->flags);
-<<<<<<< HEAD
-=======
-
-	/* Commit the pointer to the context in context_idr */
-	write_lock(&device->context_lock);
-	idr_replace(&device->context_idr, context, context->id);
-	write_unlock(&device->context_lock);
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	param->drawctxt_id = context->id;
 done:
 	mutex_unlock(&device->mutex);
@@ -2963,12 +2902,7 @@ static int kgsl_setup_useraddr(struct kgsl_mem_entry *entry,
 	struct vm_area_struct *vma = NULL;
 	int ret;
 
-<<<<<<< HEAD
 	if (param->offset != 0 || param->hostptr == 0
-=======
-	if (param->len == 0 || param->offset != 0
-		|| param->hostptr == 0
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		|| !KGSL_IS_PAGE_ALIGNED(param->hostptr)
 		|| !KGSL_IS_PAGE_ALIGNED(param->len))
 		return -EINVAL;
@@ -3320,12 +3254,6 @@ long kgsl_ioctl_map_user_mem(struct kgsl_device_private *dev_priv,
 	trace_kgsl_mem_map(entry, param->fd);
 
 	kgsl_mem_entry_commit_process(private, entry);
-<<<<<<< HEAD
-=======
-
-	/* put the extra refcount for kgsl_mem_entry_create() */
-	kgsl_mem_entry_put(entry);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	return result;
 
 error_attach:
@@ -3670,12 +3598,6 @@ long kgsl_ioctl_gpumem_alloc(struct kgsl_device_private *dev_priv,
 	param->flags = entry->memdesc.flags;
 
 	kgsl_mem_entry_commit_process(private, entry);
-<<<<<<< HEAD
-=======
-
-	/* put the extra refcount for kgsl_mem_entry_create() */
-	kgsl_mem_entry_put(entry);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	return result;
 err:
 	kgsl_sharedmem_free(&entry->memdesc);
@@ -3718,12 +3640,6 @@ long kgsl_ioctl_gpumem_alloc_id(struct kgsl_device_private *dev_priv,
 	param->gpuaddr = entry->memdesc.gpuaddr;
 
 	kgsl_mem_entry_commit_process(private, entry);
-<<<<<<< HEAD
-=======
-
-	/* put the extra refcount for kgsl_mem_entry_create() */
-	kgsl_mem_entry_put(entry);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	return result;
 err:
 	if (entry)
@@ -4020,12 +3936,7 @@ kgsl_mmap_memstore(struct kgsl_device *device, struct vm_area_struct *vma)
 static void kgsl_gpumem_vm_open(struct vm_area_struct *vma)
 {
 	struct kgsl_mem_entry *entry = vma->vm_private_data;
-<<<<<<< HEAD
 	if (!kgsl_mem_entry_get(entry))
-=======
-
-	if (kgsl_mem_entry_get(entry) == 0)
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		vma->vm_private_data = NULL;
 }
 
@@ -4662,10 +4573,7 @@ static int _register_device(struct kgsl_device *device)
 
 int kgsl_device_platform_probe(struct kgsl_device *device)
 {
-<<<<<<< HEAD
 	int result;
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	int status = -EINVAL;
 	struct resource *res;
 
@@ -4762,7 +4670,6 @@ int kgsl_device_platform_probe(struct kgsl_device *device)
 	disable_irq(device->pwrctrl.interrupt_num);
 
 	KGSL_DRV_INFO(device,
-<<<<<<< HEAD
 		"dev_id %d regs phys 0x%08lx size 0x%08x virt %p\n",
 		device->id, device->reg_phys, device->reg_len,
 		device->reg_virt);
@@ -4774,13 +4681,6 @@ int kgsl_device_platform_probe(struct kgsl_device *device)
 		goto error_pwrctrl_close;
 
 
-=======
-		"dev_id %d regs phys 0x%08lx size 0x%08x\n",
-		device->id, device->reg_phys, device->reg_len);
-
-	rwlock_init(&device->context_lock);
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	setup_timer(&device->idle_timer, kgsl_timer, (unsigned long) device);
 	status = kgsl_create_device_workqueue(device);
 	if (status)
@@ -4880,10 +4780,7 @@ EXPORT_SYMBOL(kgsl_device_platform_remove);
 static void kgsl_core_exit(void)
 {
 	kgsl_events_exit();
-<<<<<<< HEAD
 	kgsl_drm_exit();
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	kgsl_cffdump_destroy();
 	kgsl_core_debugfs_close();
 

@@ -613,17 +613,10 @@ static int regcache_sync_block_raw_multi_reg(struct regmap *map, void *block,
 	unsigned int i, val;
 	unsigned int regtmp = 0;
 	int ret = 0;
-<<<<<<< HEAD
 	struct reg_default *regs;
 	size_t num_regs = ((end - start) + 1);
 
 	regs = kcalloc(num_regs, sizeof(struct reg_default), GFP_KERNEL);
-=======
-	struct reg_sequence *regs;
-	size_t num_regs = ((end - start) + 1);
-
-	regs = kcalloc(num_regs, sizeof(struct reg_sequence), GFP_KERNEL);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	if (!regs)
 		return -ENOMEM;
 

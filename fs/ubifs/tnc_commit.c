@@ -370,11 +370,7 @@ static int layout_in_gaps(struct ubifs_info *c, int cnt)
 
 	p = c->gap_lebs;
 	do {
-<<<<<<< HEAD
 		ubifs_assert(p < c->gap_lebs + sizeof(int) * c->lst.idx_lebs);
-=======
-		ubifs_assert(p < c->gap_lebs + c->lst.idx_lebs);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		written = layout_leb_in_gaps(c, p);
 		if (written < 0) {
 			err = written;

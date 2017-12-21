@@ -678,18 +678,6 @@ static int mmc_blk_ioctl_cmd(struct block_device *bdev,
 	idata = mmc_blk_ioctl_copy_from_user(ic_ptr);
 	if (IS_ERR_OR_NULL(idata))
 		return PTR_ERR(idata);
-<<<<<<< HEAD
-=======
-	if (idata->ic.postsleep_max_us < idata->ic.postsleep_min_us) {
-		pr_err("%s: min value: %u must not be greater than max value: %u\n",
-			__func__, idata->ic.postsleep_min_us,
-			idata->ic.postsleep_max_us);
-		WARN_ON(1);
-		err = -EPERM;
-		goto cmd_err;
-	}
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	md = mmc_blk_get(bdev->bd_disk);
 	if (!md) {
 		err = -EINVAL;
@@ -747,12 +735,6 @@ static int mmc_blk_ioctl_cmd(struct block_device *bdev,
 	mmc_rpm_hold(card->host, &card->dev);
 	mmc_claim_host(card->host);
 
-<<<<<<< HEAD
-=======
-	if (mmc_card_get_bkops_en_manual(card))
-		mmc_stop_bkops(card);
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	err = mmc_blk_part_switch(card, md);
 	if (err)
 		goto cmd_rel_host;
@@ -895,12 +877,6 @@ static int mmc_blk_ioctl_rpmb_cmd(struct block_device *bdev,
 	mmc_rpm_hold(card->host, &card->dev);
 	mmc_claim_host(card->host);
 
-<<<<<<< HEAD
-=======
-	if (mmc_card_get_bkops_en_manual(card))
-		mmc_stop_bkops(card);
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	err = mmc_blk_part_switch(card, md);
 	if (err)
 		goto cmd_rel_host;
@@ -2992,12 +2968,7 @@ static struct mmc_blk_data *mmc_blk_alloc_req(struct mmc_card *card,
 		((unsigned int)size * percentage) / 100;
 
 	if (mmc_host_cmd23(card->host)) {
-<<<<<<< HEAD
 		if (mmc_card_mmc(card) ||
-=======
-		if ((mmc_card_mmc(card) &&
-		     card->csd.mmca_vsn >= CSD_SPEC_VER_3) ||
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		    (mmc_card_sd(card) &&
 		     card->scr.cmds & SD_SCR_CMD23_SUPPORT))
 			md->flags |= MMC_BLK_CMD23;

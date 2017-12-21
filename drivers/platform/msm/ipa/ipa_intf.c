@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 /* Copyright (c) 2013-2014, The Linux Foundation. All rights reserved.
-=======
-/* Copyright (c) 2013-2017, The Linux Foundation. All rights reserved.
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -269,17 +265,6 @@ int ipa_query_intf_tx_props(struct ipa_ioc_query_intf_tx_props *tx)
 	mutex_lock(&ipa_ctx->lock);
 	list_for_each_entry(entry, &ipa_ctx->intf_list, link) {
 		if (!strncmp(entry->name, tx->name, IPA_RESOURCE_NAME_MAX)) {
-<<<<<<< HEAD
-=======
-			/* add the entry check */
-			if (entry->num_tx_props != tx->num_tx_props) {
-				IPAERR("invalid entry number(%u %u)\n",
-					entry->num_tx_props,
-						tx->num_tx_props);
-				mutex_unlock(&ipa_ctx->lock);
-				return result;
-			}
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			memcpy(tx->tx, entry->tx, entry->num_tx_props *
 			       sizeof(struct ipa_ioc_tx_intf_prop));
 			result = 0;
@@ -313,17 +298,6 @@ int ipa_query_intf_rx_props(struct ipa_ioc_query_intf_rx_props *rx)
 	mutex_lock(&ipa_ctx->lock);
 	list_for_each_entry(entry, &ipa_ctx->intf_list, link) {
 		if (!strncmp(entry->name, rx->name, IPA_RESOURCE_NAME_MAX)) {
-<<<<<<< HEAD
-=======
-			/* add the entry check */
-			if (entry->num_rx_props != rx->num_rx_props) {
-				IPAERR("invalid entry number(%u %u)\n",
-					entry->num_rx_props,
-						rx->num_rx_props);
-				mutex_unlock(&ipa_ctx->lock);
-				return result;
-			}
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			memcpy(rx->rx, entry->rx, entry->num_rx_props *
 					sizeof(struct ipa_ioc_rx_intf_prop));
 			result = 0;
@@ -357,17 +331,6 @@ int ipa_query_intf_ext_props(struct ipa_ioc_query_intf_ext_props *ext)
 	mutex_lock(&ipa_ctx->lock);
 	list_for_each_entry(entry, &ipa_ctx->intf_list, link) {
 		if (!strcmp(entry->name, ext->name)) {
-<<<<<<< HEAD
-=======
-			/* add the entry check */
-			if (entry->num_ext_props != ext->num_ext_props) {
-				IPAERR("invalid entry number(%u %u)\n",
-					entry->num_ext_props,
-						ext->num_ext_props);
-				mutex_unlock(&ipa_ctx->lock);
-				return result;
-			}
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			memcpy(ext->ext, entry->ext, entry->num_ext_props *
 					sizeof(struct ipa_ioc_ext_intf_prop));
 			result = 0;
@@ -551,11 +514,6 @@ ssize_t ipa_read(struct file *filp, char __user *buf, size_t count,
 			mutex_unlock(&ipa_ctx->msg_lock);
 			if (copy_to_user(buf, &msg->meta,
 					  sizeof(struct ipa_msg_meta))) {
-<<<<<<< HEAD
-=======
-				kfree(msg);
-				msg = NULL;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				ret = -EFAULT;
 				break;
 			}
@@ -564,11 +522,6 @@ ssize_t ipa_read(struct file *filp, char __user *buf, size_t count,
 			if (msg->buff) {
 				if (copy_to_user(buf, msg->buff,
 						  msg->meta.msg_len)) {
-<<<<<<< HEAD
-=======
-					kfree(msg);
-					msg = NULL;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 					ret = -EFAULT;
 					break;
 				}

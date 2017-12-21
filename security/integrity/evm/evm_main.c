@@ -20,10 +20,6 @@
 #include <linux/integrity.h>
 #include <linux/evm.h>
 #include <crypto/hash.h>
-<<<<<<< HEAD
-=======
-#include <crypto/algapi.h>
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 #include "evm.h"
 
 int evm_initialized;
@@ -132,11 +128,7 @@ static enum integrity_status evm_verify_hmac(struct dentry *dentry,
 				   xattr_value_len, calc.digest);
 		if (rc)
 			break;
-<<<<<<< HEAD
 		rc = memcmp(xattr_data->digest, calc.digest,
-=======
-		rc = crypto_memneq(xattr_data->digest, calc.digest,
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			    sizeof(calc.digest));
 		if (rc)
 			rc = -EINVAL;

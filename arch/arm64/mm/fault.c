@@ -222,12 +222,7 @@ static int __kprobes do_page_fault(unsigned long addr, unsigned int esr,
 
 	if (esr & ESR_LNX_EXEC) {
 		vm_flags = VM_EXEC;
-<<<<<<< HEAD
 	} else if (esr & ESR_EL1_WRITE) {
-=======
-	} else if (((esr & ESR_EL1_WRITE) && !(esr & ESR_EL1_CM)) ||
-			((esr & ESR_EL1_CM) && !(mm_flags & FAULT_FLAG_USER))) {
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		vm_flags = VM_WRITE;
 		mm_flags |= FAULT_FLAG_WRITE;
 	}

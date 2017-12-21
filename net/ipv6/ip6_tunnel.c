@@ -103,7 +103,6 @@ struct ip6_tnl_net {
 
 static struct net_device_stats *ip6_get_stats(struct net_device *dev)
 {
-<<<<<<< HEAD
 	struct pcpu_tstats sum = { 0 };
 	int i;
 
@@ -114,27 +113,6 @@ static struct net_device_stats *ip6_get_stats(struct net_device *dev)
 		sum.rx_bytes   += tstats->rx_bytes;
 		sum.tx_packets += tstats->tx_packets;
 		sum.tx_bytes   += tstats->tx_bytes;
-=======
-	struct pcpu_tstats tmp, sum = { 0 };
-	int i;
-
-	for_each_possible_cpu(i) {
-		unsigned int start;
-		const struct pcpu_tstats *tstats = per_cpu_ptr(dev->tstats, i);
-
-		do {
-			start = u64_stats_fetch_begin_bh(&tstats->syncp);
-			tmp.rx_packets = tstats->rx_packets;
-			tmp.rx_bytes = tstats->rx_bytes;
-			tmp.tx_packets = tstats->tx_packets;
-			tmp.tx_bytes =  tstats->tx_bytes;
-		} while (u64_stats_fetch_retry_bh(&tstats->syncp, start));
-
-		sum.rx_packets += tmp.rx_packets;
-		sum.rx_bytes   += tmp.rx_bytes;
-		sum.tx_packets += tmp.tx_packets;
-		sum.tx_bytes   += tmp.tx_bytes;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	}
 	dev->stats.rx_packets = sum.rx_packets;
 	dev->stats.rx_bytes   = sum.rx_bytes;
@@ -416,7 +394,6 @@ ip6_tnl_dev_uninit(struct net_device *dev)
 
 __u16 ip6_tnl_parse_tlv_enc_lim(struct sk_buff *skb, __u8 *raw)
 {
-<<<<<<< HEAD
 	const struct ipv6hdr *ipv6h = (const struct ipv6hdr *) raw;
 	__u8 nexthdr = ipv6h->nexthdr;
 	__u16 off = sizeof (*ipv6h);
@@ -429,21 +406,6 @@ __u16 ip6_tnl_parse_tlv_enc_lim(struct sk_buff *skb, __u8 *raw)
 			break;
 
 		hdr = (struct ipv6_opt_hdr *) (raw + off);
-=======
-	const struct ipv6hdr *ipv6h = (const struct ipv6hdr *)raw;
-	unsigned int nhoff = raw - skb->data;
-	unsigned int off = nhoff + sizeof(*ipv6h);
-	u8 next, nexthdr = ipv6h->nexthdr;
-
-	while (ipv6_ext_hdr(nexthdr) && nexthdr != NEXTHDR_NONE) {
-		struct ipv6_opt_hdr *hdr;
-		u16 optlen;
-
-		if (!pskb_may_pull(skb, off + sizeof(*hdr)))
-			break;
-
-		hdr = (struct ipv6_opt_hdr *)(skb->data + off);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		if (nexthdr == NEXTHDR_FRAGMENT) {
 			struct frag_hdr *frag_hdr = (struct frag_hdr *) hdr;
 			if (frag_hdr->frag_off)
@@ -454,27 +416,12 @@ __u16 ip6_tnl_parse_tlv_enc_lim(struct sk_buff *skb, __u8 *raw)
 		} else {
 			optlen = ipv6_optlen(hdr);
 		}
-<<<<<<< HEAD
 		if (nexthdr == NEXTHDR_DEST) {
 			__u16 i = off + 2;
-=======
-		/* cache hdr->nexthdr, since pskb_may_pull() might
-		 * invalidate hdr
-		 */
-		next = hdr->nexthdr;
-		if (nexthdr == NEXTHDR_DEST) {
-			u16 i = 2;
-
-			/* Remember : hdr is no longer valid at this point. */
-			if (!pskb_may_pull(skb, off + optlen))
-				break;
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			while (1) {
 				struct ipv6_tlv_tnl_enc_lim *tel;
 
 				/* No more room for encapsulation limit */
-<<<<<<< HEAD
 				if (i + sizeof (*tel) > off + optlen)
 					break;
 
@@ -483,16 +430,6 @@ __u16 ip6_tnl_parse_tlv_enc_lim(struct sk_buff *skb, __u8 *raw)
 				if (tel->type == IPV6_TLV_TNL_ENCAP_LIMIT &&
 				    tel->length == 1)
 					return i;
-=======
-				if (i + sizeof(*tel) > optlen)
-					break;
-
-				tel = (struct ipv6_tlv_tnl_enc_lim *)(skb->data + off + i);
-				/* return index of option if found and valid */
-				if (tel->type == IPV6_TLV_TNL_ENCAP_LIMIT &&
-				    tel->length == 1)
-					return i + off - nhoff;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				/* else jump to next option */
 				if (tel->type)
 					i += tel->length + 2;
@@ -500,11 +437,7 @@ __u16 ip6_tnl_parse_tlv_enc_lim(struct sk_buff *skb, __u8 *raw)
 					i++;
 			}
 		}
-<<<<<<< HEAD
 		nexthdr = hdr->nexthdr;
-=======
-		nexthdr = next;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		off += optlen;
 	}
 	return 0;
@@ -889,15 +822,8 @@ static int ip6_tnl_rcv(struct sk_buff *skb, __u16 protocol,
 		}
 
 		tstats = this_cpu_ptr(t->dev->tstats);
-<<<<<<< HEAD
 		tstats->rx_packets++;
 		tstats->rx_bytes += skb->len;
-=======
-		u64_stats_update_begin(&tstats->syncp);
-		tstats->rx_packets++;
-		tstats->rx_bytes += skb->len;
-		u64_stats_update_end(&tstats->syncp);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 		netif_rx(skb);
 
@@ -1024,28 +950,12 @@ static int ip6_tnl_xmit2(struct sk_buff *skb,
 	struct ipv6_tel_txoption opt;
 	struct dst_entry *dst = NULL, *ndst = NULL;
 	struct net_device *tdev;
-<<<<<<< HEAD
-=======
-	bool use_cache = false;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	int mtu;
 	unsigned int max_headroom = sizeof(struct ipv6hdr);
 	u8 proto;
 	int err = -1;
 
-<<<<<<< HEAD
 	if (!fl6->flowi6_mark)
-=======
-	if (!(t->parms.flags &
-		     (IP6_TNL_F_USE_ORIG_TCLASS | IP6_TNL_F_USE_ORIG_FWMARK))) {
-		/* enable the cache only only if the routing decision does
-		 * not depend on the current inner header value
-		 */
-		use_cache = true;
-	}
-
-	if (use_cache)
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		dst = ip6_tnl_dst_check(t);
 	if (!dst) {
 		ndst = ip6_route_output(net, NULL, fl6);
@@ -1102,11 +1012,7 @@ static int ip6_tnl_xmit2(struct sk_buff *skb,
 		skb = new_skb;
 	}
 	skb_dst_drop(skb);
-<<<<<<< HEAD
 	if (fl6->flowi6_mark) {
-=======
-	if (!use_cache) {
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		skb_dst_set(skb, dst);
 		ndst = NULL;
 	} else {

@@ -790,7 +790,6 @@ void cfg80211_process_wdev_events(struct wireless_dev *wdev)
 		case EVENT_IBSS_JOINED:
 			__cfg80211_ibss_joined(wdev->netdev, ev->ij.bssid);
 			break;
-<<<<<<< HEAD
 		case EVENT_AUTHORIZATION:
 			__cfg80211_authorization_event(wdev->netdev,
 						       ev->au.auth_status,
@@ -798,8 +797,6 @@ void cfg80211_process_wdev_events(struct wireless_dev *wdev)
 						       ev->au.ptk_kck,
 						       ev->au.ptk_kek);
 			break;
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		}
 		wdev_unlock(wdev);
 

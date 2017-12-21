@@ -123,7 +123,6 @@ static __le32 ext4_xattr_block_csum(struct inode *inode,
 {
 	struct ext4_sb_info *sbi = EXT4_SB(inode->i_sb);
 	__u32 csum;
-<<<<<<< HEAD
 	__le32 save_csum;
 	__le64 dsk_block_nr = cpu_to_le64(block_nr);
 
@@ -135,20 +134,6 @@ static __le32 ext4_xattr_block_csum(struct inode *inode,
 			   EXT4_BLOCK_SIZE(inode->i_sb));
 
 	hdr->h_checksum = save_csum;
-=======
-	__le64 dsk_block_nr = cpu_to_le64(block_nr);
-	__u32 dummy_csum = 0;
-	int offset = offsetof(struct ext4_xattr_header, h_checksum);
-
-	csum = ext4_chksum(sbi, sbi->s_csum_seed, (__u8 *)&dsk_block_nr,
-			   sizeof(dsk_block_nr));
-	csum = ext4_chksum(sbi, csum, (__u8 *)hdr, offset);
-	csum = ext4_chksum(sbi, csum, (__u8 *)&dummy_csum, sizeof(dummy_csum));
-	offset += sizeof(dummy_csum);
-	csum = ext4_chksum(sbi, csum, (__u8 *)hdr + offset,
-			   EXT4_BLOCK_SIZE(inode->i_sb) - offset);
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	return cpu_to_le32(csum);
 }
 

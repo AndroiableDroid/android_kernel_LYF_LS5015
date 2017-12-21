@@ -61,14 +61,11 @@ extern u8 logging_option;
 extern u8 debug_level_option;
 extern u8 print_limit_option;
 
-<<<<<<< HEAD
 #define SPS_DEBUGFS(msg, args...) do {					\
 		char buf[MAX_MSG_LEN];		\
 		snprintf(buf, MAX_MSG_LEN, msg"\n", ##args);	\
 		sps_debugfs_record(buf);	\
 	} while (0)
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 #define SPS_ERR(msg, args...) do {					\
 		if (logging_option != 1) {	\
 			if (unlikely(print_limit_option > 2))	\
@@ -76,11 +73,8 @@ extern u8 print_limit_option;
 			else	\
 				pr_err(msg, ##args);	\
 		}	\
-<<<<<<< HEAD
 		if (unlikely(debugfs_record_enabled))	\
 			SPS_DEBUGFS(msg, ##args);	\
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	} while (0)
 #define SPS_INFO(msg, args...) do {					\
 		if (logging_option != 1) {	\
@@ -89,11 +83,8 @@ extern u8 print_limit_option;
 			else	\
 				pr_info(msg, ##args);	\
 		}	\
-<<<<<<< HEAD
 		if (unlikely(debugfs_record_enabled))	\
 			SPS_DEBUGFS(msg, ##args);	\
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	} while (0)
 #define SPS_DBG(msg, args...) do {					\
 		if ((unlikely(logging_option > 1))	\
@@ -104,11 +95,8 @@ extern u8 print_limit_option;
 				pr_info(msg, ##args);	\
 		} else	\
 			pr_debug(msg, ##args);	\
-<<<<<<< HEAD
 		if (unlikely(debugfs_record_enabled))	\
 			SPS_DEBUGFS(msg, ##args);	\
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	} while (0)
 #define SPS_DBG1(msg, args...) do {					\
 		if ((unlikely(logging_option > 1))	\
@@ -119,11 +107,8 @@ extern u8 print_limit_option;
 				pr_info(msg, ##args);	\
 		} else	\
 			pr_debug(msg, ##args);	\
-<<<<<<< HEAD
 		if (unlikely(debugfs_record_enabled))	\
 			SPS_DEBUGFS(msg, ##args);	\
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	} while (0)
 #define SPS_DBG2(msg, args...) do {					\
 		if ((unlikely(logging_option > 1))	\
@@ -134,11 +119,8 @@ extern u8 print_limit_option;
 				pr_info(msg, ##args);	\
 		} else	\
 			pr_debug(msg, ##args);	\
-<<<<<<< HEAD
 		if (unlikely(debugfs_record_enabled))	\
 			SPS_DEBUGFS(msg, ##args);	\
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	} while (0)
 #define SPS_DBG3(msg, args...) do {					\
 		if ((unlikely(logging_option > 1))	\
@@ -149,11 +131,8 @@ extern u8 print_limit_option;
 				pr_info(msg, ##args);	\
 		} else	\
 			pr_debug(msg, ##args);	\
-<<<<<<< HEAD
 		if (unlikely(debugfs_record_enabled))	\
 			SPS_DEBUGFS(msg, ##args);	\
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	} while (0)
 #else
 #define	SPS_DBG3(x...)		pr_debug(x)

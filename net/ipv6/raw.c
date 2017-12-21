@@ -578,16 +578,8 @@ static int rawv6_push_pending_frames(struct sock *sk, struct flowi6 *fl6,
 	}
 
 	offset += skb_transport_offset(skb);
-<<<<<<< HEAD
 	if (skb_copy_bits(skb, offset, &csum, 2))
 		BUG();
-=======
-	err = skb_copy_bits(skb, offset, &csum, 2);
-	if (err < 0) {
-		ip6_flush_pending_frames(sk);
-		goto out;
-	}
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	/* in case cksum was not initialized */
 	if (unlikely(csum))

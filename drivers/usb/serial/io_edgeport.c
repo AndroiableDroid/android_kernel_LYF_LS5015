@@ -2795,14 +2795,6 @@ static int edge_startup(struct usb_serial *serial)
 					EDGE_COMPATIBILITY_MASK1,
 					EDGE_COMPATIBILITY_MASK2 };
 
-<<<<<<< HEAD
-=======
-	if (serial->num_bulk_in < 1 || serial->num_interrupt_in < 1) {
-		dev_err(&serial->interface->dev, "missing endpoints\n");
-		return -ENODEV;
-	}
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	dev = serial->dev;
 
 	/* create our private serial structure */

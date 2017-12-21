@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 /* Copyright (c) 2013-2014, The Linux Foundation. All rights reserved.
-=======
-/* Copyright (c) 2013-2014,2017 The Linux Foundation. All rights reserved.
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -365,11 +361,7 @@ static void *__smem_get_entry_secure(unsigned id,
 	uint32_t a_hdr_size;
 	int rc;
 
-<<<<<<< HEAD
 	SMEM_DBG("%s(%u, %u, %u, %u, %d, %d)\n", __func__, id, *size, to_proc,
-=======
-	SMEM_DBG("%s(%u, %u, %u, %d, %d)\n", __func__, id, to_proc,
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 					flags, skip_init_check, use_rspinlock);
 
 	if (!skip_init_check && !smem_initialized_check())
@@ -784,11 +776,7 @@ EXPORT_SYMBOL(smem_alloc);
 void *smem_get_entry(unsigned id, unsigned *size, unsigned to_proc,
 								unsigned flags)
 {
-<<<<<<< HEAD
 	SMEM_DBG("%s(%u, %u, %u, %u)\n", __func__, id, *size, to_proc, flags);
-=======
-	SMEM_DBG("%s(%u, %u, %u)\n", __func__, id, to_proc, flags);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	/*
 	 * Handle the circular dependecy between SMEM and software implemented

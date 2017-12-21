@@ -15,12 +15,6 @@
 #define NULL_SECNO			((unsigned int)(~0))
 
 #define DEF_RECLAIM_PREFREE_SEGMENTS	5	/* 5% over total segments */
-<<<<<<< HEAD
-=======
-#define DEF_MAX_RECLAIM_PREFREE_SEGMENTS	4096	/* 8GB in maximum */
-
-#define F2FS_MIN_SEGMENTS	9 /* SB + 2 (CP + SIT + NAT) + SSA + MAIN */
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 /* L: Logical segment # in volume, R: Relative segment # in main area */
 #define GET_L2R_SEGNO(free_i, segno)	(segno - free_i->start_segno)
@@ -106,11 +100,8 @@
 	(((sector_t)blk_addr) << F2FS_LOG_SECTORS_PER_BLOCK)
 #define SECTOR_TO_BLOCK(sectors)					\
 	(sectors >> F2FS_LOG_SECTORS_PER_BLOCK)
-<<<<<<< HEAD
 #define MAX_BIO_BLOCKS(sbi)						\
 	((int)min((int)max_hw_blocks(sbi), BIO_MAX_PAGES))
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 /*
  * indicate a block allocation direction: RIGHT and LEFT.
@@ -166,32 +157,16 @@ struct victim_sel_policy {
 };
 
 struct seg_entry {
-<<<<<<< HEAD
 	unsigned short valid_blocks;	/* # of valid blocks */
 	unsigned char *cur_valid_map;	/* validity bitmap of blocks */
-=======
-	unsigned int type:6;		/* segment type like CURSEG_XXX_TYPE */
-	unsigned int valid_blocks:10;	/* # of valid blocks */
-	unsigned int ckpt_valid_blocks:10;	/* # of valid blocks last cp */
-	unsigned int padding:6;		/* padding */
-	unsigned char *cur_valid_map;	/* validity bitmap of blocks */
-#ifdef CONFIG_F2FS_CHECK_FS
-	unsigned char *cur_valid_map_mir;	/* mirror of current valid bitmap */
-#endif
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	/*
 	 * # of valid blocks and the validity bitmap stored in the the last
 	 * checkpoint pack. This information is used by the SSR mode.
 	 */
-<<<<<<< HEAD
 	unsigned short ckpt_valid_blocks;
 	unsigned char *ckpt_valid_map;
 	unsigned char *discard_map;
 	unsigned char type;		/* segment type like CURSEG_XXX_TYPE */
-=======
-	unsigned char *ckpt_valid_map;	/* validity bitmap of blocks last cp */
-	unsigned char *discard_map;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	unsigned long long mtime;	/* modification time of the segment */
 };
 
@@ -208,18 +183,9 @@ struct segment_allocation {
  * the page is atomically written, and it is in inmem_pages list.
  */
 #define ATOMIC_WRITTEN_PAGE		((unsigned long)-1)
-<<<<<<< HEAD
 
 #define IS_ATOMIC_WRITTEN_PAGE(page)			\
 		(page_private(page) == (unsigned long)ATOMIC_WRITTEN_PAGE)
-=======
-#define DUMMY_WRITTEN_PAGE		((unsigned long)-2)
-
-#define IS_ATOMIC_WRITTEN_PAGE(page)			\
-		(page_private(page) == (unsigned long)ATOMIC_WRITTEN_PAGE)
-#define IS_DUMMY_WRITTEN_PAGE(page)			\
-		(page_private(page) == (unsigned long)DUMMY_WRITTEN_PAGE)
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 struct inmem_pages {
 	struct list_head list;
@@ -234,12 +200,6 @@ struct sit_info {
 	block_t sit_blocks;		/* # of blocks used by SIT area */
 	block_t written_valid_blocks;	/* # of valid blocks in main area */
 	char *sit_bitmap;		/* SIT bitmap pointer */
-<<<<<<< HEAD
-=======
-#ifdef CONFIG_F2FS_CHECK_FS
-	char *sit_bitmap_mir;		/* SIT bitmap mirror */
-#endif
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	unsigned int bitmap_size;	/* SIT bitmap size */
 
 	unsigned long *tmp_map;			/* bitmap for temporal use */
@@ -354,12 +314,6 @@ static inline void seg_info_from_raw_sit(struct seg_entry *se,
 	se->ckpt_valid_blocks = GET_SIT_VBLOCKS(rs);
 	memcpy(se->cur_valid_map, rs->valid_map, SIT_VBLOCK_MAP_SIZE);
 	memcpy(se->ckpt_valid_map, rs->valid_map, SIT_VBLOCK_MAP_SIZE);
-<<<<<<< HEAD
-=======
-#ifdef CONFIG_F2FS_CHECK_FS
-	memcpy(se->cur_valid_map_mir, rs->valid_map, SIT_VBLOCK_MAP_SIZE);
-#endif
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	se->type = GET_SIT_TYPE(rs);
 	se->mtime = le64_to_cpu(rs->mtime);
 }
@@ -457,15 +411,6 @@ static inline void get_sit_bitmap(struct f2fs_sb_info *sbi,
 		void *dst_addr)
 {
 	struct sit_info *sit_i = SIT_I(sbi);
-<<<<<<< HEAD
-=======
-
-#ifdef CONFIG_F2FS_CHECK_FS
-	if (memcmp(sit_i->sit_bitmap, sit_i->sit_bitmap_mir,
-						sit_i->bitmap_size))
-		f2fs_bug_on(sbi, 1);
-#endif
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	memcpy(dst_addr, sit_i->sit_bitmap, sit_i->bitmap_size);
 }
 
@@ -523,7 +468,6 @@ static inline bool need_SSR(struct f2fs_sb_info *sbi)
 {
 	int node_secs = get_blocktype_secs(sbi, F2FS_DIRTY_NODES);
 	int dent_secs = get_blocktype_secs(sbi, F2FS_DIRTY_DENTS);
-<<<<<<< HEAD
 	return free_sections(sbi) <= (node_secs + 2 * dent_secs +
 						reserved_sections(sbi) + 1);
 }
@@ -532,35 +476,12 @@ static inline bool has_not_enough_free_secs(struct f2fs_sb_info *sbi, int freed)
 {
 	int node_secs = get_blocktype_secs(sbi, F2FS_DIRTY_NODES);
 	int dent_secs = get_blocktype_secs(sbi, F2FS_DIRTY_DENTS);
-=======
-	int imeta_secs = get_blocktype_secs(sbi, F2FS_DIRTY_IMETA);
-
-	if (test_opt(sbi, LFS))
-		return false;
-
-	return free_sections(sbi) <= (node_secs + 2 * dent_secs + imeta_secs +
-						reserved_sections(sbi) + 1);
-}
-
-static inline bool has_not_enough_free_secs(struct f2fs_sb_info *sbi,
-					int freed, int needed)
-{
-	int node_secs = get_blocktype_secs(sbi, F2FS_DIRTY_NODES);
-	int dent_secs = get_blocktype_secs(sbi, F2FS_DIRTY_DENTS);
-	int imeta_secs = get_blocktype_secs(sbi, F2FS_DIRTY_IMETA);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	if (unlikely(is_sbi_flag_set(sbi, SBI_POR_DOING)))
 		return false;
 
-<<<<<<< HEAD
 	return (free_sections(sbi) + freed) <= (node_secs + 2 * dent_secs +
 						reserved_sections(sbi));
-=======
-	return (free_sections(sbi) + freed) <=
-		(node_secs + 2 * dent_secs + imeta_secs +
-		reserved_sections(sbi) + needed);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 static inline bool excess_prefree_segs(struct f2fs_sb_info *sbi)
@@ -608,12 +529,6 @@ static inline bool need_inplace_update(struct inode *inode)
 	if (S_ISDIR(inode->i_mode) || f2fs_is_atomic_file(inode))
 		return false;
 
-<<<<<<< HEAD
-=======
-	if (test_opt(sbi, LFS))
-		return false;
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	if (policy & (0x1 << F2FS_IPU_FORCE))
 		return true;
 	if (policy & (0x1 << F2FS_IPU_SSR) && need_SSR(sbi))
@@ -627,11 +542,7 @@ static inline bool need_inplace_update(struct inode *inode)
 
 	/* this is only set during fdatasync */
 	if (policy & (0x1 << F2FS_IPU_FSYNC) &&
-<<<<<<< HEAD
 			is_inode_flag_set(F2FS_I(inode), FI_NEED_IPU))
-=======
-			is_inode_flag_set(inode, FI_NEED_IPU))
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		return true;
 
 	return false;
@@ -664,13 +575,8 @@ static inline void check_seg_range(struct f2fs_sb_info *sbi, unsigned int segno)
 
 static inline void verify_block_addr(struct f2fs_sb_info *sbi, block_t blk_addr)
 {
-<<<<<<< HEAD
 	f2fs_bug_on(sbi, blk_addr < SEG0_BLKADDR(sbi)
 					|| blk_addr >= MAX_BLKADDR(sbi));
-=======
-	BUG_ON(blk_addr < SEG0_BLKADDR(sbi)
-			|| blk_addr >= MAX_BLKADDR(sbi));
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 /*
@@ -714,15 +620,6 @@ static inline pgoff_t current_sit_addr(struct f2fs_sb_info *sbi,
 
 	check_seg_range(sbi, start);
 
-<<<<<<< HEAD
-=======
-#ifdef CONFIG_F2FS_CHECK_FS
-	if (f2fs_test_bit(offset, sit_i->sit_bitmap) !=
-			f2fs_test_bit(offset, sit_i->sit_bitmap_mir))
-		f2fs_bug_on(sbi, 1);
-#endif
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	/* calculate sit block address */
 	if (f2fs_test_bit(offset, sit_i->sit_bitmap))
 		blk_addr += sit_i->sit_blocks;
@@ -748,12 +645,6 @@ static inline void set_to_next_sit(struct sit_info *sit_i, unsigned int start)
 	unsigned int block_off = SIT_BLOCK_OFFSET(start);
 
 	f2fs_change_bit(block_off, sit_i->sit_bitmap);
-<<<<<<< HEAD
-=======
-#ifdef CONFIG_F2FS_CHECK_FS
-	f2fs_change_bit(block_off, sit_i->sit_bitmap_mir);
-#endif
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 static inline unsigned long long get_mtime(struct f2fs_sb_info *sbi)
@@ -784,47 +675,26 @@ static inline block_t sum_blk_addr(struct f2fs_sb_info *sbi, int base, int type)
 				- (base + 1) + type;
 }
 
-<<<<<<< HEAD
 static inline bool sec_usage_check(struct f2fs_sb_info *sbi, unsigned int secno)
 {
 	if (IS_CURSEC(sbi, secno) || (sbi->cur_victim_sec == secno))
-=======
-static inline bool no_fggc_candidate(struct f2fs_sb_info *sbi,
-						unsigned int secno)
-{
-	if (get_valid_blocks(sbi, secno, sbi->segs_per_sec) >=
-						sbi->fggc_threshold)
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		return true;
 	return false;
 }
 
-<<<<<<< HEAD
 static inline unsigned int max_hw_blocks(struct f2fs_sb_info *sbi)
 {
 	struct block_device *bdev = sbi->sb->s_bdev;
 	struct request_queue *q = bdev_get_queue(bdev);
 	return SECTOR_TO_BLOCK(queue_max_sectors(q));
-=======
-static inline bool sec_usage_check(struct f2fs_sb_info *sbi, unsigned int secno)
-{
-	if (IS_CURSEC(sbi, secno) || (sbi->cur_victim_sec == secno))
-		return true;
-	return false;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 /*
  * It is very important to gather dirty pages and write at once, so that we can
  * submit a big bio without interfering other data writes.
  * By default, 512 pages for directory data,
-<<<<<<< HEAD
  * 512 pages (2MB) * 3 for three types of nodes, and
  * max_bio_blocks for meta are set.
-=======
- * 512 pages (2MB) * 8 for nodes, and
- * 256 pages * 8 for meta are set.
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  */
 static inline int nr_pages_to_skip(struct f2fs_sb_info *sbi, int type)
 {
@@ -834,15 +704,9 @@ static inline int nr_pages_to_skip(struct f2fs_sb_info *sbi, int type)
 	if (type == DATA)
 		return sbi->blocks_per_seg;
 	else if (type == NODE)
-<<<<<<< HEAD
 		return 3 * sbi->blocks_per_seg;
 	else if (type == META)
 		return MAX_BIO_BLOCKS(sbi);
-=======
-		return 8 * sbi->blocks_per_seg;
-	else if (type == META)
-		return 8 * BIO_MAX_PAGES;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	else
 		return 0;
 }
@@ -859,7 +723,6 @@ static inline long nr_pages_to_write(struct f2fs_sb_info *sbi, int type,
 		return 0;
 
 	nr_to_write = wbc->nr_to_write;
-<<<<<<< HEAD
 
 	if (type == DATA)
 		desired = 4096;
@@ -867,11 +730,6 @@ static inline long nr_pages_to_write(struct f2fs_sb_info *sbi, int type,
 		desired = 3 * max_hw_blocks(sbi);
 	else
 		desired = MAX_BIO_BLOCKS(sbi);
-=======
-	desired = BIO_MAX_PAGES;
-	if (type == NODE)
-		desired <<= 1;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	wbc->nr_to_write = desired;
 	return desired - nr_to_write;

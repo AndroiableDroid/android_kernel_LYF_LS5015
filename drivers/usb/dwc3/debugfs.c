@@ -421,11 +421,7 @@ static ssize_t dwc3_mode_write(struct file *file,
 	struct dwc3		*dwc = s->private;
 	unsigned long		flags;
 	u32			mode = 0;
-<<<<<<< HEAD
 	char			buf[32];
-=======
-	char			buf[32] = {0};
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	if (copy_from_user(&buf, ubuf, min_t(size_t, sizeof(buf) - 1, count)))
 		return -EFAULT;
@@ -505,11 +501,7 @@ static ssize_t dwc3_testmode_write(struct file *file,
 	struct dwc3		*dwc = s->private;
 	unsigned long		flags;
 	u32			testmode = 0;
-<<<<<<< HEAD
 	char			buf[32];
-=======
-	char			buf[32] = {0};
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	if (copy_from_user(&buf, ubuf, min_t(size_t, sizeof(buf) - 1, count)))
 		return -EFAULT;
@@ -616,11 +608,7 @@ static ssize_t dwc3_link_state_write(struct file *file,
 	struct dwc3		*dwc = s->private;
 	unsigned long		flags;
 	enum dwc3_link_state	state = 0;
-<<<<<<< HEAD
 	char			buf[32];
-=======
-	char			buf[32] = {0};
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	if (copy_from_user(&buf, ubuf, min_t(size_t, sizeof(buf) - 1, count)))
 		return -EFAULT;
@@ -661,19 +649,12 @@ static ssize_t dwc3_store_ep_num(struct file *file, const char __user *ubuf,
 {
 	struct seq_file		*s = file->private_data;
 	struct dwc3		*dwc = s->private;
-<<<<<<< HEAD
 	char			kbuf[10];
 	unsigned int		num, dir, temp;
 	unsigned long		flags;
 
 	memset(kbuf, 0, 10);
 
-=======
-	char			kbuf[10] = {0};
-	unsigned int		num, dir, temp;
-	unsigned long		flags;
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	if (copy_from_user(kbuf, ubuf, count > 10 ? 10 : count))
 		return -EFAULT;
 
@@ -711,11 +692,7 @@ static int dwc3_ep_req_list_show(struct seq_file *s, void *unused)
 		req = list_entry(ptr, struct dwc3_request, list);
 
 		seq_printf(s,
-<<<<<<< HEAD
 			"req:0x%p len: %d sts: %d dma:0x%pa num_sgs: %d\n",
-=======
-			"req:0x%pK len: %d sts: %d dma:0x%pKa num_sgs: %d\n",
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			req, req->request.length, req->request.status,
 			&req->request.dma, req->request.num_sgs);
 	}
@@ -754,11 +731,7 @@ static int dwc3_ep_queued_req_show(struct seq_file *s, void *unused)
 		req = list_entry(ptr, struct dwc3_request, list);
 
 		seq_printf(s,
-<<<<<<< HEAD
 			"req:0x%p len:%d sts:%d dma:%pa nsg:%d trb:0x%p\n",
-=======
-			"req:0x%pK len:%d sts:%d dma:%pKa nsg:%d trb:0x%pK\n",
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			req, req->request.length, req->request.status,
 			&req->request.dma, req->request.num_sgs, req->trb);
 	}
@@ -798,11 +771,7 @@ static int dwc3_ep_trbs_show(struct seq_file *s, void *unused)
 		dep->name, dep->flags, dep->free_slot, dep->busy_slot);
 	for (j = 0; j < DWC3_TRB_NUM; j++) {
 		trb = &dep->trb_pool[j];
-<<<<<<< HEAD
 		seq_printf(s, "trb:0x%p bph:0x%x bpl:0x%x size:0x%x ctrl: %x\n",
-=======
-		seq_printf(s, "trb:0x%pK bph:0x%x bpl:0x%x size:0x%x ctrl: %x\n",
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			trb, trb->bph, trb->bpl, trb->size, trb->ctrl);
 	}
 	spin_unlock_irqrestore(&dwc->lock, flags);
@@ -1029,7 +998,6 @@ void dbg_print_reg(const char *name, int reg)
 static ssize_t dwc3_store_events(struct file *file,
 			    const char __user *buf, size_t count, loff_t *ppos)
 {
-<<<<<<< HEAD
 	unsigned tty;
 
 	if (buf == NULL) {
@@ -1040,36 +1008,12 @@ static ssize_t dwc3_store_events(struct file *file,
 	if (sscanf(buf, "%u", &tty) != 1 || tty > 1) {
 		pr_err("<1|0>: enable|disable console log\n");
 		goto done;
-=======
-	int ret;
-	u8 tty;
-
-	if (buf == NULL) {
-		pr_err("[%s] EINVAL\n", __func__);
-		ret = -EINVAL;
-		return ret;
-	}
-
-	ret = kstrtou8_from_user(buf, count, 0, &tty);
-	if (ret < 0) {
-		pr_err("can't get enter value.\n");
-		return ret;
-	}
-
-	if (tty > 1) {
-		pr_err("<1|0>: enable|disable console log\n");
-		ret = -EINVAL;
-		return ret;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	}
 
 	dbg_dwc3_data.tty = tty;
 	pr_info("tty = %u", dbg_dwc3_data.tty);
 
-<<<<<<< HEAD
  done:
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	return count;
 }
 
@@ -1110,17 +1054,12 @@ const struct file_operations dwc3_gadget_dbg_data_fops = {
 static ssize_t dwc3_store_int_events(struct file *file,
 			const char __user *ubuf, size_t count, loff_t *ppos)
 {
-<<<<<<< HEAD
 	int clear_stats, i;
-=======
-	int i, ret;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	unsigned long flags;
 	struct seq_file *s = file->private_data;
 	struct dwc3 *dwc = s->private;
 	struct dwc3_ep *dep;
 	struct timespec ts;
-<<<<<<< HEAD
 
 	if (ubuf == NULL) {
 		pr_err("[%s] EINVAL\n", __func__);
@@ -1130,26 +1069,6 @@ static ssize_t dwc3_store_int_events(struct file *file,
 	if (sscanf(ubuf, "%u", &clear_stats) != 1 || clear_stats != 0) {
 		pr_err("Wrong value. To clear stats, enter value as 0.\n");
 		goto done;
-=======
-	u8 clear_stats;
-
-	if (ubuf == NULL) {
-		pr_err("[%s] EINVAL\n", __func__);
-		ret = -EINVAL;
-		return ret;
-	}
-
-	ret = kstrtou8_from_user(ubuf, count, 0, &clear_stats);
-	if (ret < 0) {
-		pr_err("can't get enter value.\n");
-		return ret;
-	}
-
-	if (clear_stats != 0) {
-		pr_err("Wrong value. To clear stats, enter value as 0.\n");
-		ret = -EINVAL;
-		return ret;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	}
 
 	spin_lock_irqsave(&dwc->lock, flags);
@@ -1166,10 +1085,7 @@ static ssize_t dwc3_store_int_events(struct file *file,
 
 	spin_unlock_irqrestore(&dwc->lock, flags);
 
-<<<<<<< HEAD
 done:
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	return count;
 }
 

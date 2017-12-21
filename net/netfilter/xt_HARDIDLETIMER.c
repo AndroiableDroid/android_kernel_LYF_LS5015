@@ -134,11 +134,7 @@ static ssize_t hardidletimer_tg_show(struct kobject *kobj,
 	if (ktimespec.tv_sec >= 0)
 		return snprintf(buf, PAGE_SIZE, "%ld\n", ktimespec.tv_sec);
 
-<<<<<<< HEAD
 	if (timer->send_nl_msg)
-=======
-	if ((timer) && (timer->send_nl_msg))
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		return snprintf(buf, PAGE_SIZE, "0 %ld\n", ktimespec.tv_sec);
 	else
 		return snprintf(buf, PAGE_SIZE, "0\n");

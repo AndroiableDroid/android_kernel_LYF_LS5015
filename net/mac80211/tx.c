@@ -335,11 +335,7 @@ static void purge_old_ps_buffers(struct ieee80211_local *local)
 		skb = skb_dequeue(&ps->bc_buf);
 		if (skb) {
 			purged++;
-<<<<<<< HEAD
 			dev_kfree_skb(skb);
-=======
-			ieee80211_free_txskb(&local->hw, skb);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		}
 		total += skb_queue_len(&ps->bc_buf);
 	}
@@ -421,11 +417,7 @@ ieee80211_tx_h_multicast_ps_buf(struct ieee80211_tx_data *tx)
 	if (skb_queue_len(&ps->bc_buf) >= AP_MAX_BC_BUFFER) {
 		ps_dbg(tx->sdata,
 		       "BC TX buffer full - dropping the oldest frame\n");
-<<<<<<< HEAD
 		dev_kfree_skb(skb_dequeue(&ps->bc_buf));
-=======
-		ieee80211_free_txskb(&tx->local->hw, skb_dequeue(&ps->bc_buf));
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	} else
 		tx->local->total_ps_buffered++;
 
@@ -2719,11 +2711,7 @@ ieee80211_get_buffered_bc(struct ieee80211_hw *hw,
 			sdata = IEEE80211_DEV_TO_SUB_IF(skb->dev);
 		if (!ieee80211_tx_prepare(sdata, &tx, skb))
 			break;
-<<<<<<< HEAD
 		dev_kfree_skb_any(skb);
-=======
-		ieee80211_free_txskb(hw, skb);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	}
 
 	info = IEEE80211_SKB_CB(skb);

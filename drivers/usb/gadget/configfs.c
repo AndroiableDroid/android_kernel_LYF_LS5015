@@ -87,19 +87,12 @@ struct gadget_config_name {
 	struct list_head list;
 };
 
-<<<<<<< HEAD
-=======
-#define MAX_USB_STRING_LEN	126
-#define MAX_USB_STRING_WITH_NULL_LEN	(MAX_USB_STRING_LEN+1)
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 static int usb_string_copy(const char *s, char **s_copy)
 {
 	int ret;
 	char *str;
 	char *copy = *s_copy;
 	ret = strlen(s);
-<<<<<<< HEAD
 	if (ret > 126)
 		return -EOVERFLOW;
 
@@ -109,21 +102,6 @@ static int usb_string_copy(const char *s, char **s_copy)
 	if (str[ret - 1] == '\n')
 		str[ret - 1] = '\0';
 	kfree(copy);
-=======
-	if (ret > MAX_USB_STRING_LEN)
-		return -EOVERFLOW;
-
-	if (copy) {
-		str = copy;
-	} else {
-		str = kmalloc(MAX_USB_STRING_WITH_NULL_LEN, GFP_KERNEL);
-		if (!str)
-			return -ENOMEM;
-	}
-	strncpy(str, s, MAX_USB_STRING_WITH_NULL_LEN);
-	if (str[ret - 1] == '\n')
-		str[ret - 1] = '\0';
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	*s_copy = str;
 	return 0;
 }
@@ -774,11 +752,7 @@ static void purge_configs_funcs(struct gadget_info *gi)
 			list_move_tail(&f->list, &cfg->func_list);
 			if (f->unbind) {
 				dev_err(&gi->cdev.gadget->dev, "unbind function"
-<<<<<<< HEAD
 						" '%s'/%p\n", f->name, f);
-=======
-						" '%s'/%pK\n", f->name, f);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				f->unbind(c, f);
 			}
 		}

@@ -1576,11 +1576,7 @@ static void pppol2tp_next_tunnel(struct net *net, struct pppol2tp_seq_data *pd)
 
 static void pppol2tp_next_session(struct net *net, struct pppol2tp_seq_data *pd)
 {
-<<<<<<< HEAD
 	pd->session = l2tp_session_find_nth(pd->tunnel, pd->session_idx);
-=======
-	pd->session = l2tp_session_get_nth(pd->tunnel, pd->session_idx, true);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	pd->session_idx++;
 
 	if (pd->session == NULL) {
@@ -1707,21 +1703,10 @@ static int pppol2tp_seq_show(struct seq_file *m, void *v)
 
 	/* Show the tunnel or session context.
 	 */
-<<<<<<< HEAD
 	if (pd->session == NULL)
 		pppol2tp_seq_tunnel_show(m, pd->tunnel);
 	else
 		pppol2tp_seq_session_show(m, pd->session);
-=======
-	if (!pd->session) {
-		pppol2tp_seq_tunnel_show(m, pd->tunnel);
-	} else {
-		pppol2tp_seq_session_show(m, pd->session);
-		if (pd->session->deref)
-			pd->session->deref(pd->session);
-		l2tp_session_dec_refcount(pd->session);
-	}
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 out:
 	return 0;

@@ -1952,7 +1952,6 @@ ieee80211_rx_h_amsdu(struct ieee80211_rx_data *rx)
 	if (!(status->rx_flags & IEEE80211_RX_AMSDU))
 		return RX_CONTINUE;
 
-<<<<<<< HEAD
 	if (ieee80211_has_a4(hdr->frame_control) &&
 	    rx->sdata->vif.type == NL80211_IFTYPE_AP_VLAN &&
 	    !rx->sdata->u.vlan.sta)
@@ -1963,24 +1962,6 @@ ieee80211_rx_h_amsdu(struct ieee80211_rx_data *rx)
 	      rx->sdata->u.vlan.sta) ||
 	     (rx->sdata->vif.type == NL80211_IFTYPE_STATION &&
 	      rx->sdata->u.mgd.use_4addr)))
-=======
-	if (unlikely(ieee80211_has_a4(hdr->frame_control))) {
-		switch (rx->sdata->vif.type) {
-		case NL80211_IFTYPE_AP_VLAN:
-			if (!rx->sdata->u.vlan.sta)
-				return RX_DROP_UNUSABLE;
-			break;
-		case NL80211_IFTYPE_STATION:
-			if (!rx->sdata->u.mgd.use_4addr)
-				return RX_DROP_UNUSABLE;
-			break;
-		default:
-			return RX_DROP_UNUSABLE;
-		}
-	}
-
-	if (is_multicast_ether_addr(hdr->addr1))
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		return RX_DROP_UNUSABLE;
 
 	skb->dev = dev;

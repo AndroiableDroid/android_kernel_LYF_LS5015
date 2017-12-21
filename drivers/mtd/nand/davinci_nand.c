@@ -241,12 +241,6 @@ static void nand_davinci_hwctl_4bit(struct mtd_info *mtd, int mode)
 	unsigned long flags;
 	u32 val;
 
-<<<<<<< HEAD
-=======
-	/* Reset ECC hardware */
-	davinci_nand_readl(info, NAND_4BIT_ECC1_OFFSET);
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	spin_lock_irqsave(&davinci_nand_lock, flags);
 
 	/* Start 4-bit ECC calculation for read/write */

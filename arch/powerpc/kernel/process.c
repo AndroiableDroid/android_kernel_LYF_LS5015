@@ -1440,11 +1440,7 @@ void notrace __ppc64_runlatch_off(void)
 unsigned long arch_align_stack(unsigned long sp)
 {
 	if (!(current->personality & ADDR_NO_RANDOMIZE) && randomize_va_space)
-<<<<<<< HEAD
 		sp -= get_random_int() & ~PAGE_MASK;
-=======
-		sp -= get_random_long() & ~PAGE_MASK;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	return sp & ~0xf;
 }
 

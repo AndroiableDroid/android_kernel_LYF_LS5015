@@ -244,21 +244,10 @@ static void heartbeat_onchannelcallback(void *context)
 	struct heartbeat_msg_data *heartbeat_msg;
 	u8 *hbeat_txf_buf = util_heartbeat.recv_buffer;
 
-<<<<<<< HEAD
 	vmbus_recvpacket(channel, hbeat_txf_buf,
 			 PAGE_SIZE, &recvlen, &requestid);
 
 	if (recvlen > 0) {
-=======
-	while (1) {
-
-		vmbus_recvpacket(channel, hbeat_txf_buf,
-				 PAGE_SIZE, &recvlen, &requestid);
-
-		if (!recvlen)
-			break;
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		icmsghdrp = (struct icmsg_hdr *)&hbeat_txf_buf[
 				sizeof(struct vmbuspipe_hdr)];
 

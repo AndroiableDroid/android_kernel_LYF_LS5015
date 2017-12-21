@@ -353,10 +353,6 @@ struct sock {
 				sk_no_check  : 2,
 				sk_userlocks : 4,
 				sk_protocol  : 8,
-<<<<<<< HEAD
-=======
-#define SK_PROTOCOL_MAX U8_MAX
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				sk_type      : 16;
 	kmemcheck_bitfield_end(flags);
 	int			sk_wmem_queued;
@@ -1363,11 +1359,7 @@ static inline struct inode *SOCK_INODE(struct socket *socket)
  * Functions for memory accounting
  */
 extern int __sk_mem_schedule(struct sock *sk, int size, int kind);
-<<<<<<< HEAD
 extern void __sk_mem_reclaim(struct sock *sk);
-=======
-void __sk_mem_reclaim(struct sock *sk, int amount);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 #define SK_MEM_QUANTUM ((int)PAGE_SIZE)
 #define SK_MEM_QUANTUM_SHIFT ilog2(SK_MEM_QUANTUM)
@@ -1408,11 +1400,7 @@ static inline void sk_mem_reclaim(struct sock *sk)
 	if (!sk_has_account(sk))
 		return;
 	if (sk->sk_forward_alloc >= SK_MEM_QUANTUM)
-<<<<<<< HEAD
 		__sk_mem_reclaim(sk);
-=======
-		__sk_mem_reclaim(sk, sk->sk_forward_alloc);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 static inline void sk_mem_reclaim_partial(struct sock *sk)
@@ -1420,11 +1408,7 @@ static inline void sk_mem_reclaim_partial(struct sock *sk)
 	if (!sk_has_account(sk))
 		return;
 	if (sk->sk_forward_alloc > SK_MEM_QUANTUM)
-<<<<<<< HEAD
 		__sk_mem_reclaim(sk);
-=======
-		__sk_mem_reclaim(sk, sk->sk_forward_alloc - 1);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 static inline void sk_mem_charge(struct sock *sk, int size)
@@ -1439,19 +1423,6 @@ static inline void sk_mem_uncharge(struct sock *sk, int size)
 	if (!sk_has_account(sk))
 		return;
 	sk->sk_forward_alloc += size;
-<<<<<<< HEAD
-=======
-
-	/* Avoid a possible overflow.
-	 * TCP send queues can make this happen, if sk_mem_reclaim()
-	 * is not called and more than 2 GBytes are released at once.
-	 *
-	 * If we reach 2 MBytes, reclaim 1 MBytes right now, there is
-	 * no need to hold that much forward allocation anyway.
-	 */
-	if (unlikely(sk->sk_forward_alloc >= 1 << 21))
-		__sk_mem_reclaim(sk, 1 << 20);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 static inline void sk_wmem_free_skb(struct sock *sk, struct sk_buff *skb)

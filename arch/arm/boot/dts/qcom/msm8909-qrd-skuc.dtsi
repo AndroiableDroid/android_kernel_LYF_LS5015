@@ -90,10 +90,6 @@
 			focaltech,fw-auto-cal;
 			focaltech,ignore-id-check;
 			focaltech,gesture-support;
-<<<<<<< HEAD
-=======
-			focaltech,resume-in-workqueue;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		};
 
 	};

@@ -58,11 +58,7 @@ obj-$(CONFIG_LEDS_LM355x)		+= leds-lm355x.o
 obj-$(CONFIG_LEDS_BLINKM)		+= leds-blinkm.o
 obj-$(CONFIG_LEDS_MSM_GPIO_FLASH)	+= leds-msm-gpio-flash.o
 obj-$(CONFIG_LEDS_AW2013)		+= leds-aw2013.o
-<<<<<<< HEAD
 obj-$(CONFIG_LEDS_aw2013rgb)    += aw2013_rgb.o
-=======
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 # LED SPI Drivers
 obj-$(CONFIG_LEDS_DAC124S085)		+= leds-dac124s085.o
 

@@ -53,16 +53,10 @@ obj-$(CONFIG_CHARGER_BQ2415X)	+= bq2415x_charger.o
 obj-$(CONFIG_POWER_AVS)		+= avs/
 obj-$(CONFIG_SMB349_USB_CHARGER)   += smb349-charger.o
 obj-$(CONFIG_SMB350_CHARGER)   += smb350_charger.o
-<<<<<<< HEAD
 obj-$(CONFIG_SMB135X_CHARGER)   += smb135x-charger.o
 obj-$(CONFIG_SMB1360_CHARGER_FG) += smb1360-charger-fg.o
 obj-$(CONFIG_SMB1360_CHARGER_FG_TESTPLUS) += smb1360-charger-fg-testplus.o
 obj-$(CONFIG_SMB1360_CHARGER_FG_TEST) += smb1360-charger-fg-test.o
-=======
-obj-$(CONFIG_SMB1351_USB_CHARGER) += smb1351-charger.o
-obj-$(CONFIG_SMB135X_CHARGER)   += smb135x-charger.o
-obj-$(CONFIG_SMB1360_CHARGER_FG) += smb1360-charger-fg.o
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 obj-$(CONFIG_SMB358_CHARGER)	+= smb358-charger.o
 obj-$(CONFIG_BATTERY_BQ28400)	+= bq28400_battery.o
 obj-$(CONFIG_SMB137C_CHARGER)	+= smb137c-charger.o

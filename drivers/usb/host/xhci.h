@@ -1262,19 +1262,11 @@ struct xhci_td {
 	union xhci_trb		*first_trb;
 	union xhci_trb		*last_trb;
 
-<<<<<<< HEAD
 	/* ZLP received in data stage of a control transfer */
 	bool			zlp_data;
 
 	/* actual_length of the URB has already been set */
 	bool			urb_length_set;
-=======
-	/* actual_length of the URB has already been set */
-	bool			urb_length_set;
-
-	/* ZLP received in data stage of a control transfer */
-	bool			zlp_data;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 };
 
 /* xHCI command default timeout value */

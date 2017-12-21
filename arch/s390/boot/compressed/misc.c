@@ -138,7 +138,6 @@ static void check_ipl_parmblock(void *start, unsigned long size)
 
 unsigned long decompress_kernel(void)
 {
-<<<<<<< HEAD
 	unsigned long output_addr;
 	unsigned char *output;
 
@@ -148,18 +147,10 @@ unsigned long decompress_kernel(void)
 	free_mem_ptr = (unsigned long)&_end;
 	free_mem_end_ptr = free_mem_ptr + HEAP_SIZE;
 	output = (unsigned char *) output_addr;
-=======
-	void *output, *kernel_end;
-
-	output = (void *) ALIGN((unsigned long) &_end + HEAP_SIZE, PAGE_SIZE);
-	kernel_end = output + SZ__bss_start;
-	check_ipl_parmblock((void *) 0, (unsigned long) kernel_end);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 #ifdef CONFIG_BLK_DEV_INITRD
 	/*
 	 * Move the initrd right behind the end of the decompressed
-<<<<<<< HEAD
 	 * kernel image.
 	 */
 	if (INITRD_START && INITRD_SIZE &&
@@ -172,27 +163,6 @@ unsigned long decompress_kernel(void)
 	}
 #endif
 
-=======
-	 * kernel image. This also prevents initrd corruption caused by
-	 * bss clearing since kernel_end will always be located behind the
-	 * current bss section..
-	 */
-	if (INITRD_START && INITRD_SIZE && kernel_end > (void *) INITRD_START) {
-		check_ipl_parmblock(kernel_end, INITRD_SIZE);
-		memmove(kernel_end, (void *) INITRD_START, INITRD_SIZE);
-		INITRD_START = (unsigned long) kernel_end;
-	}
-#endif
-
-	/*
-	 * Clear bss section. free_mem_ptr and free_mem_end_ptr need to be
-	 * initialized afterwards since they reside in bss.
-	 */
-	memset(&_bss, 0, &_ebss - &_bss);
-	free_mem_ptr = (unsigned long) &_end;
-	free_mem_end_ptr = free_mem_ptr + HEAP_SIZE;
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	puts("Uncompressing Linux... ");
 	decompress(input_data, input_len, NULL, NULL, output, NULL, error);
 	puts("Ok, booting the kernel.\n");

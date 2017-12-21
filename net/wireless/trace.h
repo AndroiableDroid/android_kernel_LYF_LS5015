@@ -2587,7 +2587,6 @@ TRACE_EVENT(cfg80211_ft_event,
 		  WIPHY_PR_ARG, NETDEV_PR_ARG, MAC_PR_ARG(target_ap))
 );
 
-<<<<<<< HEAD
 DEFINE_EVENT(wiphy_netdev_mac_evt, rdev_key_mgmt_set_pmk,
 	TP_PROTO(struct wiphy *wiphy, struct net_device *netdev, const u8 *pmk),
 	TP_ARGS(wiphy, netdev, pmk)
@@ -2611,8 +2610,6 @@ TRACE_EVENT(cfg80211_authorization_event,
 		  WIPHY_PR_ARG, NETDEV_PR_ARG, __entry->auth_status)
 );
 
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 #endif /* !__RDEV_OPS_TRACE || TRACE_HEADER_MULTI_READ */
 
 #undef TRACE_INCLUDE_PATH

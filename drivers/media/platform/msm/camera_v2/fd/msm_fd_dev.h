@@ -212,10 +212,6 @@ enum msm_fd_mem_resources {
 struct msm_fd_device {
 	struct mutex lock;
 	spinlock_t slock;
-<<<<<<< HEAD
-=======
-	struct mutex recovery_lock;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	int ref_count;
 
 	int irq_num;

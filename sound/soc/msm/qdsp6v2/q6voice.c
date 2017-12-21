@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 /*  Copyright (c) 2012-2016, The Linux Foundation. All rights reserved.
-=======
-/*  Copyright (c) 2012-2017, The Linux Foundation. All rights reserved.
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -92,13 +88,8 @@ static int voice_alloc_oob_shared_mem(void);
 static int voice_free_oob_shared_mem(void);
 static int voice_alloc_oob_mem_table(void);
 static int voice_alloc_and_map_oob_mem(struct voice_data *v);
-<<<<<<< HEAD
 static int voc_disable_cvp(uint32_t session_id);
 static int voc_enable_cvp(uint32_t session_id);
-=======
-static int voice_disable_cvp(uint32_t session_id);
-static int voice_enable_cvp(uint32_t session_id);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 static void voice_vote_powerstate_to_bms(struct voice_data *v, bool state);
 
 static struct voice_data *voice_get_session_by_idx(int idx);
@@ -166,11 +157,6 @@ static bool voice_is_valid_session_id(uint32_t session_id)
 	case VOIP_SESSION_VSID:
 	case QCHAT_SESSION_VSID:
 	case VOWLAN_SESSION_VSID:
-<<<<<<< HEAD
-=======
-	case VOICEMMODE1_VSID:
-	case VOICEMMODE2_VSID:
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	case ALL_SESSION_VSID:
 		ret = true;
 		break;
@@ -267,15 +253,6 @@ char *voc_get_session_name(u32 session_id)
 	} else if (session_id ==
 			common.voice[VOC_PATH_VOWLAN_PASSIVE].session_id) {
 		session_name = VOWLAN_SESSION_NAME;
-<<<<<<< HEAD
-=======
-	} else if (session_id ==
-		common.voice[VOC_PATH_VOICEMMODE1_PASSIVE].session_id) {
-		session_name = VOICEMMODE1_NAME;
-	} else if (session_id ==
-		common.voice[VOC_PATH_VOICEMMODE2_PASSIVE].session_id) {
-		session_name = VOICEMMODE2_NAME;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	} else if (session_id == common.voice[VOC_PATH_FULL].session_id) {
 		session_name = VOIP_SESSION_NAME;
 	}
@@ -301,15 +278,6 @@ uint32_t voc_get_session_id(char *name)
 		else if (!strncmp(name, "VoWLAN session", 14))
 			session_id =
 			common.voice[VOC_PATH_VOWLAN_PASSIVE].session_id;
-<<<<<<< HEAD
-=======
-		else if (!strcmp(name, "VoiceMMode1"))
-			session_id =
-			common.voice[VOC_PATH_VOICEMMODE1_PASSIVE].session_id;
-		else if (!strcmp(name, "VoiceMMode2"))
-			session_id =
-			common.voice[VOC_PATH_VOICEMMODE2_PASSIVE].session_id;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		else
 			session_id = common.voice[VOC_PATH_FULL].session_id;
 
@@ -349,17 +317,6 @@ static struct voice_data *voice_get_session(u32 session_id)
 		v = &common.voice[VOC_PATH_VOWLAN_PASSIVE];
 		break;
 
-<<<<<<< HEAD
-=======
-	case VOICEMMODE1_VSID:
-		v = &common.voice[VOC_PATH_VOICEMMODE1_PASSIVE];
-		break;
-
-	case VOICEMMODE2_VSID:
-		v = &common.voice[VOC_PATH_VOICEMMODE2_PASSIVE];
-		break;
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	case ALL_SESSION_VSID:
 		break;
 
@@ -404,17 +361,6 @@ int voice_get_idx_for_session(u32 session_id)
 		idx = VOC_PATH_VOWLAN_PASSIVE;
 		break;
 
-<<<<<<< HEAD
-=======
-	case VOICEMMODE1_VSID:
-		idx = VOC_PATH_VOICEMMODE1_PASSIVE;
-		break;
-
-	case VOICEMMODE2_VSID:
-		idx = VOC_PATH_VOICEMMODE2_PASSIVE;
-		break;
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	case ALL_SESSION_VSID:
 		idx = MAX_VOC_SESSIONS - 1;
 		break;
@@ -434,14 +380,11 @@ static struct voice_data *voice_get_session_by_idx(int idx)
 				NULL : &common.voice[idx]);
 }
 
-<<<<<<< HEAD
 static bool is_voice_session(u32 session_id)
 {
 	return (session_id == common.voice[VOC_PATH_PASSIVE].session_id);
 }
 
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 static bool is_voip_session(u32 session_id)
 {
 	return (session_id == common.voice[VOC_PATH_FULL].session_id);
@@ -467,21 +410,6 @@ static bool is_vowlan_session(u32 session_id)
 	return (session_id == common.voice[VOC_PATH_VOWLAN_PASSIVE].session_id);
 }
 
-<<<<<<< HEAD
-=======
-static bool is_voicemmode1(u32 session_id)
-{
-	return session_id ==
-			common.voice[VOC_PATH_VOICEMMODE1_PASSIVE].session_id;
-}
-
-static bool is_voicemmode2(u32 session_id)
-{
-	return session_id ==
-			common.voice[VOC_PATH_VOICEMMODE2_PASSIVE].session_id;
-}
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 static bool is_voc_state_active(int voc_state)
 {
 	if ((voc_state == VOC_RUN) ||
@@ -527,50 +455,10 @@ static bool is_other_session_active(u32 session_id)
 	return ret;
 }
 
-<<<<<<< HEAD
 static bool is_voice_app_id(u32 session_id)
 {
 	return (((session_id & APP_ID_MASK) >> APP_ID_SHIFT) ==
 						VSID_APP_CS_VOICE);
-=======
-static bool is_sub1_vsid(u32 session_id)
-{
-	bool ret;
-
-	switch (session_id) {
-	case VOICE_SESSION_VSID:
-	case VOLTE_SESSION_VSID:
-	case VOWLAN_SESSION_VSID:
-	case VOICEMMODE1_VSID:
-		ret = true;
-		break;
-	default:
-		ret = false;
-	}
-
-	return ret;
-}
-
-static bool is_sub2_vsid(u32 session_id)
-{
-	bool ret;
-
-	switch (session_id) {
-	case VOICE2_SESSION_VSID:
-	case VOICEMMODE2_VSID:
-		ret = true;
-		break;
-	default:
-		ret = false;
-	}
-
-	return ret;
-}
-
-static bool is_voice_app_id(u32 session_id)
-{
-	return is_sub1_vsid(session_id) || is_sub2_vsid(session_id);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 static void init_session_id(void)
@@ -581,13 +469,6 @@ static void init_session_id(void)
 	common.voice[VOC_PATH_FULL].session_id = VOIP_SESSION_VSID;
 	common.voice[VOC_PATH_QCHAT_PASSIVE].session_id = QCHAT_SESSION_VSID;
 	common.voice[VOC_PATH_VOWLAN_PASSIVE].session_id = VOWLAN_SESSION_VSID;
-<<<<<<< HEAD
-=======
-	common.voice[VOC_PATH_VOICEMMODE1_PASSIVE].session_id =
-							VOICEMMODE1_VSID;
-	common.voice[VOC_PATH_VOICEMMODE2_PASSIVE].session_id =
-							VOICEMMODE2_VSID;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 static int voice_apr_register(uint32_t session_id)
@@ -829,17 +710,6 @@ static int voice_create_mvm_cvs_session(struct voice_data *v)
 				strlcpy(mvm_session_cmd.mvm_session.name,
 				VOWLAN_SESSION_VSID_STR,
 				strlen(VOWLAN_SESSION_VSID_STR)+1);
-<<<<<<< HEAD
-=======
-			} else if (is_voicemmode1(v->session_id)) {
-				strlcpy(mvm_session_cmd.mvm_session.name,
-				VOICEMMODE1_VSID_STR,
-				strlen(VOICEMMODE1_VSID_STR) + 1);
-			} else if (is_voicemmode2(v->session_id)) {
-				strlcpy(mvm_session_cmd.mvm_session.name,
-				VOICEMMODE2_VSID_STR,
-				strlen(VOICEMMODE2_VSID_STR) + 1);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			} else {
 				strlcpy(mvm_session_cmd.mvm_session.name,
 				"default modem voice",
@@ -938,17 +808,6 @@ static int voice_create_mvm_cvs_session(struct voice_data *v)
 				strlcpy(cvs_session_cmd.cvs_session.name,
 				VOWLAN_SESSION_VSID_STR,
 				strlen(VOWLAN_SESSION_VSID_STR)+1);
-<<<<<<< HEAD
-=======
-			} else if (is_voicemmode1(v->session_id)) {
-				strlcpy(cvs_session_cmd.cvs_session.name,
-				VOICEMMODE1_VSID_STR,
-				strlen(VOICEMMODE1_VSID_STR) + 1);
-			} else if (is_voicemmode2(v->session_id)) {
-				strlcpy(cvs_session_cmd.cvs_session.name,
-				VOICEMMODE2_VSID_STR,
-				strlen(VOICEMMODE2_VSID_STR) + 1);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			} else {
 			strlcpy(cvs_session_cmd.cvs_session.name,
 				"default modem voice",
@@ -4776,7 +4635,6 @@ done:
 
 int voc_start_playback(uint32_t set, uint16_t port_id)
 {
-<<<<<<< HEAD
 	int ret = 0;
 	u16 cvs_handle;
 
@@ -4819,54 +4677,13 @@ int voc_start_playback(uint32_t set, uint16_t port_id)
 							VOLTE_SESSION_NAME));
 		} else {
 			break;
-=======
-	struct voice_data *v = NULL;
-	int ret = 0;
-	struct voice_session_itr itr;
-	u16 cvs_handle;
-
-	pr_debug("%s port_id = %#x set = %d", __func__, port_id, set);
-
-	voice_itr_init(&itr, ALL_SESSION_VSID);
-	while (voice_itr_get_next_session(&itr, &v)) {
-		if ((v != NULL) &&
-		    (((port_id == VOICE_PLAYBACK_TX) &&
-		       is_sub1_vsid(v->session_id)) ||
-		     ((port_id == VOICE2_PLAYBACK_TX) &&
-		       is_sub2_vsid(v->session_id)))) {
-
-			mutex_lock(&v->lock);
-			v->music_info.port_id = port_id;
-			v->music_info.play_enable = set;
-			if (set)
-				v->music_info.count++;
-			else
-				v->music_info.count--;
-			pr_debug("%s: music_info count=%d\n", __func__,
-				 v->music_info.count);
-
-			cvs_handle = voice_get_cvs_handle(v);
-			if (cvs_handle != 0) {
-				if (set)
-					ret = voice_cvs_start_playback(v);
-				else
-					ret = voice_cvs_stop_playback(v);
-			}
-			mutex_unlock(&v->lock);
-		} else {
-			pr_err("%s: Invalid session\n", __func__);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		}
 	}
 
 	return ret;
 }
 
-<<<<<<< HEAD
 static int voc_disable_cvp(uint32_t session_id)
-=======
-static int voice_disable_cvp(uint32_t session_id)
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 {
 	struct voice_data *v = voice_get_session(session_id);
 	int ret = 0;
@@ -4905,11 +4722,7 @@ done:
 	return ret;
 }
 
-<<<<<<< HEAD
 static int voc_enable_cvp(uint32_t session_id)
-=======
-static int voice_enable_cvp(uint32_t session_id)
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 {
 	struct voice_data *v = voice_get_session(session_id);
 	int ret = 0;
@@ -5197,13 +5010,9 @@ int voc_set_pp_enable(uint32_t session_id, uint32_t module_id, uint32_t enable)
 	voice_itr_init(&itr, session_id);
 	while (voice_itr_get_next_session(&itr, &v)) {
 		if (v != NULL) {
-<<<<<<< HEAD
 			if (!(is_voice_app_id(v->session_id) ||
 			      is_volte_session(v->session_id) ||
 			      is_vowlan_session(v->session_id)))
-=======
-			if (!(is_voice_app_id(v->session_id)))
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				continue;
 
 			mutex_lock(&v->lock);
@@ -5607,29 +5416,17 @@ int voc_set_lch(uint32_t session_id, enum voice_lch_mode lch_mode)
 			goto done;
 		}
 	} else {
-<<<<<<< HEAD
 		ret = voc_disable_cvp(session_id);
 		if (ret < 0) {
 			pr_err("%s: voc_disable_cvp failed ret=%d\n",
-=======
-		ret = voice_disable_cvp(session_id);
-		if (ret < 0) {
-			pr_err("%s: voice_disable_cvp failed ret=%d\n",
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				__func__, ret);
 			goto done;
 		}
 
 		/* Mute and topology_none are set during vocproc enable */
-<<<<<<< HEAD
 		ret = voc_enable_cvp(session_id);
 		if (ret < 0) {
 			pr_err("%s: voc_enable_cvp failed ret=%d\n",
-=======
-		ret = voice_enable_cvp(session_id);
-		if (ret < 0) {
-			pr_err("%s: voice_enable_cvp failed ret=%d\n",
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				 __func__, ret);
 			goto done;
 		}
@@ -7618,11 +7415,7 @@ static int voice_alloc_source_tracking_shared_memory(void)
 		&(common.source_tracking_sh_mem.sh_mem_block.handle),
 		BUFFER_BLOCK_SIZE,
 		&(common.source_tracking_sh_mem.sh_mem_block.phys),
-<<<<<<< HEAD
 		(size_t *)&(common.source_tracking_sh_mem.sh_mem_block.size),
-=======
-		&(common.source_tracking_sh_mem.sh_mem_block.size),
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		&(common.source_tracking_sh_mem.sh_mem_block.data));
 	if (ret < 0) {
 		pr_err("%s: audio ION alloc failed for sh_mem block, ret = %d\n",
@@ -7638,22 +7431,14 @@ static int voice_alloc_source_tracking_shared_memory(void)
 		 __func__,
 		&(common.source_tracking_sh_mem.sh_mem_block.phys),
 		(void *)(common.source_tracking_sh_mem.sh_mem_block.data),
-<<<<<<< HEAD
 		(size_t)(common.source_tracking_sh_mem.sh_mem_block.size));
-=======
-		(common.source_tracking_sh_mem.sh_mem_block.size));
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	ret = msm_audio_ion_alloc("source_tracking_sh_mem_table",
 		&(common.source_tracking_sh_mem.sh_mem_table.client),
 		&(common.source_tracking_sh_mem.sh_mem_table.handle),
 		sizeof(struct vss_imemory_table_t),
 		&(common.source_tracking_sh_mem.sh_mem_table.phys),
-<<<<<<< HEAD
 		(size_t *)&(common.source_tracking_sh_mem.sh_mem_table.size),
-=======
-		&(common.source_tracking_sh_mem.sh_mem_table.size),
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		&(common.source_tracking_sh_mem.sh_mem_table.data));
 	if (ret < 0) {
 		pr_err("%s: audio ION alloc failed for sh_mem table, ret = %d\n",
@@ -7677,11 +7462,7 @@ static int voice_alloc_source_tracking_shared_memory(void)
 		 __func__,
 		&(common.source_tracking_sh_mem.sh_mem_table.phys),
 		(void *)(common.source_tracking_sh_mem.sh_mem_table.data),
-<<<<<<< HEAD
 		(size_t)(common.source_tracking_sh_mem.sh_mem_table.size));
-=======
-		(common.source_tracking_sh_mem.sh_mem_table.size));
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 done:
 	pr_debug("%s: Exit, ret=%d\n", __func__, ret);

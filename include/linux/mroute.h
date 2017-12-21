@@ -103,9 +103,5 @@ struct mfc_cache {
 struct rtmsg;
 extern int ipmr_get_route(struct net *net, struct sk_buff *skb,
 			  __be32 saddr, __be32 daddr,
-<<<<<<< HEAD
 			  struct rtmsg *rtm, int nowait);
-=======
-			  struct rtmsg *rtm, int nowait, u32 portid);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 #endif

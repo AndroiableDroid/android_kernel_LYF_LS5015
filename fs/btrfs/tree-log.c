@@ -1691,19 +1691,12 @@ static noinline int find_dir_range(struct btrfs_root *root,
 next:
 	/* check the next slot in the tree to see if it is a valid item */
 	nritems = btrfs_header_nritems(path->nodes[0]);
-<<<<<<< HEAD
-=======
-	path->slots[0]++;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	if (path->slots[0] >= nritems) {
 		ret = btrfs_next_leaf(root, path);
 		if (ret)
 			goto out;
-<<<<<<< HEAD
 	} else {
 		path->slots[0]++;
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	}
 
 	btrfs_item_key_to_cpu(path->nodes[0], &key, path->slots[0]);

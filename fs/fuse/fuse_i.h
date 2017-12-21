@@ -157,13 +157,6 @@ struct fuse_file {
 
 	/** Has flock been performed on this file? */
 	bool flock:1;
-<<<<<<< HEAD
-=======
-
-	/* the read write file */
-	struct file *rw_lower_file;
-	bool shortcircuit_enabled;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 };
 
 /** One input argument of a request */
@@ -368,12 +361,6 @@ struct fuse_req {
 
 	/** Request is stolen from fuse_file->reserved_req */
 	struct file *stolen_file;
-<<<<<<< HEAD
-=======
-
-	/** fuse shortcircuit file  */
-	struct file *private_lower_rw_file;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 };
 
 /**
@@ -496,12 +483,6 @@ struct fuse_conn {
 	/** write-back cache policy (default is write-through) */
 	unsigned writeback_cache:1;
 
-<<<<<<< HEAD
-=======
-	/** Shortcircuited IO. */
-	unsigned shortcircuit_io:1;
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	/*
 	 * The following bitfields are only for optimization purposes
 	 * and hence races in setting them will not cause malfunction

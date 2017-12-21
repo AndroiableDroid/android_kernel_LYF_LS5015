@@ -674,19 +674,9 @@ static int msm_fd_s_fmt_vid_out(struct file *file,
 static int msm_fd_reqbufs(struct file *file,
 	void *fh, struct v4l2_requestbuffers *req)
 {
-<<<<<<< HEAD
 	struct fd_ctx *ctx = msm_fd_ctx_from_fh(fh);
 
 	return vb2_reqbufs(&ctx->vb2_q, req);
-=======
-	int ret;
-	struct fd_ctx *ctx = msm_fd_ctx_from_fh(fh);
-
-	mutex_lock(&ctx->fd_device->recovery_lock);
-	ret = vb2_reqbufs(&ctx->vb2_q, req);
-	mutex_unlock(&ctx->fd_device->recovery_lock);
-	return ret;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 /*
@@ -698,20 +688,9 @@ static int msm_fd_reqbufs(struct file *file,
 static int msm_fd_qbuf(struct file *file, void *fh,
 	struct v4l2_buffer *pb)
 {
-<<<<<<< HEAD
 	struct fd_ctx *ctx = msm_fd_ctx_from_fh(fh);
 
 	return vb2_qbuf(&ctx->vb2_q, pb);
-=======
-	int ret;
-	struct fd_ctx *ctx = msm_fd_ctx_from_fh(fh);
-
-	mutex_lock(&ctx->fd_device->recovery_lock);
-	ret = vb2_qbuf(&ctx->vb2_q, pb);
-	mutex_unlock(&ctx->fd_device->recovery_lock);
-	return ret;
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 /*
@@ -723,19 +702,9 @@ static int msm_fd_qbuf(struct file *file, void *fh,
 static int msm_fd_dqbuf(struct file *file,
 	void *fh, struct v4l2_buffer *pb)
 {
-<<<<<<< HEAD
 	struct fd_ctx *ctx = msm_fd_ctx_from_fh(fh);
 
 	return vb2_dqbuf(&ctx->vb2_q, pb, file->f_flags & O_NONBLOCK);
-=======
-	int ret;
-	struct fd_ctx *ctx = msm_fd_ctx_from_fh(fh);
-
-	mutex_lock(&ctx->fd_device->recovery_lock);
-	ret = vb2_dqbuf(&ctx->vb2_q, pb, file->f_flags & O_NONBLOCK);
-	mutex_unlock(&ctx->fd_device->recovery_lock);
-	return ret;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 /*
@@ -1257,10 +1226,6 @@ static int fd_probe(struct platform_device *pdev)
 
 	mutex_init(&fd->lock);
 	spin_lock_init(&fd->slock);
-<<<<<<< HEAD
-=======
-	mutex_init(&fd->recovery_lock);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	fd->dev = &pdev->dev;
 
 	/* Get resources */

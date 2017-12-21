@@ -114,10 +114,6 @@ static inline void __udelay(unsigned long usecs)
  */
 #define	HZSCALE		(268435456 / (1000000 / HZ))
 
-<<<<<<< HEAD
 #define ndelay(n) __delay(DIV_ROUND_UP((n) * ((((HZSCALE) >> 11) * (loops_per_jiffy >> 11)) >> 6), 1000));
-=======
-#define ndelay(n) __delay(DIV_ROUND_UP((n) * ((((HZSCALE) >> 11) * (loops_per_jiffy >> 11)) >> 6), 1000))
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 #endif /* defined(_M68K_DELAY_H) */

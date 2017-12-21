@@ -83,11 +83,6 @@ static unsigned long lowmem_deathpending_timeout;
 
 static atomic_t shift_adj = ATOMIC_INIT(0);
 static short adj_max_shift = 353;
-<<<<<<< HEAD
-=======
-module_param_named(adj_max_shift, adj_max_shift, short,
-	S_IRUGO | S_IWUSR);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 /* User knob to enable/disable adaptive lmk feature */
 static int enable_adaptive_lmk;

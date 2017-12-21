@@ -891,26 +891,18 @@ static unsigned long shrink_page_list(struct list_head *page_list,
 		 *    the caller does not have __GFP_IO. In this case mark
 		 *    the page for immediate reclaim and continue scanning.
 		 *
-<<<<<<< HEAD
 		 *    __GFP_IO is checked  because a loop driver thread might
-=======
-		 *    Require may_enter_fs because we would wait on fs, which
-		 *    may not have submitted IO yet. And the loop driver might
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		 *    enter reclaim, and deadlock if it waits on a page for
 		 *    which it is needed to do the write (loop masks off
 		 *    __GFP_IO|__GFP_FS for this reason); but more thought
 		 *    would probably show more reasons.
 		 *
-<<<<<<< HEAD
 		 *    Don't require __GFP_FS, since we're not going into the
 		 *    FS, just waiting on its writeback completion. Worryingly,
 		 *    ext4 gfs2 and xfs allocate pages with
 		 *    grab_cache_page_write_begin(,,AOP_FLAG_NOFS), so testing
 		 *    may_enter_fs here is liable to OOM on them.
 		 *
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		 * 3) memcg encounters a page that is not already marked
 		 *    PageReclaim. memcg does not have any dirty pages
 		 *    throttling so we could easily OOM just because too many
@@ -927,11 +919,7 @@ static unsigned long shrink_page_list(struct list_head *page_list,
 
 			/* Case 2 above */
 			} else if (global_reclaim(sc) ||
-<<<<<<< HEAD
 			    !PageReclaim(page) || !(sc->gfp_mask & __GFP_IO)) {
-=======
-			    !PageReclaim(page) || !may_enter_fs) {
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				/*
 				 * This is slightly racy - end_page_writeback()
 				 * might have just cleared PageReclaim, then

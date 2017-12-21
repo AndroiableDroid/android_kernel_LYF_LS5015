@@ -586,11 +586,7 @@ early_idt_handler_common:
 	movl %eax,%ds
 	movl %eax,%es
 
-<<<<<<< HEAD
 	cmpl $(__KERNEL_CS),32(%esp)
-=======
-	cmpw $(__KERNEL_CS),32(%esp)
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	jne 10f
 
 	leal 28(%esp),%eax	# Pointer to %eip

@@ -2925,12 +2925,6 @@ ppp_disconnect_channel(struct channel *pch)
  */
 static void ppp_destroy_channel(struct channel *pch)
 {
-<<<<<<< HEAD
-=======
-	put_net(pch->chan_net);
-	pch->chan_net = NULL;
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	atomic_dec(&channel_count);
 
 	if (!pch->file.dead) {

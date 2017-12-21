@@ -197,11 +197,8 @@ static int cpu_notify(unsigned long val, void *v)
 	return __cpu_notify(val, v, -1, NULL);
 }
 
-<<<<<<< HEAD
 #ifdef CONFIG_HOTPLUG_CPU
 
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 static void cpu_notify_nofail(unsigned long val, void *v)
 {
 	BUG_ON(cpu_notify(val, v));
@@ -223,10 +220,6 @@ void __ref __unregister_cpu_notifier(struct notifier_block *nb)
 }
 EXPORT_SYMBOL(__unregister_cpu_notifier);
 
-<<<<<<< HEAD
-=======
-#ifdef CONFIG_HOTPLUG_CPU
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 /**
  * clear_tasks_mm_cpumask - Safely clear tasks' mm_cpumask for a CPU
  * @cpu: a CPU id

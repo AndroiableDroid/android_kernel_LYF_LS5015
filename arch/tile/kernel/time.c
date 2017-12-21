@@ -215,13 +215,8 @@ void do_timer_interrupt(struct pt_regs *regs, int fault_num)
  */
 unsigned long long sched_clock(void)
 {
-<<<<<<< HEAD
 	return clocksource_cyc2ns(get_cycles(),
 				  sched_clock_mult, SCHED_CLOCK_SHIFT);
-=======
-	return mult_frac(get_cycles(),
-			 sched_clock_mult, 1ULL << SCHED_CLOCK_SHIFT);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 int setup_profiling_timer(unsigned int multiplier)

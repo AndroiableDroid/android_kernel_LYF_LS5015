@@ -1,9 +1,5 @@
 /*
-<<<<<<< HEAD
  * Copyright (c) 2012-2013, 2017 The Linux Foundation. All rights reserved.
-=======
- * Copyright (c) 2012-2013 The Linux Foundation. All rights reserved.
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * Previously licensed under the ISC license by Qualcomm Atheros, Inc.
  *
@@ -100,12 +96,8 @@ eHalStatus csrMsgProcessor( tpAniSirGlobal pMac,  void *pMsgBuf )
             * workable due to failure or finding the condition meets both SAP and infra/IBSS requirement.
             */
             if( (eWNI_SME_SETCONTEXT_RSP == pSmeRsp->messageType) ||
-<<<<<<< HEAD
                 (eWNI_SME_REMOVEKEY_RSP == pSmeRsp->messageType) ||
                 (pSmeRsp->messageType == eWNI_SME_FT_PRE_AUTH_RSP))
-=======
-                (eWNI_SME_REMOVEKEY_RSP == pSmeRsp->messageType) )
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
             {
                 smsLog(pMac, LOGW, FL(" handling msg 0x%X CSR state is %d"), pSmeRsp->messageType, pMac->roam.curState[pSmeRsp->sessionId]);
                 csrRoamCheckForLinkStatusChange(pMac, pSmeRsp);

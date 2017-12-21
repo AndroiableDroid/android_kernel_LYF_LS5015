@@ -21,7 +21,6 @@
 #undef CDBG
 #define CDBG(fmt, args...) pr_debug(fmt, ##args)
 
-<<<<<<< HEAD
 
 static uint32_t g_camera_id = 0;   /*main 0 sub 1*/
 
@@ -30,8 +29,6 @@ uint32_t get_camera_id(void)
     return g_camera_id;
 }
 
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 static struct v4l2_file_operations msm_sensor_v4l2_subdev_fops;
 static void msm_sensor_adjust_mclk(struct msm_camera_power_ctrl_t *ctrl)
 {
@@ -466,7 +463,6 @@ int msm_sensor_power_up(struct msm_sensor_ctrl_t *s_ctrl)
 	slave_info = s_ctrl->sensordata->slave_info;
 	sensor_name = s_ctrl->sensordata->sensor_name;
 
-<<<<<<< HEAD
 	if(!strcmp(sensor_name, "imx214_br")){
 		if(!strcmp(power_info->cam_vreg->reg_name, "cam_vdig")){
 			power_info->cam_vreg->min_voltage = 1000000;
@@ -475,8 +471,6 @@ int msm_sensor_power_up(struct msm_sensor_ctrl_t *s_ctrl)
 		}
 	}
 
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	if (!power_info || !sensor_i2c_client || !slave_info ||
 		!sensor_name) {
 		pr_err("%s:%d failed: %p %p %p %p\n",
@@ -514,16 +508,12 @@ int msm_sensor_match_id(struct msm_sensor_ctrl_t *s_ctrl)
 	struct msm_camera_i2c_client *sensor_i2c_client;
 	struct msm_camera_slave_info *slave_info;
 	const char *sensor_name;
-<<<<<<< HEAD
     //Jelly add for s5k5e2 compatibale
     #ifdef CONFIG_TEST_ONLY
 	uint16_t i=0,eepromMid = 0, eepromRmid = 0, eepromData;
 	uint32_t eepromAddr;
     #endif
     //endif
-=======
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	if (!s_ctrl) {
 		pr_err("%s:%d failed: %p\n",
 			__func__, __LINE__, s_ctrl);
@@ -550,7 +540,6 @@ int msm_sensor_match_id(struct msm_sensor_ctrl_t *s_ctrl)
 
 	CDBG("%s: read id: 0x%x expected id 0x%x:\n", __func__, chipid,
 		slave_info->sensor_id);
-<<<<<<< HEAD
 	
 	
 	if (chipid != slave_info->sensor_id) {
@@ -663,12 +652,6 @@ int msm_sensor_match_id(struct msm_sensor_ctrl_t *s_ctrl)
 	}
 	#endif
 	//end
-=======
-	if (chipid != slave_info->sensor_id) {
-		pr_err("msm_sensor_match_id chip id doesnot match\n");
-		return -ENODEV;
-	}
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	return rc;
 }
 
@@ -759,13 +742,8 @@ static int msm_sensor_config32(struct msm_sensor_ctrl_t *s_ctrl,
 	int32_t rc = 0;
 	int32_t i = 0;
 	mutex_lock(s_ctrl->msm_sensor_mutex);
-<<<<<<< HEAD
 	CDBG("%s:%d %s cfgtype = %d,session_id = %d\n", __func__, __LINE__,
 		s_ctrl->sensordata->sensor_name, cdata->cfgtype,s_ctrl->sensordata->sensor_info->session_id);
-=======
-	CDBG("%s:%d %s cfgtype = %d\n", __func__, __LINE__,
-		s_ctrl->sensordata->sensor_name, cdata->cfgtype);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	switch (cdata->cfgtype) {
 	case CFG_GET_SENSOR_INFO:
 		memcpy(cdata->cfg.sensor_info.sensor_name,
@@ -982,13 +960,10 @@ static int msm_sensor_config32(struct msm_sensor_ctrl_t *s_ctrl,
 	}
 
 	case CFG_POWER_UP:
-<<<<<<< HEAD
 		g_camera_id = s_ctrl->sensordata->cam_slave_info->camera_id;
 			//CDBG("pengliu g_camaera_id = %d\n",g_camera_id);
 			pr_err("pengliu g_camaera_id = %d\n",g_camera_id);//jelly added for debug
 
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		if (s_ctrl->sensor_state != MSM_SENSOR_POWER_DOWN) {
 			pr_err("%s:%d failed: invalid state %d\n", __func__,
 				__LINE__, s_ctrl->sensor_state);

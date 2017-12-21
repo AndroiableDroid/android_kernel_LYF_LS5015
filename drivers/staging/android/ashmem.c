@@ -32,10 +32,7 @@
 #include <linux/mutex.h>
 #include <linux/shmem_fs.h>
 #include <linux/ashmem.h>
-<<<<<<< HEAD
 #include <asm/cacheflush.h>
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 #include "ashmem.h"
 
@@ -662,7 +659,6 @@ static int ashmem_pin_unpin(struct ashmem_area *asma, unsigned long cmd,
 	return ret;
 }
 
-<<<<<<< HEAD
 static int ashmem_cache_op(struct ashmem_area *asma,
 	void (*cache_func)(const void *vstart, const void *vend))
 {
@@ -694,8 +690,6 @@ done:
 	return ret;
 }
 
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 static long ashmem_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 {
 	struct ashmem_area *asma = file->private_data;
@@ -741,7 +735,6 @@ static long ashmem_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 			ashmem_shrink(&ashmem_shrinker, &sc);
 		}
 		break;
-<<<<<<< HEAD
 	case ASHMEM_CACHE_FLUSH_RANGE:
 		ret = ashmem_cache_op(asma, &dmac_flush_range);
 		break;
@@ -751,8 +744,6 @@ static long ashmem_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 	case ASHMEM_CACHE_INV_RANGE:
 		ret = ashmem_cache_op(asma, &dmac_inv_range);
 		break;
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	}
 
 	return ret;

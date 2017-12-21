@@ -228,13 +228,8 @@ static int radeon_move_blit(struct ttm_buffer_object *bo,
 
 	rdev = radeon_get_rdev(bo->bdev);
 	ridx = radeon_copy_ring_index(rdev);
-<<<<<<< HEAD
 	old_start = old_mem->start << PAGE_SHIFT;
 	new_start = new_mem->start << PAGE_SHIFT;
-=======
-	old_start = (u64)old_mem->start << PAGE_SHIFT;
-	new_start = (u64)new_mem->start << PAGE_SHIFT;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	switch (old_mem->mem_type) {
 	case TTM_PL_VRAM:

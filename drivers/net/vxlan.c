@@ -1386,11 +1386,7 @@ static int vxlan_validate(struct nlattr *tb[], struct nlattr *data[])
 
 	if (data[IFLA_VXLAN_ID]) {
 		__u32 id = nla_get_u32(data[IFLA_VXLAN_ID]);
-<<<<<<< HEAD
 		if (id >= VXLAN_VID_MASK)
-=======
-		if (id >= VXLAN_N_VID)
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			return -ERANGE;
 	}
 

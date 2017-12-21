@@ -800,7 +800,6 @@ void mm_release(struct task_struct *tsk, struct mm_struct *mm)
 	deactivate_mm(tsk, mm);
 
 	/*
-<<<<<<< HEAD
 	 * If we're exiting normally, clear a user-space tid field if
 	 * requested.  We leave this alone when dying by signal, to leave
 	 * the value intact in a core dump, and to save the unnecessary
@@ -809,14 +808,6 @@ void mm_release(struct task_struct *tsk, struct mm_struct *mm)
 	 */
 	if (tsk->clear_child_tid) {
 		if (!(tsk->flags & PF_SIGNALED) &&
-=======
-	 * Signal userspace if we're not exiting with a core dump
-	 * because we want to leave the value intact for debugging
-	 * purposes.
-	 */
-	if (tsk->clear_child_tid) {
-		if (!(tsk->signal->flags & SIGNAL_GROUP_COREDUMP) &&
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		    atomic_read(&mm->mm_users) > 1) {
 			/*
 			 * We don't check the error code - if userspace has
@@ -1526,7 +1517,6 @@ static struct task_struct *copy_process(unsigned long clone_flags,
 		goto bad_fork_free_pid;
 	}
 
-<<<<<<< HEAD
 	if (clone_flags & CLONE_THREAD) {
 		current->signal->nr_threads++;
 		atomic_inc(&current->signal->live);
@@ -1535,8 +1525,6 @@ static struct task_struct *copy_process(unsigned long clone_flags,
 		list_add_tail_rcu(&p->thread_group, &p->group_leader->thread_group);
 	}
 
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	if (likely(p->pid)) {
 		ptrace_init_task(p, (clone_flags & CLONE_PTRACE) || trace);
 
@@ -1554,15 +1542,6 @@ static struct task_struct *copy_process(unsigned long clone_flags,
 			list_add_tail_rcu(&p->tasks, &init_task.tasks);
 			__this_cpu_inc(process_counts);
 		} else {
-<<<<<<< HEAD
-=======
-			current->signal->nr_threads++;
-			atomic_inc(&current->signal->live);
-			atomic_inc(&current->signal->sigcnt);
-			p->group_leader = current->group_leader;
-			list_add_tail_rcu(&p->thread_group,
-					  &p->group_leader->thread_group);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			list_add_tail_rcu(&p->thread_node,
 					  &p->signal->thread_head);
 		}

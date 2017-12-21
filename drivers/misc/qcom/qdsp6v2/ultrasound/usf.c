@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 /* Copyright (c) 2011-2014, The Linux Foundation. All rights reserved.
-=======
-/* Copyright (c) 2011-2017, The Linux Foundation. All rights reserved.
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -25,10 +21,6 @@
 #include <linux/input.h>
 #include <linux/uaccess.h>
 #include <linux/time.h>
-<<<<<<< HEAD
-=======
-#include <linux/mutex.h>
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 #include <sound/apr_audio.h>
 #include <linux/qdsp6v2/usf.h>
 #include "q6usm.h"
@@ -135,11 +127,6 @@ struct usf_type {
 	uint16_t conflicting_event_filters;
 	/* The requested buttons bitmap */
 	uint16_t req_buttons_bitmap;
-<<<<<<< HEAD
-=======
-	/* Mutex for exclusive operations (all public APIs) */
-	struct mutex mutex;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 };
 
 struct usf_input_dev_type {
@@ -181,11 +168,7 @@ static const int s_button_map[] = {
 };
 
 /* The opened devices container */
-<<<<<<< HEAD
 static int s_opened_devs[MAX_DEVS_NUMBER];
-=======
-static atomic_t s_opened_devs[MAX_DEVS_NUMBER];
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 #define USF_NAME_PREFIX "usf_"
 #define USF_NAME_PREFIX_SIZE 4
@@ -1389,28 +1372,9 @@ static int __usf_set_stream_param(struct usf_xx_type *usf_xx,
 				int dir)
 {
 	struct us_client *usc = usf_xx->usc;
-<<<<<<< HEAD
 	struct us_port_data *port = &usc->port[dir];
 	int rc = 0;
 
-=======
-	struct us_port_data *port;
-	int rc = 0;
-
-	if (usc == NULL) {
-		pr_err("%s: usc is null\n",
-			__func__);
-		return -EFAULT;
-	}
-
-	port = &usc->port[dir];
-	if (port == NULL) {
-		pr_err("%s: port is null\n",
-			__func__);
-		return -EFAULT;
-	}
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	if (port->param_buf == NULL) {
 		pr_err("%s: parameter buffer is null\n",
 			__func__);
@@ -1535,19 +1499,10 @@ static int usf_get_stream_param(struct usf_xx_type *usf_xx,
 	return __usf_get_stream_param(usf_xx, &get_stream_param, dir);
 } /* usf_get_stream_param */
 
-<<<<<<< HEAD
 static long usf_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 {
 	int rc = 0;
 	struct usf_type *usf = file->private_data;
-=======
-static long __usf_ioctl(struct usf_type *usf,
-		unsigned int cmd,
-		unsigned long arg)
-{
-
-	int rc = 0;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	struct usf_xx_type *usf_xx = NULL;
 
 	switch (cmd) {
@@ -1710,21 +1665,6 @@ static long __usf_ioctl(struct usf_type *usf,
 		release_xx(usf_xx);
 
 	return rc;
-<<<<<<< HEAD
-=======
-} /* __usf_ioctl */
-
-static long usf_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
-{
-	struct usf_type *usf = file->private_data;
-	int rc = 0;
-
-	mutex_lock(&usf->mutex);
-	rc = __usf_ioctl(usf, cmd, arg);
-	mutex_unlock(&usf->mutex);
-
-	return rc;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 } /* usf_ioctl */
 
 #ifdef CONFIG_COMPAT
@@ -2162,19 +2102,12 @@ static int usf_get_stream_param32(struct usf_xx_type *usf_xx,
 	return __usf_get_stream_param(usf_xx, &get_stream_param, dir);
 } /* usf_get_stream_param32 */
 
-<<<<<<< HEAD
 static long usf_compat_ioctl(struct file *file,
-=======
-static long __usf_compat_ioctl(struct usf_type *usf,
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			     unsigned int cmd,
 			     unsigned long arg)
 {
 	int rc = 0;
-<<<<<<< HEAD
 	struct usf_type *usf = file->private_data;
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	struct usf_xx_type *usf_xx = NULL;
 
 	switch (cmd) {
@@ -2182,11 +2115,7 @@ static long __usf_compat_ioctl(struct usf_type *usf,
 	case US_START_RX:
 	case US_STOP_TX:
 	case US_STOP_RX: {
-<<<<<<< HEAD
 		return usf_ioctl(file, cmd, arg);
-=======
-		return __usf_ioctl(usf, cmd, arg);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	}
 
 	case US_SET_TX_INFO32: {
@@ -2295,23 +2224,6 @@ static long __usf_compat_ioctl(struct usf_type *usf,
 		release_xx(usf_xx);
 
 	return rc;
-<<<<<<< HEAD
-=======
-} /* __usf_compat_ioctl */
-
-static long usf_compat_ioctl(struct file *file,
-			     unsigned int cmd,
-			     unsigned long arg)
-{
-	struct usf_type *usf = file->private_data;
-	int rc = 0;
-
-	mutex_lock(&usf->mutex);
-	rc = __usf_compat_ioctl(usf, cmd, arg);
-	mutex_unlock(&usf->mutex);
-
-	return rc;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 } /* usf_compat_ioctl */
 #endif /* CONFIG_COMPAT */
 
@@ -2320,26 +2232,13 @@ static int usf_mmap(struct file *file, struct vm_area_struct *vms)
 	struct usf_type *usf = file->private_data;
 	int dir = OUT;
 	struct usf_xx_type *usf_xx = &usf->usf_tx;
-<<<<<<< HEAD
 
-=======
-	int rc = 0;
-
-	mutex_lock(&usf->mutex);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	if (vms->vm_flags & USF_VM_WRITE) { /* RX buf mapping */
 		dir = IN;
 		usf_xx = &usf->usf_rx;
 	}
-<<<<<<< HEAD
 
 	return q6usm_get_virtual_address(dir, usf_xx->usc, vms);
-=======
-	rc = q6usm_get_virtual_address(dir, usf_xx->usc, vms);
-	mutex_unlock(&usf->mutex);
-
-	return rc;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 static uint16_t add_opened_dev(int minor)
@@ -2347,7 +2246,6 @@ static uint16_t add_opened_dev(int minor)
 	uint16_t ind = 0;
 
 	for (ind = 0; ind < MAX_DEVS_NUMBER; ++ind) {
-<<<<<<< HEAD
 		if (minor == s_opened_devs[ind]) {
 			pr_err("%s: device %d is already opened\n",
 			       __func__, minor);
@@ -2356,13 +2254,6 @@ static uint16_t add_opened_dev(int minor)
 
 		if (s_opened_devs[ind] == 0) {
 			s_opened_devs[ind] = minor;
-=======
-		if (minor == atomic_cmpxchg(&s_opened_devs[ind], 0, minor)) {
-			pr_err("%s: device %d is already opened\n",
-			       __func__, minor);
-			return USF_UNDEF_DEV_ID;
-		} else {
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			pr_debug("%s: device %d is added; ind=%d\n",
 				__func__, minor, ind);
 			return ind;
@@ -2399,11 +2290,6 @@ static int usf_open(struct inode *inode, struct file *file)
 	usf->usf_tx.us_detect_type = USF_US_DETECT_UNDEF;
 	usf->usf_rx.us_detect_type = USF_US_DETECT_UNDEF;
 
-<<<<<<< HEAD
-=======
-	mutex_init(&usf->mutex);
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	pr_debug("%s:usf in open\n", __func__);
 	return 0;
 }
@@ -2414,24 +2300,13 @@ static int usf_release(struct inode *inode, struct file *file)
 
 	pr_debug("%s: release entry\n", __func__);
 
-<<<<<<< HEAD
-=======
-	mutex_lock(&usf->mutex);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	usf_release_input(usf);
 
 	usf_disable(&usf->usf_tx);
 	usf_disable(&usf->usf_rx);
 
-<<<<<<< HEAD
 	s_opened_devs[usf->dev_ind] = 0;
 
-=======
-	atomic_set(&s_opened_devs[usf->dev_ind], 0);
-
-	mutex_unlock(&usf->mutex);
-	mutex_destroy(&usf->mutex);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	kfree(usf);
 	pr_debug("%s: release exit\n", __func__);
 	return 0;

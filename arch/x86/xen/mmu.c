@@ -1187,11 +1187,7 @@ static void __init xen_cleanhighmap(unsigned long vaddr,
 
 	/* NOTE: The loop is more greedy than the cleanup_highmap variant.
 	 * We include the PMD passed in on _both_ boundaries. */
-<<<<<<< HEAD
 	for (; vaddr <= vaddr_end && (pmd < (level2_kernel_pgt + PAGE_SIZE));
-=======
-	for (; vaddr <= vaddr_end && (pmd < (level2_kernel_pgt + PTRS_PER_PMD));
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			pmd++, vaddr += PMD_SIZE) {
 		if (pmd_none(*pmd))
 			continue;

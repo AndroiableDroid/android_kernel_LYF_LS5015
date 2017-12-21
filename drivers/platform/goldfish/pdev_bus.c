@@ -153,7 +153,6 @@ static int goldfish_new_pdev(void)
 static irqreturn_t goldfish_pdev_bus_interrupt(int irq, void *dev_id)
 {
 	irqreturn_t ret = IRQ_NONE;
-<<<<<<< HEAD
 	while (1) {
 		u32 op = readl(pdev_bus_base + PDEV_BUS_OP);
 		switch (op) {
@@ -162,36 +161,15 @@ static irqreturn_t goldfish_pdev_bus_interrupt(int irq, void *dev_id)
 
 		case PDEV_BUS_OP_REMOVE_DEV:
 			goldfish_pdev_remove();
-=======
-
-	while (1) {
-		u32 op = readl(pdev_bus_base + PDEV_BUS_OP);
-
-		switch (op) {
-		case PDEV_BUS_OP_REMOVE_DEV:
-			goldfish_pdev_remove();
-			ret = IRQ_HANDLED;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			break;
 
 		case PDEV_BUS_OP_ADD_DEV:
 			goldfish_new_pdev();
-<<<<<<< HEAD
 			break;
 		}
 		ret = IRQ_HANDLED;
 	}
 	return ret;
-=======
-			ret = IRQ_HANDLED;
-			break;
-
-		case PDEV_BUS_OP_DONE:
-		default:
-			return ret;
-		}
-	}
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 static int goldfish_pdev_bus_probe(struct platform_device *pdev)

@@ -137,11 +137,7 @@ static int acm_port_connect(struct f_acm *acm)
 	port_num = gacm_ports[acm->port_num].client_port_num;
 
 
-<<<<<<< HEAD
 	pr_debug("%s: transport:%s f_acm:%p gserial:%p port_num:%d cl_port_no:%d\n",
-=======
-	pr_debug("%s: transport:%s f_acm:%pK gserial:%pK port_num:%d cl_port_no:%d\n",
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			__func__, xport_to_str(acm->transport),
 			acm, &acm->port, acm->port_num, port_num);
 
@@ -167,11 +163,7 @@ static int acm_port_disconnect(struct f_acm *acm)
 
 	port_num = gacm_ports[acm->port_num].client_port_num;
 
-<<<<<<< HEAD
 	pr_debug("%s: transport:%s f_acm:%p gserial:%p port_num:%d cl_pno:%d\n",
-=======
-	pr_debug("%s: transport:%s f_acm:%pK gserial:%pK port_num:%d cl_pno:%d\n",
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			__func__, xport_to_str(acm->transport),
 			acm, &acm->port, acm->port_num, port_num);
 
@@ -832,11 +824,7 @@ fail:
 	if (acm->port.in)
 		acm->port.in->driver_data = NULL;
 
-<<<<<<< HEAD
 	ERROR(cdev, "%s/%p: can't bind, err %d\n", f->name, f, status);
-=======
-	ERROR(cdev, "%s/%pK: can't bind, err %d\n", f->name, f, status);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	return status;
 }

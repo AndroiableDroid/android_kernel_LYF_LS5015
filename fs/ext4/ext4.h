@@ -246,10 +246,6 @@ struct ext4_io_submit {
 #define	EXT4_MAX_BLOCK_SIZE		65536
 #define EXT4_MIN_BLOCK_LOG_SIZE		10
 #define EXT4_MAX_BLOCK_LOG_SIZE		16
-<<<<<<< HEAD
-=======
-#define EXT4_MAX_CLUSTER_LOG_SIZE	30
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 #ifdef __KERNEL__
 # define EXT4_BLOCK_SIZE(s)		((s)->s_blocksize)
 #else

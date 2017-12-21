@@ -941,13 +941,8 @@ static void extract_buf(struct entropy_store *r, __u8 *out)
 	 * pool while mixing, and hash one final time.
 	 */
 	sha_transform(hash.w, extract, workspace);
-<<<<<<< HEAD
 	memset(extract, 0, sizeof(extract));
 	memset(workspace, 0, sizeof(workspace));
-=======
-	memzero_explicit(extract, sizeof(extract));
-	memzero_explicit(workspace, sizeof(workspace));
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	/*
 	 * In case the hash function has some recognizable output
@@ -970,11 +965,7 @@ static void extract_buf(struct entropy_store *r, __u8 *out)
 	}
 
 	memcpy(out, &hash, EXTRACT_SIZE);
-<<<<<<< HEAD
 	memset(&hash, 0, sizeof(hash));
-=======
-	memzero_explicit(&hash, sizeof(hash));
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 static ssize_t extract_entropy(struct entropy_store *r, void *buf,
@@ -1022,11 +1013,7 @@ static ssize_t extract_entropy(struct entropy_store *r, void *buf,
 	}
 
 	/* Wipe data just returned from memory */
-<<<<<<< HEAD
 	memset(tmp, 0, sizeof(tmp));
-=======
-	memzero_explicit(tmp, sizeof(tmp));
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	return ret;
 }
@@ -1064,11 +1051,7 @@ static ssize_t extract_entropy_user(struct entropy_store *r, void __user *buf,
 	}
 
 	/* Wipe data just returned from memory */
-<<<<<<< HEAD
 	memset(tmp, 0, sizeof(tmp));
-=======
-	memzero_explicit(tmp, sizeof(tmp));
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	return ret;
 }

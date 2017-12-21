@@ -656,12 +656,6 @@ int ip_defrag(struct sk_buff *skb, u32 user)
 	net = skb->dev ? dev_net(skb->dev) : dev_net(skb_dst(skb)->dev);
 	IP_INC_STATS_BH(net, IPSTATS_MIB_REASMREQDS);
 
-<<<<<<< HEAD
-=======
-	if (!net->ipv4.frags.high_thresh)
-		goto fail;
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	/* Start by cleaning up the memory. */
 	ip_evictor(net);
 
@@ -678,10 +672,6 @@ int ip_defrag(struct sk_buff *skb, u32 user)
 		return ret;
 	}
 
-<<<<<<< HEAD
-=======
-fail:
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	IP_INC_STATS_BH(net, IPSTATS_MIB_REASMFAILS);
 	kfree_skb(skb);
 	return -ENOMEM;

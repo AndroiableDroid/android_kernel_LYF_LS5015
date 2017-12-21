@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 /* Copyright (c) 2012-2015, The Linux Foundation. All rights reserved.
-=======
-/* Copyright (c) 2012-2017, The Linux Foundation. All rights reserved.
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -130,11 +126,7 @@ struct share_mem_buf {
 struct mem_map_table {
 	dma_addr_t		phys;
 	void			*data;
-<<<<<<< HEAD
 	uint32_t		size; /* size of buffer */
-=======
-	size_t			size; /* size of buffer */
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	struct ion_handle	*handle;
 	struct ion_client	*client;
 };
@@ -1546,11 +1538,7 @@ struct cal_mem {
 	void *buf;
 };
 
-<<<<<<< HEAD
 #define MAX_VOC_SESSIONS 6
-=======
-#define MAX_VOC_SESSIONS 8
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 struct common_data {
 	/* these default values are for all devices */
@@ -1641,11 +1629,6 @@ enum {
 #define VOC_PATH_VOICE2_PASSIVE 3
 #define VOC_PATH_QCHAT_PASSIVE 4
 #define VOC_PATH_VOWLAN_PASSIVE 5
-<<<<<<< HEAD
-=======
-#define VOC_PATH_VOICEMMODE1_PASSIVE 6
-#define VOC_PATH_VOICEMMODE2_PASSIVE 7
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 #define MAX_SESSION_NAME_LEN 32
 #define VOICE_SESSION_NAME   "Voice session"
@@ -1654,7 +1637,6 @@ enum {
 #define VOICE2_SESSION_NAME  "Voice2 session"
 #define QCHAT_SESSION_NAME   "QCHAT session"
 #define VOWLAN_SESSION_NAME  "VoWLAN session"
-<<<<<<< HEAD
 
 #define VOICE2_SESSION_VSID_STR "10DC1000"
 #define QCHAT_SESSION_VSID_STR "10803000"
@@ -1678,26 +1660,6 @@ enum vsid_app_type {
 	VSID_APP_VOIP = 4, /* VoIP on AP HLOS without modem processor */
 	VSID_APP_MAX,
 };
-=======
-#define VOICEMMODE1_NAME     "VoiceMMode1"
-#define VOICEMMODE2_NAME     "VoiceMMode2"
-
-#define VOICE2_SESSION_VSID_STR      "10DC1000"
-#define QCHAT_SESSION_VSID_STR       "10803000"
-#define VOWLAN_SESSION_VSID_STR      "10002000"
-#define VOICEMMODE1_VSID_STR         "11C05000"
-#define VOICEMMODE2_VSID_STR         "11DC5000"
-#define VOICE_SESSION_VSID           0x10C01000
-#define VOICE2_SESSION_VSID          0x10DC1000
-#define VOLTE_SESSION_VSID           0x10C02000
-#define VOIP_SESSION_VSID            0x10004000
-#define QCHAT_SESSION_VSID           0x10803000
-#define VOWLAN_SESSION_VSID          0x10002000
-#define VOICEMMODE1_VSID             0x11C05000
-#define VOICEMMODE2_VSID             0x11DC5000
-#define ALL_SESSION_VSID             0xFFFFFFFF
-#define VSID_MAX                     ALL_SESSION_VSID
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 /* called  by alsa driver */
 int voc_set_pp_enable(uint32_t session_id, uint32_t module_id,

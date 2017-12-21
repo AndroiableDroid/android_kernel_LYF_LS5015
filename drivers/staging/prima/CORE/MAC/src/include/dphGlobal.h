@@ -1,9 +1,5 @@
 /*
-<<<<<<< HEAD
  * Copyright (c) 2011-2013, 2016-2017 The Linux Foundation. All rights reserved.
-=======
- * Copyright (c) 2011-2013, 2016 The Linux Foundation. All rights reserved.
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * Previously licensed under the ISC license by Qualcomm Atheros, Inc.
  *
@@ -324,7 +320,6 @@ typedef struct sCfgTrafficClass {
 } tCfgTrafficClass;
 
 
-<<<<<<< HEAD
 /**
  * struct parsed_ies: Parsed IE's of BSS capability
  * @ht_caps: HT caps IE
@@ -346,8 +341,6 @@ struct parsed_ies {
     tDot11fIEVHTOperation vht_operation;
     tDot11fIEhs20vendor_ie hs20vendor_ie;
 };
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 /// STA state node
 
@@ -667,10 +660,7 @@ typedef struct sDphHashNode
      */
     tANI_U8 isDisassocDeauthInProgress;
     bool sta_deletion_in_progress;
-<<<<<<< HEAD
     struct parsed_ies parsed_ies;
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
     struct sDphHashNode  *next;
 
 

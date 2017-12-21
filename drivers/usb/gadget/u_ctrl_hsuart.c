@@ -233,11 +233,7 @@ static void ghsuart_ctrl_connect_w(struct work_struct *w)
 	if (!port || !test_bit(CH_READY, &port->channel_sts))
 		return;
 
-<<<<<<< HEAD
 	pr_debug("%s: port:%p\n", __func__, port);
-=======
-	pr_debug("%s: port:%pK\n", __func__, port);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	if (test_bit(CH_OPENED, &port->channel_sts)) {
 		retval = wait_for_completion_timeout(
@@ -443,11 +439,7 @@ static int ghsuart_ctrl_port_alloc(int portno, enum gadget_type gtype)
 	err = platform_driver_register(pdrv);
 	if (unlikely(err < 0))
 		return err;
-<<<<<<< HEAD
 	pr_debug("%s: port:%p portno:%d\n", __func__, port, portno);
-=======
-	pr_debug("%s: port:%pK portno:%d\n", __func__, port, portno);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	return 0;
 }
@@ -510,11 +502,7 @@ static ssize_t ghsuart_ctrl_read_stats(struct file *file, char __user *ubuf,
 		spin_lock_irqsave(&port->port_lock, flags);
 
 		temp += scnprintf(buf + temp, DEBUG_BUF_SIZE - temp,
-<<<<<<< HEAD
 				"#PORT:%d port: %p\n"
-=======
-				"#PORT:%d port: %pK\n"
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				"to_usbhost:    %lu\n"
 				"to_modem:      %lu\n"
 				"cpkt_drp_cnt:  %lu\n"

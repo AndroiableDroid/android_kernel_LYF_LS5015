@@ -117,11 +117,7 @@ static inline int dma_declare_contiguous_reserved(struct device *dev,
 	return ret;
 }
 
-<<<<<<< HEAD
 unsigned long dma_alloc_from_contiguous(struct device *dev, int count,
-=======
-unsigned long dma_alloc_from_contiguous(struct device *dev, size_t count,
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				       unsigned int order);
 bool dma_release_from_contiguous(struct device *dev, unsigned long pfn,
 				 int count);
@@ -140,11 +136,7 @@ int dma_declare_contiguous(struct device *dev, phys_addr_t size,
 }
 
 static inline
-<<<<<<< HEAD
 unsigned long dma_alloc_from_contiguous(struct device *dev, int count,
-=======
-unsigned long dma_alloc_from_contiguous(struct device *dev, size_t count,
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				       unsigned int order)
 {
 	return 0;

@@ -34,17 +34,6 @@
 #include <asm/processor-flags.h>
 #include <asm/asm-offsets.h>
 
-<<<<<<< HEAD
-=======
-/*
- * Locally defined symbols should be marked hidden:
- */
-	.hidden _bss
-	.hidden _ebss
-	.hidden _got
-	.hidden _egot
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	__HEAD
 	.code32
 ENTRY(startup_32)

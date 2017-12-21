@@ -474,11 +474,7 @@ void phy_stop_machine(struct phy_device *phydev)
 	cancel_delayed_work_sync(&phydev->state_queue);
 
 	mutex_lock(&phydev->lock);
-<<<<<<< HEAD
 	if (phydev->state > PHY_UP)
-=======
-	if (phydev->state > PHY_UP && phydev->state != PHY_HALTED)
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		phydev->state = PHY_UP;
 	mutex_unlock(&phydev->lock);
 

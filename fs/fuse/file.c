@@ -7,10 +7,6 @@
 */
 
 #include "fuse_i.h"
-<<<<<<< HEAD
-=======
-#include "fuse_shortcircuit.h"
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 #include <linux/pagemap.h>
 #include <linux/slab.h>
@@ -25,12 +21,7 @@
 static const struct file_operations fuse_direct_io_file_operations;
 
 static int fuse_send_open(struct fuse_conn *fc, u64 nodeid, struct file *file,
-<<<<<<< HEAD
 			  int opcode, struct fuse_open_out *outargp)
-=======
-			  int opcode, struct fuse_open_out *outargp,
-			  struct file **lower_file)
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 {
 	struct fuse_open_in inarg;
 	struct fuse_req *req;
@@ -54,13 +45,6 @@ static int fuse_send_open(struct fuse_conn *fc, u64 nodeid, struct file *file,
 	req->out.args[0].value = outargp;
 	fuse_request_send(fc, req);
 	err = req->out.h.error;
-<<<<<<< HEAD
-=======
-
-	if (!err && req->private_lower_rw_file != NULL)
-		*lower_file =  req->private_lower_rw_file;
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	fuse_put_request(fc, req);
 
 	return err;
@@ -74,13 +58,6 @@ struct fuse_file *fuse_file_alloc(struct fuse_conn *fc)
 	if (unlikely(!ff))
 		return NULL;
 
-<<<<<<< HEAD
-=======
-	ff->rw_lower_file = NULL;
-	ff->shortcircuit_enabled = 0;
-	if (fc->shortcircuit_io)
-		ff->shortcircuit_enabled = 1;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	ff->fc = fc;
 	ff->reserved_req = fuse_request_alloc(0);
 	if (unlikely(!ff->reserved_req)) {
@@ -151,10 +128,6 @@ static void fuse_file_put(struct fuse_file *ff, bool sync)
 		struct fuse_req *req = ff->reserved_req;
 
 		if (sync) {
-<<<<<<< HEAD
-=======
-			req->force = 1;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			req->background = 0;
 			fuse_request_send(ff->fc, req);
 			path_put(&req->misc.release.path);
@@ -180,12 +153,7 @@ int fuse_do_open(struct fuse_conn *fc, u64 nodeid, struct file *file,
 	if (!ff)
 		return -ENOMEM;
 
-<<<<<<< HEAD
 	err = fuse_send_open(fc, nodeid, file, opcode, &outarg);
-=======
-	err = fuse_send_open(fc, nodeid, file, opcode, &outarg,
-			     &(ff->rw_lower_file));
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	if (err) {
 		fuse_file_free(ff);
 		return err;
@@ -293,11 +261,6 @@ void fuse_release_common(struct file *file, int opcode)
 	if (unlikely(!ff))
 		return;
 
-<<<<<<< HEAD
-=======
-	fuse_shortcircuit_release(ff);
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	req = ff->reserved_req;
 	fuse_prepare_release(ff, file->f_flags, opcode);
 
@@ -996,15 +959,8 @@ out:
 static ssize_t fuse_file_aio_read(struct kiocb *iocb, const struct iovec *iov,
 				  unsigned long nr_segs, loff_t pos)
 {
-<<<<<<< HEAD
 	struct inode *inode = iocb->ki_filp->f_mapping->host;
 	struct fuse_conn *fc = get_fuse_conn(inode);
-=======
-	ssize_t ret_val;
-	struct inode *inode = iocb->ki_filp->f_mapping->host;
-	struct fuse_conn *fc = get_fuse_conn(inode);
-	struct fuse_file *ff = iocb->ki_filp->private_data;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	/*
 	 * In auto invalidate mode, always update attributes on read.
@@ -1019,16 +975,7 @@ static ssize_t fuse_file_aio_read(struct kiocb *iocb, const struct iovec *iov,
 			return err;
 	}
 
-<<<<<<< HEAD
 	return generic_file_aio_read(iocb, iov, nr_segs, pos);
-=======
-	if (ff && ff->shortcircuit_enabled && ff->rw_lower_file)
-		ret_val = fuse_shortcircuit_aio_read(iocb, iov, nr_segs, pos);
-	else
-		ret_val = generic_file_aio_read(iocb, iov, nr_segs, pos);
-
-	return ret_val;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 static void fuse_write_fill(struct fuse_req *req, struct fuse_file *ff,
@@ -1169,10 +1116,6 @@ static ssize_t fuse_fill_write_pages(struct fuse_req *req,
 
 		mark_page_accessed(page);
 
-<<<<<<< HEAD
-=======
-		iov_iter_advance(ii, tmp);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		if (!tmp) {
 			unlock_page(page);
 			page_cache_release(page);
@@ -1185,10 +1128,7 @@ static ssize_t fuse_fill_write_pages(struct fuse_req *req,
 		req->page_descs[req->num_pages].length = tmp;
 		req->num_pages++;
 
-<<<<<<< HEAD
 		iov_iter_advance(ii, tmp);
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		count += tmp;
 		pos += tmp;
 		offset += tmp;
@@ -1273,10 +1213,6 @@ static ssize_t fuse_file_aio_write(struct kiocb *iocb, const struct iovec *iov,
 {
 	struct file *file = iocb->ki_filp;
 	struct address_space *mapping = file->f_mapping;
-<<<<<<< HEAD
-=======
-	struct fuse_file *ff = file->private_data;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	size_t count = 0;
 	size_t ocount = 0;
 	ssize_t written = 0;
@@ -1295,11 +1231,7 @@ static ssize_t fuse_file_aio_write(struct kiocb *iocb, const struct iovec *iov,
 		return generic_file_aio_write(iocb, iov, nr_segs, pos);
 	}
 
-<<<<<<< HEAD
 	WARN_ON(iocb->ki_pos != pos);
-=======
-	BUG_ON(iocb->ki_pos != pos);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	ocount = 0;
 	err = generic_segment_checks(iov, &nr_segs, &ocount, VERIFY_READ);
@@ -1327,27 +1259,6 @@ static ssize_t fuse_file_aio_write(struct kiocb *iocb, const struct iovec *iov,
 	if (err)
 		goto out;
 
-<<<<<<< HEAD
-=======
-	if (ff && ff->shortcircuit_enabled && ff->rw_lower_file) {
-		/* Use iocb->ki_pos instead of pos to handle the cases of files
-		 * that are opened with O_APPEND. For example if multiple
-		 * processes open the same file with O_APPEND then the
-		 * iocb->ki_pos will not be equal to the new pos value that is
-		 * updated with the file size(to guarantee appends even when
-		 * the file has grown due to the writes by another process).
-		 * We should use iocb->pos here since the lower filesystem
-		 * is expected to adjust for O_APPEND anyway and may need to
-		 * adjust the size for the file changes that occur due to
-		 * some processes writing directly to the lower filesystem
-		 * without using fuse.
-		 */
-		written = fuse_shortcircuit_aio_write(iocb, iov, nr_segs,
-							iocb->ki_pos);
-		goto out;
-	}
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	if (file->f_flags & O_DIRECT) {
 		written = generic_file_direct_write(iocb, iov, &nr_segs,
 						    pos, &iocb->ki_pos,
@@ -1928,12 +1839,6 @@ static const struct vm_operations_struct fuse_file_vm_ops = {
 
 static int fuse_file_mmap(struct file *file, struct vm_area_struct *vma)
 {
-<<<<<<< HEAD
-=======
-	struct fuse_file *ff = file->private_data;
-
-	ff->shortcircuit_enabled = 0;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	if ((vma->vm_flags & VM_SHARED) && (vma->vm_flags & VM_MAYWRITE))
 		fuse_link_write_file(file);
 
@@ -1944,13 +1849,6 @@ static int fuse_file_mmap(struct file *file, struct vm_area_struct *vma)
 
 static int fuse_direct_mmap(struct file *file, struct vm_area_struct *vma)
 {
-<<<<<<< HEAD
-=======
-	struct fuse_file *ff = file->private_data;
-
-	ff->shortcircuit_enabled = 0;
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	/* Can't provide the coherency needed for MAP_SHARED */
 	if (vma->vm_flags & VM_MAYSHARE)
 		return -ENODEV;
@@ -2706,10 +2604,6 @@ fuse_direct_IO(int rw, struct kiocb *iocb, const struct iovec *iov,
 	loff_t i_size;
 	size_t count = iov_length(iov, nr_segs);
 	struct fuse_io_priv *io;
-<<<<<<< HEAD
-=======
-	bool is_sync = is_sync_kiocb(iocb);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	pos = offset;
 	inode = file->f_mapping->host;
@@ -2745,11 +2639,7 @@ fuse_direct_IO(int rw, struct kiocb *iocb, const struct iovec *iov,
 	 * to wait on real async I/O requests, so we must submit this request
 	 * synchronously.
 	 */
-<<<<<<< HEAD
 	if (!is_sync_kiocb(iocb) && (offset + count > i_size) && rw == WRITE)
-=======
-	if (!is_sync && (offset + count > i_size) && rw == WRITE)
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		io->async = false;
 
 	if (rw == WRITE)
@@ -2761,11 +2651,7 @@ fuse_direct_IO(int rw, struct kiocb *iocb, const struct iovec *iov,
 		fuse_aio_complete(io, ret < 0 ? ret : 0, -1);
 
 		/* we have a non-extending, async request, so return */
-<<<<<<< HEAD
 		if (!is_sync_kiocb(iocb))
-=======
-		if (!is_sync)
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			return -EIOCBQUEUED;
 
 		ret = wait_on_sync_kiocb(iocb);

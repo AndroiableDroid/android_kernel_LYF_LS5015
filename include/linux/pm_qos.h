@@ -36,10 +36,7 @@ enum pm_qos_flags_status {
 #define PM_QOS_NETWORK_THROUGHPUT_DEFAULT_VALUE	0
 #define PM_QOS_DEV_LAT_DEFAULT_VALUE		0
 
-<<<<<<< HEAD
 #define PM_QOS_DVFS_RESPONSE_LATENCY 		7
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 #define PM_QOS_FLAG_NO_POWER_OFF	(1 << 0)
 #define PM_QOS_FLAG_REMOTE_WAKEUP	(1 << 1)
 

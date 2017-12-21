@@ -661,11 +661,7 @@ static void usb_qdss_connect_work(struct work_struct *work)
 	dxport = qdss_ports[qdss->port_num].data_xport;
 	ctrl_xport = qdss_ports[qdss->port_num].ctrl_xport;
 	port_num = qdss_ports[qdss->port_num].data_xport_num;
-<<<<<<< HEAD
 	pr_debug("%s: data xport: %s dev: %p portno: %d\n",
-=======
-	pr_debug("%s: data xport: %s dev: %pK portno: %d\n",
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			__func__, xport_to_str(dxport),
 			qdss, qdss->port_num);
 	if (qdss->port_num >= nr_qdss_ports) {
@@ -770,11 +766,7 @@ static int qdss_set_alt(struct usb_function *f, unsigned intf, unsigned alt)
 
 	dxport = qdss_ports[qdss->port_num].data_xport;
 
-<<<<<<< HEAD
 	pr_debug("qdss_set_alt qdss pointer = %p\n", qdss);
-=======
-	pr_debug("qdss_set_alt qdss pointer = %pK\n", qdss);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	if (alt != 0)
 		goto fail;

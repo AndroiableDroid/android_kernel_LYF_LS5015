@@ -461,12 +461,6 @@ static int sco_sock_bind(struct socket *sock, struct sockaddr *addr, int alen)
 	if (!addr || addr->sa_family != AF_BLUETOOTH)
 		return -EINVAL;
 
-<<<<<<< HEAD
-=======
-	if (alen < sizeof(struct sockaddr_sco))
-		return -EINVAL;
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	memset(&sa, 0, sizeof(sa));
 	len = min_t(unsigned int, sizeof(sa), alen);
 	memcpy(&sa, addr, len);

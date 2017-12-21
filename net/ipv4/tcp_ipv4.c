@@ -389,12 +389,7 @@ void tcp_v4_err(struct sk_buff *icmp_skb, u32 info)
 
 	switch (type) {
 	case ICMP_REDIRECT:
-<<<<<<< HEAD
 		do_redirect(icmp_skb, sk);
-=======
-		if (!sock_owned_by_user(sk))
-			do_redirect(icmp_skb, sk);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		goto out;
 	case ICMP_SOURCE_QUENCH:
 		/* Just silently ignore these. */
@@ -829,12 +824,7 @@ static void tcp_v4_reqsk_send_ack(struct sock *sk, struct sk_buff *skb,
 	 */
 	tcp_v4_send_ack(skb, (sk->sk_state == TCP_LISTEN) ?
 			tcp_rsk(req)->snt_isn + 1 : tcp_sk(sk)->snd_nxt,
-<<<<<<< HEAD
 			tcp_rsk(req)->rcv_nxt, req->rcv_wnd,
-=======
-			tcp_rsk(req)->rcv_nxt,
-			req->rcv_wnd >> inet_rsk(req)->rcv_wscale,
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			tcp_time_stamp,
 			req->ts_recent,
 			0,
@@ -1431,10 +1421,6 @@ static int tcp_v4_conn_req_fastopen(struct sock *sk,
 	 * scaled. So correct it appropriately.
 	 */
 	tp->snd_wnd = ntohs(tcp_hdr(skb)->window);
-<<<<<<< HEAD
-=======
-	tp->max_window = tp->snd_wnd;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	/* Activate the retrans timer so that SYNACK can be retransmitted.
 	 * The request socket is not added to the SYN table of the parent
@@ -1973,24 +1959,6 @@ bool tcp_prequeue(struct sock *sk, struct sk_buff *skb)
 }
 EXPORT_SYMBOL(tcp_prequeue);
 
-<<<<<<< HEAD
-=======
-int tcp_filter(struct sock *sk, struct sk_buff *skb)
-{
-	struct tcphdr *th = (struct tcphdr *)skb->data;
-	unsigned int eaten = skb->len;
-	int err;
-
-	err = sk_filter_trim_cap(sk, skb, th->doff * 4);
-	if (!err) {
-		eaten -= skb->len;
-		TCP_SKB_CB(skb)->end_seq -= eaten;
-	}
-	return err;
-}
-EXPORT_SYMBOL(tcp_filter);
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 /*
  *	From tcp_input.c
  */
@@ -2053,15 +2021,8 @@ process:
 		goto discard_and_relse;
 	nf_reset(skb);
 
-<<<<<<< HEAD
 	if (sk_filter(sk, skb))
 		goto discard_and_relse;
-=======
-	if (tcp_filter(sk, skb))
-		goto discard_and_relse;
-	th = (const struct tcphdr *)skb->data;
-	iph = ip_hdr(skb);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	skb->dev = NULL;
 
@@ -2704,10 +2665,6 @@ static void get_tcp4_sock(struct sock *sk, struct seq_file *f, int i)
 	__be32 src = inet->inet_rcv_saddr;
 	__u16 destp = ntohs(inet->inet_dport);
 	__u16 srcp = ntohs(inet->inet_sport);
-<<<<<<< HEAD
-=======
-	__u8 state = sk->sk_state;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	int rx_queue;
 
 	if (icsk->icsk_pending == ICSK_TIME_RETRANS ||
@@ -2726,12 +2683,6 @@ static void get_tcp4_sock(struct sock *sk, struct seq_file *f, int i)
 		timer_expires = jiffies;
 	}
 
-<<<<<<< HEAD
-=======
-	if (inet->transparent)
-		state |= 0x80;
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	if (sk->sk_state == TCP_LISTEN)
 		rx_queue = sk->sk_ack_backlog;
 	else
@@ -2742,11 +2693,7 @@ static void get_tcp4_sock(struct sock *sk, struct seq_file *f, int i)
 
 	seq_printf(f, "%4d: %08X:%04X %08X:%04X %02X %08X:%08X %02X:%08lX "
 			"%08X %5d %8d %lu %d %pK %lu %lu %u %u %d",
-<<<<<<< HEAD
 		i, src, srcp, dest, destp, sk->sk_state,
-=======
-		i, src, srcp, dest, destp, state,
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		tp->write_seq - tp->snd_una,
 		rx_queue,
 		timer_active,

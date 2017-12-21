@@ -2366,15 +2366,8 @@ int __sys_recvmmsg(int fd, struct mmsghdr __user *mmsg, unsigned int vlen,
 		return err;
 
 	err = sock_error(sock->sk);
-<<<<<<< HEAD
 	if (err)
 		goto out_put;
-=======
-	if (err) {
-		datagrams = err;
-		goto out_put;
-	}
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	entry = mmsg;
 	compat_entry = (struct compat_mmsghdr __user *)mmsg;
@@ -2428,7 +2421,6 @@ int __sys_recvmmsg(int fd, struct mmsghdr __user *mmsg, unsigned int vlen,
 			break;
 	}
 
-<<<<<<< HEAD
 out_put:
 	fput_light(sock->file, fput_needed);
 
@@ -2454,33 +2446,6 @@ out_put:
 	}
 
 	return err;
-=======
-	if (err == 0)
-		goto out_put;
-
-	if (datagrams == 0) {
-		datagrams = err;
-		goto out_put;
-	}
-
-	/*
-	 * We may return less entries than requested (vlen) if the
-	 * sock is non block and there aren't enough datagrams...
-	 */
-	if (err != -EAGAIN) {
-		/*
-		 * ... or  if recvmsg returns an error after we
-		 * received some datagrams, where we record the
-		 * error to return on the next call or if the
-		 * app asks about it using getsockopt(SO_ERROR).
-		 */
-		sock->sk->sk_err = -err;
-	}
-out_put:
-	fput_light(sock->file, fput_needed);
-
-	return datagrams;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 SYSCALL_DEFINE5(recvmmsg, int, fd, struct mmsghdr __user *, mmsg,

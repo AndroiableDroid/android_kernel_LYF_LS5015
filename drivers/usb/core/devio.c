@@ -373,19 +373,11 @@ static void snoop_urb(struct usb_device *udev,
 
 	if (userurb) {		/* Async */
 		if (when == SUBMIT)
-<<<<<<< HEAD
 			dev_info(&udev->dev, "userurb %p, ep%d %s-%s, "
 					"length %u\n",
 					userurb, ep, t, d, length);
 		else
 			dev_info(&udev->dev, "userurb %p, ep%d %s-%s, "
-=======
-			dev_info(&udev->dev, "userurb %pK, ep%d %s-%s, "
-					"length %u\n",
-					userurb, ep, t, d, length);
-		else
-			dev_info(&udev->dev, "userurb %pK, ep%d %s-%s, "
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 					"actual_length %u status %d\n",
 					userurb, ep, t, d, length,
 					timeout_or_status);

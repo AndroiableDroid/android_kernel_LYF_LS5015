@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 /* Copyright (c) 2015-2016, The Linux Foundation. All rights reserved.
-=======
-/* Copyright (c) 2015-2017, The Linux Foundation. All rights reserved.
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -132,7 +128,6 @@ enum {
 	RX_MIX1_INP_SEL_RX3,
 };
 
-<<<<<<< HEAD
 enum{
 	MODE_1 = 0,
 	MODE_2,
@@ -142,8 +137,6 @@ enum{
 
 static int test_spk_pa_mode = 0;
 
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 static const DECLARE_TLV_DB_SCALE(digital_gain, 0, 1, 0);
 static const DECLARE_TLV_DB_SCALE(analog_gain, 0, 25, 1);
 static struct snd_soc_dai_driver msm8x16_wcd_i2s_dai[];
@@ -1164,34 +1157,10 @@ static int __msm8x16_wcd_reg_read(struct snd_soc_codec *codec,
 	else if (MSM8X16_WCD_IS_DIGITAL_REG(reg)) {
 		mutex_lock(&pdata->cdc_mclk_mutex);
 		if (atomic_read(&pdata->mclk_enabled) == false) {
-<<<<<<< HEAD
 			pdata->digital_cdc_clk.clk_val = pdata->mclk_freq;
 			ret = afe_set_digital_codec_core_clock(
 					AFE_PORT_ID_PRIMARY_MI2S_RX,
 					&pdata->digital_cdc_clk);
-=======
-			switch (q6core_get_avs_version()) {
-			case (Q6_SUBSYS_AVS2_6):
-				pdata->digital_cdc_clk.clk_val =
-						pdata->mclk_freq;
-				ret = afe_set_digital_codec_core_clock(
-						AFE_PORT_ID_PRIMARY_MI2S_RX,
-						&pdata->digital_cdc_clk);
-				break;
-			case (Q6_SUBSYS_AVS2_7):
-			case (Q6_SUBSYS_AVS2_8):
-				pdata->digital_cdc_core_clk.enable = 1;
-				ret = afe_set_lpass_clock_v2(
-						AFE_PORT_ID_PRIMARY_MI2S_RX,
-						&pdata->digital_cdc_core_clk);
-				break;
-			case (Q6_SUBSYS_INVALID):
-			default:
-				ret = -EINVAL;
-				pr_err("%s: INVALID AVS IMAGE\n", __func__);
-				break;
-			}
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			if (ret < 0) {
 				pr_err("failed to enable the MCLK\n");
 				goto err;
@@ -1239,34 +1208,10 @@ static int __msm8x16_wcd_reg_write(struct snd_soc_codec *codec,
 		mutex_lock(&pdata->cdc_mclk_mutex);
 		if (atomic_read(&pdata->mclk_enabled) == false) {
 			pr_debug("enable MCLK for AHB write %s:\n", __func__);
-<<<<<<< HEAD
 			pdata->digital_cdc_clk.clk_val = pdata->mclk_freq;
 			ret = afe_set_digital_codec_core_clock(
 					AFE_PORT_ID_PRIMARY_MI2S_RX,
 					&pdata->digital_cdc_clk);
-=======
-			switch (q6core_get_avs_version()) {
-			case (Q6_SUBSYS_AVS2_6):
-				pdata->digital_cdc_clk.clk_val =
-						pdata->mclk_freq;
-				ret = afe_set_digital_codec_core_clock(
-						AFE_PORT_ID_PRIMARY_MI2S_RX,
-						&pdata->digital_cdc_clk);
-				break;
-			case (Q6_SUBSYS_AVS2_7):
-			case (Q6_SUBSYS_AVS2_8):
-				pdata->digital_cdc_core_clk.enable = 1;
-				ret = afe_set_lpass_clock_v2(
-						AFE_PORT_ID_PRIMARY_MI2S_RX,
-						&pdata->digital_cdc_core_clk);
-				break;
-			case (Q6_SUBSYS_INVALID):
-			default:
-				ret = -EINVAL;
-				pr_err("%s: INVALID AVS IMAGE\n", __func__);
-				break;
-			}
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			if (ret < 0) {
 				pr_err("failed to enable the MCLK\n");
 				ret = 0;
@@ -2105,7 +2050,6 @@ static int msm8x16_wcd_pa_gain_put(struct snd_kcontrol *kcontrol,
 	return 0;
 }
 
-<<<<<<< HEAD
 static int test_spk_pa_get(struct snd_kcontrol *kcontrol,
 				struct snd_ctl_elem_value *ucontrol)
 {
@@ -2158,8 +2102,6 @@ static int test_spk_pa_set(struct snd_kcontrol *kcontrol,
 		__func__, test_spk_pa_mode);
 	return 0;
 }
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 static int msm8x16_wcd_boost_option_get(struct snd_kcontrol *kcontrol,
 				struct snd_ctl_elem_value *ucontrol)
@@ -2531,7 +2473,6 @@ static const struct soc_enum msm8x16_wcd_spk_boost_ctl_enum[] = {
 		SOC_ENUM_SINGLE_EXT(2, msm8x16_wcd_spk_boost_ctrl_text),
 };
 
-<<<<<<< HEAD
 static const char * const test_spk_pa_ctrl_text[] = {
 		"MODE_1", "MODE_2", "MODE_3",
 		"MODE_4"};
@@ -2539,8 +2480,6 @@ static const struct soc_enum test_spk_pa_ctl_enum[] = {
 		SOC_ENUM_SINGLE_EXT(4, test_spk_pa_ctrl_text),
 };
 
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 static const char * const msm8x16_wcd_ext_spk_boost_ctrl_text[] = {
 		"DISABLE", "ENABLE"};
 static const struct soc_enum msm8x16_wcd_ext_spk_boost_ctl_enum[] = {
@@ -2569,12 +2508,9 @@ static const struct soc_enum cf_rxmix3_enum =
 
 static const struct snd_kcontrol_new msm8x16_wcd_snd_controls[] = {
 
-<<<<<<< HEAD
 	SOC_ENUM_EXT("Mobee Spk PA Mode", test_spk_pa_ctl_enum[0],
 		test_spk_pa_get, test_spk_pa_set),
 
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	SOC_ENUM_EXT("Boost Option", msm8x16_wcd_boost_option_ctl_enum[0],
 		msm8x16_wcd_boost_option_get, msm8x16_wcd_boost_option_set),
 
@@ -3569,11 +3505,7 @@ static int msm8x16_wcd_codec_enable_micbias(struct snd_soc_dapm_widget *w,
 			snd_soc_update_bits(codec, micb_int_reg, 0x08, 0x08);
 			msm8x16_notifier_call(codec,
 					WCD_EVENT_POST_MICBIAS_2_ON);
-<<<<<<< HEAD
 		} else if (strnstr(w->name, internal3_text, 30)) {
-=======
-		} else if (strnstr(w->name, internal3_text, strlen(w->name))) {
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			snd_soc_update_bits(codec, micb_int_reg, 0x01, 0x01);
 		} else if (strnstr(w->name, external2_text, strlen(w->name))) {
 			msm8x16_notifier_call(codec,
@@ -3586,11 +3518,7 @@ static int msm8x16_wcd_codec_enable_micbias(struct snd_soc_dapm_widget *w,
 		} else if (strnstr(w->name, internal2_text, strlen(w->name))) {
 			msm8x16_notifier_call(codec,
 					WCD_EVENT_POST_MICBIAS_2_OFF);
-<<<<<<< HEAD
 		} else if (strnstr(w->name, internal3_text, 30)) {
-=======
-		} else if (strnstr(w->name, internal3_text, strlen(w->name))) {
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			snd_soc_update_bits(codec, micb_int_reg, 0x2, 0x0);
 		} else if (strnstr(w->name, external2_text, strlen(w->name))) {
 			/*
@@ -4704,18 +4632,13 @@ static int msm8x16_wcd_codec_enable_spk_ext_pa(struct snd_soc_dapm_widget *w,
 {
 	struct snd_soc_codec *codec = w->codec;
 	struct msm8x16_wcd_priv *msm8x16_wcd = snd_soc_codec_get_drvdata(codec);
-<<<<<<< HEAD
 	int i=0;
-=======
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	dev_dbg(codec->dev, "%s: %s event = %d\n", __func__, w->name, event);
 	switch (event) {
 	case SND_SOC_DAPM_POST_PMU:
 		dev_dbg(w->codec->dev,
 			"%s: enable external speaker PA\n", __func__);
 		if (msm8x16_wcd->codec_spk_ext_pa_cb)
-<<<<<<< HEAD
 			for(i = 0;i<test_spk_pa_mode;i++){
 				msm8x16_wcd->codec_spk_ext_pa_cb(codec, 1);
 				udelay(2);
@@ -4724,9 +4647,6 @@ static int msm8x16_wcd_codec_enable_spk_ext_pa(struct snd_soc_dapm_widget *w,
 			}
 			msm8x16_wcd->codec_spk_ext_pa_cb(codec, 1);
 			mdelay(20);
-=======
-			msm8x16_wcd->codec_spk_ext_pa_cb(codec, 1);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		break;
 	case SND_SOC_DAPM_PRE_PMD:
 		dev_dbg(w->codec->dev,
@@ -5700,10 +5620,6 @@ int msm8x16_wcd_suspend(struct snd_soc_codec *codec)
 	struct msm8916_asoc_mach_data *pdata = NULL;
 	struct msm8x16_wcd *msm8x16 = codec->control_data;
 	struct msm8x16_wcd_pdata *msm8x16_pdata = msm8x16->dev->platform_data;
-<<<<<<< HEAD
-=======
-	int ret = 0;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	pdata = snd_soc_card_get_drvdata(codec->card);
 	pr_debug("%s: mclk cnt = %d, mclk_enabled = %d\n",
@@ -5714,35 +5630,10 @@ int msm8x16_wcd_suspend(struct snd_soc_codec *codec)
 				&pdata->disable_mclk_work);
 		mutex_lock(&pdata->cdc_mclk_mutex);
 		if (atomic_read(&pdata->mclk_enabled) == true) {
-<<<<<<< HEAD
 			pdata->digital_cdc_clk.clk_val = 0;
 			afe_set_digital_codec_core_clock(
 					AFE_PORT_ID_PRIMARY_MI2S_RX,
 					&pdata->digital_cdc_clk);
-=======
-			switch (q6core_get_avs_version()) {
-			case (Q6_SUBSYS_AVS2_6):
-				pdata->digital_cdc_clk.clk_val = 0;
-				ret = afe_set_digital_codec_core_clock(
-						AFE_PORT_ID_PRIMARY_MI2S_RX,
-						&pdata->digital_cdc_clk);
-				break;
-			case (Q6_SUBSYS_AVS2_7):
-			case (Q6_SUBSYS_AVS2_8):
-				pdata->digital_cdc_core_clk.enable = 0;
-				ret = afe_set_lpass_clock_v2(
-						AFE_PORT_ID_PRIMARY_MI2S_RX,
-						&pdata->digital_cdc_core_clk);
-				break;
-			case (Q6_SUBSYS_INVALID):
-			default:
-				ret = -EINVAL;
-				pr_err("%s: INVALID AVS IMAGE\n", __func__);
-				break;
-			}
-			if (ret < 0)
-				pr_err("failed to disable the MCLK\n");
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			atomic_set(&pdata->mclk_enabled, false);
 		}
 		mutex_unlock(&pdata->cdc_mclk_mutex);
@@ -5966,11 +5857,7 @@ static int msm8x16_wcd_spmi_probe(struct spmi_device *spmi)
 	}
 
 
-<<<<<<< HEAD
 	dev_dbg(&spmi->dev, "%s(%d):start addr = 0x%pa\n",
-=======
-	dev_dbg(&spmi->dev, "%s(%d):start addr = 0x%pK\n",
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		__func__, __LINE__,  &wcd_resource->start);
 
 	if (wcd_resource->start != TOMBAK_CORE_0_SPMI_ADDR)

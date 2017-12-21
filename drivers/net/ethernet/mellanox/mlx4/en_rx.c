@@ -350,19 +350,8 @@ int mlx4_en_activate_rx_rings(struct mlx4_en_priv *priv)
 		ring->cqn = priv->rx_cq[ring_ind].mcq.cqn;
 
 		ring->stride = stride;
-<<<<<<< HEAD
 		if (ring->stride <= TXBB_SIZE)
 			ring->buf += TXBB_SIZE;
-=======
-		if (ring->stride <= TXBB_SIZE) {
-			/* Stamp first unused send wqe */
-			__be32 *ptr = (__be32 *)ring->buf;
-			__be32 stamp = cpu_to_be32(1 << STAMP_SHIFT);
-			*ptr = stamp;
-			/* Move pointer to start of rx section */
-			ring->buf += TXBB_SIZE;
-		}
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 		ring->log_stride = ffs(ring->stride) - 1;
 		ring->buf_size = ring->size * ring->stride;

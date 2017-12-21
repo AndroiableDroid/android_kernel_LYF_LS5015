@@ -398,11 +398,6 @@ int kthread_park(struct task_struct *k)
 			if (k != current) {
 				wake_up_process(k);
 				wait_for_completion(&kthread->parked);
-<<<<<<< HEAD
-=======
-				while (k->state != TASK_PARKED)
-					cond_resched();
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			}
 		}
 		ret = 0;

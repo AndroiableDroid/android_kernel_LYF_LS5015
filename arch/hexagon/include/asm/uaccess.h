@@ -102,12 +102,7 @@ static inline long hexagon_strncpy_from_user(char *dst, const char __user *src,
 {
 	long res = __strnlen_user(src, n);
 
-<<<<<<< HEAD
 	/* return from strnlen can't be zero -- that would be rubbish. */
-=======
-	if (unlikely(!res))
-		return -EFAULT;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	if (res > n) {
 		copy_from_user(dst, src, n);

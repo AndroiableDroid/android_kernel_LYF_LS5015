@@ -1,9 +1,5 @@
 /*
-<<<<<<< HEAD
  * Copyright (c) 2013-2015, The Linux Foundation. All rights reserved.
-=======
- * Copyright (c) 2013-2014, 2017 The Linux Foundation. All rights reserved.
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -535,14 +531,6 @@ void rmnet_config_netlink_msg_handler(struct sk_buff *skb)
 	nlmsg_header = (struct nlmsghdr *) skb->data;
 	rmnet_header = (struct rmnet_nl_msg_s *) nlmsg_data(nlmsg_header);
 
-<<<<<<< HEAD
-=======
-	if (!nlmsg_header->nlmsg_pid ||
-	    (nlmsg_header->nlmsg_len < sizeof(struct nlmsghdr) +
-				       sizeof(struct rmnet_nl_msg_s)))
-		return;
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	LOGL("Netlink message pid=%d, seq=%d, length=%d, rmnet_type=%d",
 		nlmsg_header->nlmsg_pid,
 		nlmsg_header->nlmsg_seq,

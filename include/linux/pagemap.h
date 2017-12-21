@@ -491,60 +491,35 @@ static inline int fault_in_pages_readable(const char __user *uaddr, int size)
  */
 static inline int fault_in_multipages_writeable(char __user *uaddr, int size)
 {
-<<<<<<< HEAD
 	int ret = 0;
 	char __user *end = uaddr + size - 1;
 
 	if (unlikely(size == 0))
 		return ret;
 
-=======
-	char __user *end = uaddr + size - 1;
-
-	if (unlikely(size == 0))
-		return 0;
-
-	if (unlikely(uaddr > end))
-		return -EFAULT;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	/*
 	 * Writing zeroes into userspace here is OK, because we know that if
 	 * the zero gets there, we'll be overwriting it.
 	 */
-<<<<<<< HEAD
 	while (uaddr <= end) {
 		ret = __put_user(0, uaddr);
 		if (ret != 0)
 			return ret;
 		uaddr += PAGE_SIZE;
 	}
-=======
-	do {
-		if (unlikely(__put_user(0, uaddr) != 0))
-			return -EFAULT;
-		uaddr += PAGE_SIZE;
-	} while (uaddr <= end);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	/* Check whether the range spilled into the next page. */
 	if (((unsigned long)uaddr & PAGE_MASK) ==
 			((unsigned long)end & PAGE_MASK))
-<<<<<<< HEAD
 		ret = __put_user(0, end);
 
 	return ret;
-=======
-		return __put_user(0, end);
-
-	return 0;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 static inline int fault_in_multipages_readable(const char __user *uaddr,
 					       int size)
 {
 	volatile char c;
-<<<<<<< HEAD
 	int ret = 0;
 	const char __user *end = uaddr + size - 1;
 
@@ -557,37 +532,15 @@ static inline int fault_in_multipages_readable(const char __user *uaddr,
 			return ret;
 		uaddr += PAGE_SIZE;
 	}
-=======
-	const char __user *end = uaddr + size - 1;
-
-	if (unlikely(size == 0))
-		return 0;
-
-	if (unlikely(uaddr > end))
-		return -EFAULT;
-
-	do {
-		if (unlikely(__get_user(c, uaddr) != 0))
-			return -EFAULT;
-		uaddr += PAGE_SIZE;
-	} while (uaddr <= end);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	/* Check whether the range spilled into the next page. */
 	if (((unsigned long)uaddr & PAGE_MASK) ==
 			((unsigned long)end & PAGE_MASK)) {
-<<<<<<< HEAD
 		ret = __get_user(c, end);
 		(void)c;
 	}
 
 	return ret;
-=======
-		return __get_user(c, end);
-	}
-
-	return 0;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 
 int add_to_page_cache_locked(struct page *page, struct address_space *mapping,

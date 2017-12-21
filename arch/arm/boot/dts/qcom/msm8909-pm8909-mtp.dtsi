@@ -125,14 +125,3 @@
 &smb1357_otg_vreg {
 	usb-pullup-supply = <&pm8909_l13>;
 };
-<<<<<<< HEAD
-=======
-
-&soc {
-	i2c@78b6000 {
-		nq@28 {
-			qcom,nq-clkreq = <&pm8909_gpios 2 0>;
-		};
-	};
-};
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147

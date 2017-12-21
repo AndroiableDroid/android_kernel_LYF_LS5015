@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 /* Copyright (c) 2011-2015, The Linux Foundation. All rights reserved.
-=======
-/* Copyright (c) 2011-2016, The Linux Foundation. All rights reserved.
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -840,11 +836,7 @@ int diag_send_diag_mode_update_by_smd(struct diag_smd_info *smd_info,
 	int err = 0;
 
 	if (!smd_info || smd_info->type != SMD_CNTL_TYPE) {
-<<<<<<< HEAD
 		pr_err("diag: In %s, invalid channel info, smd_info: %p type: %d\n",
-=======
-		pr_err("diag: In %s, invalid channel info, smd_info: %pK type: %d\n",
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 					__func__, smd_info,
 					((smd_info) ? smd_info->type : -1));
 		return -EIO;

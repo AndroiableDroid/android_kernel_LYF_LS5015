@@ -178,11 +178,7 @@ static int bam_data_alloc_requests(struct usb_ep *ep, struct list_head *head,
 	struct bam_data_ch_info	*d = &port->data_ch;
 	struct usb_request *req;
 
-<<<<<<< HEAD
 	pr_debug("%s: ep:%p head:%p num:%d cb:%p", __func__,
-=======
-	pr_debug("%s: ep:%pK head:%pK num:%d cb:%pK", __func__,
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			ep, head, num, cb);
 
 	if (d->alloc_rx_reqs) {
@@ -308,11 +304,7 @@ static void bam_data_write_done(void *p, struct sk_buff *skb)
 
 	d->pending_with_bam--;
 
-<<<<<<< HEAD
 	pr_debug("%s: port:%p d:%p pbam:%u, pno:%d\n", __func__,
-=======
-	pr_debug("%s: port:%pK d:%pK pbam:%u, pno:%d\n", __func__,
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			port, d, d->pending_with_bam, port->port_num);
 
 	spin_unlock_irqrestore(&port->port_lock, flags);
@@ -546,11 +538,7 @@ static void bam_data_write_toipa(struct work_struct *w)
 
 		d->pending_with_bam++;
 
-<<<<<<< HEAD
 		pr_debug("%s: port:%p d:%p pbam:%u pno:%d\n", __func__,
-=======
-		pr_debug("%s: port:%pK d:%pK pbam:%u pno:%d\n", __func__,
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				port, d, d->pending_with_bam, port->port_num);
 
 		spin_unlock_irqrestore(&port->port_lock, flags);
@@ -779,11 +767,7 @@ static void bam2bam_data_disconnect_work(struct work_struct *w)
 			pr_err("usb_bam_disconnect_ipa failed: err:%d\n", ret);
 	}
 
-<<<<<<< HEAD
 	pr_debug("Disconnect workqueue done (port %p)\n", port);
-=======
-	pr_debug("Disconnect workqueue done (port %pK)\n", port);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 /*
  * This function configured data fifo based on index passed to get bam2bam
@@ -1219,11 +1203,7 @@ static void bam2bam_data_connect_work(struct work_struct *w)
 		}
 	}
 
-<<<<<<< HEAD
 	pr_debug("Connect workqueue done (port %p)", port);
-=======
-	pr_debug("Connect workqueue done (port %pK)", port);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	return;
 
 disconnect_ipa:
@@ -1267,11 +1247,7 @@ void bam_data_start_rx_tx(u8 port_num)
 	}
 
 	if (!d->rx_req || !d->tx_req) {
-<<<<<<< HEAD
 		pr_err("%s: No request d->rx_req=%p, d->tx_req=%p", __func__,
-=======
-		pr_err("%s: No request d->rx_req=%pK, d->tx_req=%pK", __func__,
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			d->rx_req, d->tx_req);
 		goto out;
 	}
@@ -1413,11 +1389,7 @@ void bam_data_disconnect(struct data_port *gr, u8 port_num)
 	unsigned long flags;
 	bool disable_eps = true;
 
-<<<<<<< HEAD
 	pr_debug("dev:%p port number:%d\n", gr, port_num);
-=======
-	pr_debug("dev:%pK port number:%d\n", gr, port_num);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	if (port_num >= n_bam2bam_data_ports) {
 		pr_err("invalid bam2bam portno#%d\n", port_num);
@@ -1668,11 +1640,7 @@ int bam_data_connect(struct data_port *gr, u8 port_num,
 
 	ret = usb_ep_enable(gr->in);
 	if (ret) {
-<<<<<<< HEAD
 		pr_err("usb_ep_enable failed eptype:IN ep:%p", gr->in);
-=======
-		pr_err("usb_ep_enable failed eptype:IN ep:%pK", gr->in);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		goto exit;
 	}
 
@@ -1680,11 +1648,7 @@ int bam_data_connect(struct data_port *gr, u8 port_num,
 
 	ret = usb_ep_enable(gr->out);
 	if (ret) {
-<<<<<<< HEAD
 		pr_err("usb_ep_enable failed eptype:OUT ep:%p", gr->out);
-=======
-		pr_err("usb_ep_enable failed eptype:OUT ep:%pK", gr->out);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		gr->in->driver_data = 0;
 		goto exit;
 	}

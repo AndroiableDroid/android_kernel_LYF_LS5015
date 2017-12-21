@@ -364,11 +364,7 @@ static void crypto_ccm_decrypt_done(struct crypto_async_request *areq,
 
 	if (!err) {
 		err = crypto_ccm_auth(req, req->dst, cryptlen);
-<<<<<<< HEAD
 		if (!err && memcmp(pctx->auth_tag, pctx->odata, authsize))
-=======
-		if (!err && crypto_memneq(pctx->auth_tag, pctx->odata, authsize))
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			err = -EBADMSG;
 	}
 	aead_request_complete(req, err);
@@ -427,11 +423,7 @@ static int crypto_ccm_decrypt(struct aead_request *req)
 		return err;
 
 	/* verify */
-<<<<<<< HEAD
 	if (memcmp(authtag, odata, authsize))
-=======
-	if (crypto_memneq(authtag, odata, authsize))
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		return -EBADMSG;
 
 	return err;

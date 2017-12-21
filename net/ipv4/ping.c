@@ -150,29 +150,17 @@ void ping_hash(struct sock *sk)
 void ping_unhash(struct sock *sk)
 {
 	struct inet_sock *isk = inet_sk(sk);
-<<<<<<< HEAD
 	pr_debug("ping_unhash(isk=%p,isk->num=%u)\n", isk, isk->inet_num);
 	if (sk_hashed(sk)) {
 		write_lock_bh(&ping_table.lock);
-=======
-
-	pr_debug("ping_unhash(isk=%p,isk->num=%u)\n", isk, isk->inet_num);
-	write_lock_bh(&ping_table.lock);
-	if (sk_hashed(sk)) {
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		hlist_nulls_del(&sk->sk_nulls_node);
 		sk_nulls_node_init(&sk->sk_nulls_node);
 		sock_put(sk);
 		isk->inet_num = 0;
 		isk->inet_sport = 0;
 		sock_prot_inuse_add(sock_net(sk), sk->sk_prot, -1);
-<<<<<<< HEAD
 		write_unlock_bh(&ping_table.lock);
 	}
-=======
-	}
-	write_unlock_bh(&ping_table.lock);
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 }
 EXPORT_SYMBOL_GPL(ping_unhash);
 
@@ -651,11 +639,6 @@ static int ping_v4_push_pending_frames(struct sock *sk, struct pingfakehdr *pfh,
 {
 	struct sk_buff *skb = skb_peek(&sk->sk_write_queue);
 
-<<<<<<< HEAD
-=======
-	if (!skb)
-		return 0;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	pfh->wcheck = csum_partial((char *)&pfh->icmph,
 		sizeof(struct icmphdr), pfh->wcheck);
 	pfh->icmph.checksum = csum_fold(pfh->wcheck);
@@ -668,11 +651,7 @@ int ping_common_sendmsg(int family, struct msghdr *msg, size_t len,
 			void *user_icmph, size_t icmph_len) {
 	u8 type, code;
 
-<<<<<<< HEAD
 	if (len > 0xFFFF)
-=======
-	if (len > 0xFFFF || len < icmph_len)
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		return -EMSGSIZE;
 
 	/*

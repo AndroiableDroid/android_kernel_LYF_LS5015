@@ -473,11 +473,7 @@ static void android_work(struct work_struct *data)
 		}
 		pr_info("%s: sent uevent %s\n", __func__, uevent_envp[0]);
 	} else {
-<<<<<<< HEAD
 		pr_info("%s: did not send uevent (%d %d %p)\n", __func__,
-=======
-		pr_info("%s: did not send uevent (%d %d %pK)\n", __func__,
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			 dev->connected, dev->sw_connected, cdev->config);
 	}
 }
@@ -2569,11 +2565,7 @@ static void mass_storage_function_enable(struct android_usb_function *f)
 
 	pr_debug("fsg.nluns:%d\n", config->fsg.nluns);
 	for (i = prev_nluns; i < config->fsg.nluns; i++) {
-<<<<<<< HEAD
 		snprintf(lun_name, sizeof(buf), "lun%d", (i-prev_nluns));
-=======
-		snprintf(lun_name, sizeof(buf1), "lun%d", (i-prev_nluns));
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		pr_debug("sysfs: LUN name:%s\n", lun_name);
 		err = sysfs_create_link(&f->dev->kobj,
 			&common->luns[i].dev.kobj, lun_name);
@@ -3122,7 +3114,6 @@ static ssize_t remote_wakeup_store(struct device *pdev,
 
 	return size;
 }
-<<<<<<< HEAD
 #if defined(CONFIG_MIRAGE_ONLY) || defined(CONFIG_TESTPLUS_ONLY)
 static ssize_t adb_name_show(struct device *pdev,
 			   struct device_attribute *attr, char *buf)
@@ -3130,9 +3121,6 @@ static ssize_t adb_name_show(struct device *pdev,
 	return snprintf(buf, PAGE_SIZE, "%s\n", strings_dev[STRING_SERIAL_IDX].s);
 }
 #endif
-=======
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 static ssize_t
 functions_show(struct device *pdev, struct device_attribute *attr, char *buf)
 {
@@ -3469,13 +3457,9 @@ DESCRIPTOR_ATTR(bDeviceProtocol, "%d\n")
 DESCRIPTOR_STRING_ATTR(iManufacturer, manufacturer_string)
 DESCRIPTOR_STRING_ATTR(iProduct, product_string)
 DESCRIPTOR_STRING_ATTR(iSerial, serial_string)
-<<<<<<< HEAD
 #if defined(CONFIG_MIRAGE_ONLY) || defined(CONFIG_TESTPLUS_ONLY)
 static DEVICE_ATTR(adb_display_name, S_IRUGO | S_IWUSR, adb_name_show, NULL);
 #endif
-=======
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 static DEVICE_ATTR(functions, S_IRUGO | S_IWUSR, functions_show,
 						 functions_store);
 static DEVICE_ATTR(enable, S_IRUGO | S_IWUSR, enable_show, enable_store);
@@ -3502,12 +3486,9 @@ static struct device_attribute *android_usb_attributes[] = {
 	&dev_attr_iManufacturer,
 	&dev_attr_iProduct,
 	&dev_attr_iSerial,
-<<<<<<< HEAD
 #if defined(CONFIG_MIRAGE_ONLY) || defined(CONFIG_TESTPLUS_ONLY)
 	&dev_attr_adb_display_name,
 #endif
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	&dev_attr_functions,
 	&dev_attr_enable,
 	&dev_attr_pm_qos,
@@ -3837,11 +3818,7 @@ static int usb_diag_update_pid_and_serial_num(u32 pid, const char *snum)
 		return -ENODEV;
 	}
 
-<<<<<<< HEAD
 	pr_debug("%s: dload:%p pid:%x serial_num:%s\n",
-=======
-	pr_debug("%s: dload:%pK pid:%x serial_num:%s\n",
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 				__func__, diag_dload, pid, snum);
 
 	/* update pid */
@@ -3874,11 +3851,8 @@ static int android_probe(struct platform_device *pdev)
 	struct android_usb_platform_data *pdata;
 	struct android_dev *android_dev;
 	struct resource *res;
-<<<<<<< HEAD
 	const char *adb_name;
 
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	int ret = 0, i, len = 0, prop_len = 0;
 	u32 usb_core_id = 0;
 
@@ -3940,11 +3914,8 @@ static int android_probe(struct platform_device *pdev)
 		ret = of_property_read_u8(pdev->dev.of_node,
 				"qcom,android-usb-uicc-nluns",
 				&pdata->uicc_nluns);
-<<<<<<< HEAD
 
 		ret = of_property_read_string(pdev->dev.of_node, "adb_diaplay_name", &adb_name);
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	} else {
 		pdata = pdev->dev.platform_data;
 	}

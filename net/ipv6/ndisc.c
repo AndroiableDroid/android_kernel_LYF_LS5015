@@ -1193,18 +1193,7 @@ static void ndisc_router_discovery(struct sk_buff *skb)
 	if (rt)
 		rt6_set_expires(rt, jiffies + (HZ * lifetime));
 	if (ra_msg->icmph.icmp6_hop_limit) {
-<<<<<<< HEAD
 		in6_dev->cnf.hop_limit = ra_msg->icmph.icmp6_hop_limit;
-=======
-		/* Only set hop_limit on the interface if it is higher than
-		 * the current hop_limit.
-		 */
-		if (in6_dev->cnf.hop_limit < ra_msg->icmph.icmp6_hop_limit) {
-			in6_dev->cnf.hop_limit = ra_msg->icmph.icmp6_hop_limit;
-		} else {
-			ND_PRINTK(2, warn, "RA: Got route advertisement with lower hop_limit than current\n");
-		}
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 		if (rt)
 			dst_metric_set(&rt->dst, RTAX_HOPLIMIT,
 				       ra_msg->icmph.icmp6_hop_limit);
@@ -1720,7 +1709,6 @@ int __init ndisc_init(void)
 	if (err)
 		goto out_unregister_pernet;
 #endif
-<<<<<<< HEAD
 	err = register_netdevice_notifier(&ndisc_netdev_notifier);
 	if (err)
 		goto out_unregister_sysctl;
@@ -1739,30 +1727,6 @@ out_unregister_pernet:
 void ndisc_cleanup(void)
 {
 	unregister_netdevice_notifier(&ndisc_netdev_notifier);
-=======
-out:
-	return err;
-
-#ifdef CONFIG_SYSCTL
-out_unregister_pernet:
-	unregister_pernet_subsys(&ndisc_net_ops);
-	goto out;
-#endif
-}
-
-int __init ndisc_late_init(void)
-{
-	return register_netdevice_notifier(&ndisc_netdev_notifier);
-}
-
-void ndisc_late_cleanup(void)
-{
-	unregister_netdevice_notifier(&ndisc_netdev_notifier);
-}
-
-void ndisc_cleanup(void)
-{
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 #ifdef CONFIG_SYSCTL
 	neigh_sysctl_unregister(&nd_tbl.parms);
 #endif

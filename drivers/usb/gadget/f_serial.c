@@ -413,11 +413,7 @@ static int gport_connect(struct f_gser *gser)
 	unsigned	port_num;
 	int		ret;
 
-<<<<<<< HEAD
 	pr_debug("%s: transport: %s f_gser: %p gserial: %p port_num: %d\n",
-=======
-	pr_debug("%s: transport: %s f_gser: %pK gserial: %pK port_num: %d\n",
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			__func__, xport_to_str(gser->transport),
 			gser, &gser->port, gser->port_num);
 
@@ -468,11 +464,7 @@ static int gport_disconnect(struct f_gser *gser)
 
 	port_num = gserial_ports[gser->port_num].client_port_num;
 
-<<<<<<< HEAD
 	pr_debug("%s: transport: %s f_gser: %p gserial: %p port_num: %d\n",
-=======
-	pr_debug("%s: transport: %s f_gser: %pK gserial: %pK port_num: %d\n",
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 			__func__, xport_to_str(gser->transport),
 			gser, &gser->port, gser->port_num);
 
@@ -650,12 +642,6 @@ static void gser_disable(struct usb_function *f)
 	struct f_gser	*gser = func_to_gser(f);
 	struct usb_composite_dev *cdev = f->config->cdev;
 
-<<<<<<< HEAD
-=======
-	if (!gser->online)
-		return;
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	DBG(cdev, "generic ttyGS%d deactivated\n", gser->port_num);
 
 	gport_disconnect(gser);
@@ -667,10 +653,6 @@ static void gser_disable(struct usb_function *f)
 #endif
 	gser->online = 0;
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 #ifdef CONFIG_MODEM_SUPPORT
 static int gser_notify(struct f_gser *gser, u8 type, u16 value,
 		void *data, unsigned length)

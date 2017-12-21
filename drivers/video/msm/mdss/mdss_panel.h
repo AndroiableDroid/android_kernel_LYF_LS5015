@@ -466,10 +466,6 @@ struct mdss_panel_debugfs_info {
 	u32 xres;
 	u32 yres;
 	struct lcd_panel_info lcdc;
-<<<<<<< HEAD
-=======
-	struct dentry *parent;
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 	u32 override_flag;
 	char frame_rate;
 	struct mdss_panel_debugfs_info *next;

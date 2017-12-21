@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 /* Copyright (c) 2012-2014, The Linux Foundation. All rights reserved.
-=======
-/* Copyright (c) 2012-2014,2016, The Linux Foundation. All rights reserved.
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -1114,12 +1110,9 @@ void kgsl_snapshot_save_frozen_objs(struct work_struct *work)
 		goto done;
 
 	snapshot->mempool = vmalloc(size);
-<<<<<<< HEAD
 	if (snapshot->mempool != NULL)
 		KGSL_CORE_ERR("snapshot: mempool address %p, size %zx\n",
 				snapshot->mempool, size);
-=======
->>>>>>> d68615f3cbc9422df08ad91c16b35422dfee0147
 
 	ptr = snapshot->mempool;
 	snapshot->mempool_size = 0;
