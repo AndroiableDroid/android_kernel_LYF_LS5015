@@ -152,6 +152,29 @@ static const char *const vp8_profile_level[] = {
 	"2.0",
 	"3.0",
 };
+
+static const char *const mpeg_video_vidc_extradata[] = {
+	"Extradata none",
+	"Extradata MB Quantization",
+	"Extradata Interlace Video",
+	"Extradata VC1 Framedisp",
+	"Extradata VC1 Seqdisp",
+	"Extradata timestamp",
+	"Extradata S3D Frame Packing",
+	"Extradata Frame Rate",
+	"Extradata Panscan Window",
+	"Extradata Recovery point SEI",
+	"Extradata Closed Caption UD",
+	"Extradata AFD UD",
+	"Extradata Multislice info",
+	"Extradata number of concealed MB",
+	"Extradata metadata filler",
+	"Extradata input crop",
+	"Extradata digital zoom",
+	"Extradata aspect ratio",
+	"Extradata macroblock metadata",
+};
+
 static const char *const perf_level[] = {
 	"Nominal",
 	"Performance",
@@ -1139,8 +1162,6 @@ static struct msm_vidc_format venc_formats[] = {
 		.type = OUTPUT_PORT,
 	},
 };
-
-static int msm_venc_set_csc(struct msm_vidc_inst *inst);
 
 static int msm_venc_queue_setup(struct vb2_queue *q,
 				const struct v4l2_format *fmt,
@@ -3009,7 +3030,6 @@ int msm_venc_s_parm(struct msm_vidc_inst *inst, struct v4l2_streamparm *a)
 	u64 us_per_frame = 0;
 	void *pdata;
 	int rc = 0, fps = 0;
-	u64 base_fps = 0;
 	struct hal_frame_rate frame_rate;
 	struct hfi_device *hdev;
 
@@ -3045,10 +3065,8 @@ int msm_venc_s_parm(struct msm_vidc_inst *inst, struct v4l2_streamparm *a)
 		goto exit;
 	}
 
-	base_fps = USEC_PER_SEC;
-	do_div(base_fps, us_per_frame);
-
-	fps = (int)base_fps;
+	fps = USEC_PER_SEC;
+	do_div(fps, us_per_frame);
 
 	if ((fps % 15 == 14) || (fps % 24 == 23))
 		fps = fps + 1;
@@ -3056,7 +3074,7 @@ int msm_venc_s_parm(struct msm_vidc_inst *inst, struct v4l2_streamparm *a)
 		fps = fps - 1;
 
 	if (inst->prop.fps != fps) {
-		dprintk(VIDC_PROF, "reported fps changed for %pK: %d->%d\n",
+		dprintk(VIDC_PROF, "reported fps changed for %p: %d->%d\n",
 				inst, inst->prop.fps, fps);
 		inst->prop.fps = fps;
 		frame_rate.frame_rate = inst->prop.fps * (0x1<<16);
@@ -3076,7 +3094,7 @@ exit:
 	return rc;
 }
 
-static int msm_venc_set_csc(struct msm_vidc_inst *inst)
+int msm_venc_set_csc(struct msm_vidc_inst *inst)
 {
 	int rc = 0;
 	int count = 0;
@@ -3578,11 +3596,8 @@ static struct v4l2_ctrl **get_super_cluster(struct msm_vidc_inst *inst,
 	struct v4l2_ctrl **cluster = kmalloc(sizeof(struct v4l2_ctrl *) *
 			NUM_CTRLS, GFP_KERNEL);
 
-	if (!size || !cluster || !inst) {
-		if (cluster)
-			kfree(cluster);
+	if (!size || !cluster || !inst)
 		return NULL;
-	}
 
 	for (c = 0; c < NUM_CTRLS; c++)
 		cluster[sz++] =  inst->ctrls[c];

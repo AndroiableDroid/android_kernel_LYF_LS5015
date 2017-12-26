@@ -1,4 +1,4 @@
--/* Copyright (c) 2012-2014, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2012-2014, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -114,8 +114,6 @@ enum hal_extradata_id {
 	HAL_EXTRADATA_DIGITAL_ZOOM,
 	HAL_EXTRADATA_LTR_INFO,
 	HAL_EXTRADATA_METADATA_MBI,
-	HAL_EXTRADATA_MASTERING_DISPLAY_COLOUR_SEI,
-	HAL_EXTRADATA_CONTENT_LIGHT_LEVEL_SEI,
 };
 
 enum hal_property {
@@ -218,7 +216,6 @@ enum hal_property {
 	HAL_PARAM_VENC_HIER_B_MAX_ENH_LAYERS,
 	HAL_PARAM_VDEC_NON_SECURE_OUTPUT2,
 	HAL_PARAM_VENC_HIER_P_HYBRID_MODE,
-	HAL_PARAM_VENC_VIDEO_SIGNAL_INFO,
 };
 
 enum hal_domain {
