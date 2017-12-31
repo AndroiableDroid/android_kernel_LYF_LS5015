@@ -826,6 +826,7 @@ static struct kobject *get_device_parent(struct device *dev,
 		return &parent->kobj;
 	return NULL;
 }
+
 static void cleanup_glue_dir(struct device *dev, struct kobject *glue_dir)
 {
 	/* see if we live in a "glue" directory */
@@ -1006,7 +1007,6 @@ int device_add(struct device *dev)
 	struct kobject *kobj;
 	struct class_interface *class_intf;
 	int error = -EINVAL;
-	struct kobject *glue_dir = NULL;
 
 	dev = get_device(dev);
 	if (!dev)
