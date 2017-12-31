@@ -2421,6 +2421,9 @@ int __sys_recvmmsg(int fd, struct mmsghdr __user *mmsg, unsigned int vlen,
 			break;
 	}
 
+out_put:
+	fput_light(sock->file, fput_needed);
+
 	if (err == 0)
 		goto out_put;
 	
