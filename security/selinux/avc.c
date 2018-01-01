@@ -1119,6 +1119,7 @@ inline int avc_has_perm_noaudit(u32 ssid, u32 tsid,
 	else
 		memcpy(avd, &node->ae.avd, sizeof(*avd));
 
+
 	denied = requested & ~(avd->allowed);
 	if (unlikely(denied))
 		rc = avc_denied(ssid, tsid, tclass, requested, 0, 0, flags, avd);
