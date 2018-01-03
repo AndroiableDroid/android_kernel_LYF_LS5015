@@ -1760,15 +1760,13 @@ static eHalStatus hdd_AssociationCompletionHandler( hdd_adapter_t *pAdapter, tCs
                 if (pRoamInfo)
                     cfg80211_connect_result ( dev, pRoamInfo->bssid,
                         NULL, 0, NULL, 0,
-                        pRoamInfo->reasonCode ?
-                        pRoamInfo->reasonCode :
                         WLAN_STATUS_UNSPECIFIED_FAILURE,
                         GFP_KERNEL );
                 else
                     cfg80211_connect_result ( dev, pWextState->req_bssId,
                         NULL, 0, NULL, 0,
                         WLAN_STATUS_UNSPECIFIED_FAILURE,
-                         GFP_KERNEL );
+                        GFP_KERNEL );
             }
         }
 
@@ -2987,8 +2985,7 @@ eHalStatus hdd_smeRoamCallback( void *pContext, tCsrRoamInfo *pRoamInfo, tANI_U3
                 if((pHddCtx) &&
                    (VOS_TRUE == pHddStaCtx->hdd_ReassocScenario) &&
                    (TRUE == pHddCtx->hdd_wlan_suspended) &&
-                   ((eCSR_ROAM_RESULT_NONE == roamResult)||
-                     pRoamInfo->is11rAssoc))
+                   (eCSR_ROAM_RESULT_NONE == roamResult))
                 {
                     /* Send DTIM period to the FW; only if the wlan is already
                        in suspend. This is the case with roaming (reassoc),
@@ -3012,27 +3009,8 @@ eHalStatus hdd_smeRoamCallback( void *pContext, tCsrRoamInfo *pRoamInfo, tANI_U3
                                          eSME_FULL_PWR_NEEDED_BY_HDD);
                     }
                 }
-
-                if ((pHddCtx) &&
-                    (FULL_POWER == pmcGetPmcState(pHddCtx->hHal)) &&
-                    (VOS_TRUE == pHddStaCtx->hdd_ReassocScenario) &&
-                    ((eCSR_ROAM_RESULT_NONE == roamResult) ||
-                      pRoamInfo->is11rAssoc))
-                {
-                    hddLog( LOG1, FL("Device in full power."
-                           "Stop and start traffic timer for roaming"));
-                    pmcStopTrafficTimer(pHddCtx->hHal);
-                    if (pmcStartTrafficTimer(pHddCtx->hHal,
-                        TRAFFIC_TIMER_ROAMING) != eHAL_STATUS_SUCCESS)
-                    {
-                       hddLog(LOGP, FL("Cannot start traffic timer"));
-                    }
-                }
-
                 halStatus = hdd_RoamSetKeyCompleteHandler( pAdapter, pRoamInfo, roamId, roamStatus, roamResult );
-                if ((eCSR_ROAM_RESULT_NONE == roamResult) ||
-                     pRoamInfo->is11rAssoc)
-                    pHddStaCtx->hdd_ReassocScenario = FALSE;
+                pHddStaCtx->hdd_ReassocScenario = FALSE;
             }
             break;
 #ifdef WLAN_FEATURE_VOWIFI_11R
