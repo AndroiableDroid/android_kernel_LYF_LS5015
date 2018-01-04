@@ -1,14 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-<<<<<<< HEAD
-<<<<<<< HEAD
 # Linux/arm64 3.10.103 Kernel Configuration
-=======
-# Linux/arm64 3.10.49 Kernel Configuration
->>>>>>> 601ca3e2a48... Wlan Fix
-=======
-# Linux/arm64 3.10.49 Kernel Configuration
->>>>>>> 9ff0470e22d... Wlan Fix
 #
 CONFIG_ARM64=y
 CONFIG_64BIT=y
@@ -41,18 +33,8 @@ CONFIG_BUILDTIME_EXTABLE_SORT=y
 #
 CONFIG_INIT_ENV_ARG_LIMIT=32
 CONFIG_CROSS_COMPILE=""
-<<<<<<< HEAD
-<<<<<<< HEAD
 CONFIG_LOCALVERSION="-@ndroiable:)roid"
 # CONFIG_LOCALVERSION_AUTO is not set
-=======
-CONFIG_LOCALVERSION=""
-CONFIG_LOCALVERSION_AUTO=y
->>>>>>> 601ca3e2a48... Wlan Fix
-=======
-CONFIG_LOCALVERSION=""
-CONFIG_LOCALVERSION_AUTO=y
->>>>>>> 9ff0470e22d... Wlan Fix
 CONFIG_DEFAULT_HOSTNAME="(none)"
 CONFIG_SWAP=y
 # CONFIG_SYSVIPC is not set
@@ -114,15 +96,7 @@ CONFIG_CGROUPS=y
 # CONFIG_CGROUP_DEBUG is not set
 CONFIG_CGROUP_FREEZER=y
 # CONFIG_CGROUP_DEVICE is not set
-<<<<<<< HEAD
-<<<<<<< HEAD
 CONFIG_CPUSETS=y
-=======
-# CONFIG_CPUSETS is not set
->>>>>>> 601ca3e2a48... Wlan Fix
-=======
-# CONFIG_CPUSETS is not set
->>>>>>> 9ff0470e22d... Wlan Fix
 CONFIG_CGROUP_CPUACCT=y
 CONFIG_RESOURCE_COUNTERS=y
 # CONFIG_MEMCG is not set
@@ -334,8 +308,6 @@ CONFIG_HOTPLUG_CPU=y
 CONFIG_PREEMPT=y
 CONFIG_PREEMPT_COUNT=y
 CONFIG_SWP_EMULATE=y
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 # CONFIG_HZ_100 is not set
 # CONFIG_HZ_250 is not set
@@ -344,12 +316,6 @@ CONFIG_HZ_300=y
 CONFIG_HZ=300
 CONFIG_SCHED_HRTICK=y
 
-=======
-CONFIG_HZ=100
->>>>>>> 601ca3e2a48... Wlan Fix
-=======
-CONFIG_HZ=100
->>>>>>> 9ff0470e22d... Wlan Fix
 CONFIG_ARCH_HAS_HOLES_MEMORYMODEL=y
 CONFIG_ARCH_SPARSEMEM_ENABLE=y
 CONFIG_ARCH_SPARSEMEM_DEFAULT=y
@@ -526,13 +492,7 @@ CONFIG_INET_XFRM_MODE_TRANSPORT=y
 CONFIG_INET_XFRM_MODE_TUNNEL=y
 # CONFIG_INET_XFRM_MODE_BEET is not set
 # CONFIG_INET_LRO is not set
-<<<<<<< HEAD
-<<<<<<< HEAD
 CONFIG_INET_DIAG_DESTROY=y
-=======
->>>>>>> 601ca3e2a48... Wlan Fix
-=======
->>>>>>> 9ff0470e22d... Wlan Fix
 CONFIG_INET_DIAG=y
 CONFIG_INET_TCP_DIAG=y
 # CONFIG_INET_UDP_DIAG is not set
@@ -3508,15 +3468,7 @@ CONFIG_MSM_OCMEM=y
 CONFIG_MSM_OCMEM_LOCAL_POWER_CTRL=y
 # CONFIG_MSM_OCMEM_DEBUG is not set
 # CONFIG_MSM_OCMEM_POWER_DISABLE is not set
-<<<<<<< HEAD
-<<<<<<< HEAD
-CONFIG_MSM_BOOT_STATS=y
-=======
 # CONFIG_MSM_BOOT_STATS is not set
->>>>>>> 601ca3e2a48... Wlan Fix
-=======
-# CONFIG_MSM_BOOT_STATS is not set
->>>>>>> 9ff0470e22d... Wlan Fix
 CONFIG_MSM_SCM=y
 # CONFIG_MAXIMUM_CURRENT_THROTTLING is not set
 CONFIG_MSM_CPU_PWR_CTL=y
@@ -3629,7 +3581,9 @@ CONFIG_MISC_FILESYSTEMS=y
 # CONFIG_QNX4FS_FS is not set
 # CONFIG_QNX6FS_FS is not set
 # CONFIG_ROMFS_FS is not set
-# CONFIG_PSTORE is not set
+CONFIG_PSTORE=y
+CONFIG_PSTORE_CONSOLE=y
+CONFIG_PSTORE_RAM=y
 # CONFIG_SYSV_FS is not set
 # CONFIG_UFS_FS is not set
 # CONFIG_F2FS_FS is not set
@@ -4042,3 +3996,4 @@ CONFIG_OID_REGISTRY=y
 CONFIG_QMI_ENCDEC=y
 # CONFIG_QMI_ENCDEC_DEBUG is not set
 # CONFIG_STRICT_MEMORY_RWX is not set
+
