@@ -355,6 +355,7 @@ USERINCLUDE    := \
 		-I$(srctree)/arch/$(hdr-arch)/include/uapi \
 		-Iarch/$(hdr-arch)/include/generated/uapi \
 		-I$(srctree)/include/uapi \
+		-I$(srctree)/drivers/soc/qcom \
 		-Iinclude/generated/uapi \
                 -include $(srctree)/include/linux/kconfig.h
 
