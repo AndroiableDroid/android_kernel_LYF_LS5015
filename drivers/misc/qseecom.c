@@ -4255,10 +4255,10 @@ static int __qseecom_qteec_issue_cmd(struct qseecom_dev_handle *data,
 	ireq.qsee_cmd_id = cmd_id;
 	ireq.app_id = data->client.app_id;
 	ireq.req_ptr = (uint32_t)__qseecom_uvirt_to_kphys(data,
-						(uintptr_t)req_ptr);
+						(uintptr_t)req->req_ptr);
 	ireq.req_len = req->req_len;
 	ireq.resp_ptr = (uint32_t)__qseecom_uvirt_to_kphys(data,
-						(uintptr_t)resp_ptr);
+						(uintptr_t)req->resp_ptr);
 	ireq.resp_len = req->resp_len;
 
 	reqd_len_sb_in = req->req_len + req->resp_len;
