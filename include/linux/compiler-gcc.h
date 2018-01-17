@@ -66,6 +66,7 @@
 #define __deprecated			__attribute__((deprecated))
 #define __packed			__attribute__((packed))
 #define __weak				__attribute__((weak))
+#define __alias(symbol)		__attribute__((alias(#symbol)))
 
 /*
  * it doesn't make sense on ARM (currently the only user of __naked) to trace
@@ -183,7 +184,10 @@
 
 #if GCC_VERSION >= 40600
 /*
- * Tell the optimizer that something else uses this function or variable.
+ * When used with Link Time Optimization, gcc can optimize away C functions or
+ * variables which are referenced only from assembly code.  __visible tells the
+ * optimizer that something else uses this function or variable, thus preventing
+ * this.
  */
 #define __visible	__attribute__((externally_visible))
 #endif
@@ -222,3 +226,4 @@
 #define uninitialized_var(x) x = x
 
 #define __always_inline		inline __attribute__((always_inline))
+
