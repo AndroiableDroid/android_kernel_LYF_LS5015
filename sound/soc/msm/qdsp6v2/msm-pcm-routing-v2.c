@@ -85,7 +85,7 @@ enum {
 #define QUAT_MI2S_TX_TEXT "QUAT_MI2S_TX"
 #define ADM_LSM_TX_TEXT "ADM_LSM_TX"
 #define LSM_FUNCTION_TEXT "LSM Function"
-static const char * const lsm_port_text[] = {
+static const char * lsm_port_text[] = {
 	"None",
 	SLIMBUS_0_TX_TEXT, SLIMBUS_1_TX_TEXT, SLIMBUS_2_TX_TEXT,
 	SLIMBUS_3_TX_TEXT, SLIMBUS_4_TX_TEXT, SLIMBUS_5_TX_TEXT,
@@ -1895,7 +1895,7 @@ static int msm_routing_ext_ec_put(struct snd_kcontrol *kcontrol,
 	return ret;
 }
 
-static const char * const ext_ec_ref_rx[] = {"NONE", "PRI_MI2S_TX",
+static const char * ext_ec_ref_rx[] = {"NONE", "PRI_MI2S_TX",
 					     "SEC_MI2S_TX", "TERT_MI2S_TX",
 					     "QUAT_MI2S_TX"};
 
@@ -4030,7 +4030,7 @@ static const struct snd_kcontrol_new hfp_int_switch_mixer_controls =
 static const struct soc_enum lsm_port_enum =
 	SOC_ENUM_SINGLE_EXT(ARRAY_SIZE(lsm_port_text), lsm_port_text);
 
-static const char * const lsm_func_text[] = {
+static const char * lsm_func_text[] = {
 	"None", "AUDIO", "BEACON", "ULTRASOUND", "SWAUDIO",
 };
 static const struct soc_enum lsm_func_enum =
@@ -4085,7 +4085,7 @@ static const struct snd_kcontrol_new lsm_controls[] = {
 	msm_routing_put_lec_ref_cfg_control),
 };
 
-static const char * const aanc_slim_0_rx_text[] = {
+static const char * aanc_slim_0_rx_text[] = {
 	"ZERO", "SLIMBUS_0_TX", "SLIMBUS_1_TX", "SLIMBUS_2_TX", "SLIMBUS_3_TX",
 	"SLIMBUS_4_TX", "SLIMBUS_5_TX", "SLIMBUS_6_TX"
 };
@@ -4795,11 +4795,11 @@ static int spkr_prot_get_vi_rch_port(struct snd_kcontrol *kcontrol,
 	return 0;
 }
 
-static const char * const slim0_rx_vi_fb_tx_lch_mux_text[] = {
+static const char * slim0_rx_vi_fb_tx_lch_mux_text[] = {
 	"ZERO", "SLIM4_TX"
 };
 
-static const char * const slim0_rx_vi_fb_tx_rch_mux_text[] = {
+static const char * slim0_rx_vi_fb_tx_rch_mux_text[] = {
 	"ZERO", "SLIM4_TX"
 };
 
