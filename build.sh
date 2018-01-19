@@ -29,9 +29,25 @@ mkdir $KERNEL_DIR/out
 
 # Get Toolchain
 
-rm -rf $KERNEL_DIR/../uber
 UBER=$KERNEL_DIR/../uber
-git clone https://bitbucket.org/UBERTC/aarch64-linux-android-4.9-kernel.git $UBER
+
+function TC() {
+
+if [[ -d ${UBER} ]]; then
+	if [[ -d ${UBER}/.git ]]; then
+		cd ${UBER}
+		git fetch origin
+        	git reset --hard origin/master
+		git clean -fxd > /dev/null 2>&1
+		cd ${KERNEL_DIR}
+	else
+		rm -rf ${UBER}
+	fi
+else
+
+	git clone https://bitbucket.org/UBERTC/aarch64-linux-android-4.9-kernel.git $UBER
+fi
+}
 
 # Modify the following variable if you want to build
 export CROSS_COMPILE=$UBER/bin/aarch64-linux-android-
@@ -81,6 +97,7 @@ make ARCH=arm64 O=out-j8 clean mrproper
 rm -rf $KERNEL_DIR/zImage
 ;;
 *)
+TC
 compile_kernel
 ;;
 esac
