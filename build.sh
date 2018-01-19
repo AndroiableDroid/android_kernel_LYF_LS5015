@@ -26,8 +26,15 @@ red='\033[0;31m'
 nocol='\033[0m'
 rm -rf $KERNEL_DIR/out
 mkdir $KERNEL_DIR/out
+
+# Get Toolchain
+
+rm -rf $KERNEL_DIR/../uber
+UBER=$KERNEL_DIR/../uber
+git clone https://bitbucket.org/UBERTC/aarch64-linux-android-4.9-kernel.git $UBER
+
 # Modify the following variable if you want to build
-export CROSS_COMPILE=$KERNEL_DIR/../uber/bin/aarch64-linux-android-
+export CROSS_COMPILE=$UBER/bin/aarch64-linux-android-
 export ARCH=arm64
 export SUBARCH=arm64
 export KBUILD_BUILD_USER="Faraz"
@@ -64,6 +71,8 @@ cp $KERNEL_DIR/out/arch/arm64/boot/Image.gz-dtb $BUILD_DIR/zImage
 cd $BUILD_DIR
 zip -r Nichrome-$VERSION-$DATE.zip *
 cd $KERNEL_DIR
+rm -rf $KERNEL_DIR/out
+rm $BUILD_DIR/zImage
 }
 
 case $1 in
