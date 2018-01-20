@@ -21,9 +21,13 @@ KERN_IMG=$KERNEL_DIR/out/arch/arm64/boot/Image.gz-dtb
 BUILD_START=$(date +"%s")
 blue='\033[0;34m'
 cyan='\033[0;36m'
+green='\e[0;32m'
 yellow='\033[0;33m'
 red='\033[0;31m'
 nocol='\033[0m'
+purple='\e[0;35m'
+white='\e[0;37m'
+DEVICE="LS-5015"
 rm -rf $KERNEL_DIR/out
 mkdir $KERNEL_DIR/out
 
@@ -59,12 +63,14 @@ export USE_CCACHE=1
 BUILD_DIR=$KERNEL_DIR/build
 VERSION="X4"
 DATE=$(date +"%d%m%y")
+ZIP_NAME=Nichrome-$DEVICE-$VERSION-$DATE
 
 compile_kernel ()
 {
-echo -e "$blue***********************************************"
+echo -e "$cyan****************************************************"
 echo "             Compiling Nichrome kernel        "
-echo -e "***********************************************$nocol"
+echo -e "****************************************************"
+echo -e "$nocol"
 rm -f $KERN_IMG
 make O=out LS5015_defconfig
 make O=out -j8
@@ -80,21 +86,25 @@ make_zip
 
 make_zip ()
 {
-echo "Making Zip"
-rm $BUILD_DIR/*.zip
-rm $BUILD_DIR/zImage
-cp $KERNEL_DIR/out/arch/arm64/boot/Image.gz-dtb $BUILD_DIR/zImage
-cd $BUILD_DIR
-zip -r Nichrome-$VERSION-$DATE.zip *
-cd $KERNEL_DIR
-rm -rf $KERNEL_DIR/out
-rm $BUILD_DIR/zImage
+if [[ $( ls ${KERNEL_DIR}/out/arch/arm64/boot/Image.gz-dtb 2>/dev/null | wc -l ) != "0" ]]; then
+	BUILD_RESULT_STRING="BUILD SUCCESSFUL"
+	echo "Making Zip"
+	rm $BUILD_DIR/*.zip
+	rm $BUILD_DIR/zImage
+	cp $KERNEL_DIR/out/arch/arm64/boot/Image.gz-dtb $BUILD_DIR/zImage
+	cd $BUILD_DIR
+	zip -r ${ZIP_NAME}.zip *
+	cd $KERNEL_DIR
+	rm -rf $KERNEL_DIR/out
+	rm $BUILD_DIR/zImage
+else
+    BUILD_RESULT_STRING="BUILD FAILED"
+fi
 }
 
 case $1 in
 clean)
 make ARCH=arm64 O=out-j8 clean mrproper
-rm -rf $KERNEL_DIR/zImage
 ;;
 *)
 TC
@@ -103,4 +113,11 @@ compile_kernel
 esac
 BUILD_END=$(date +"%s")
 DIFF=$(($BUILD_END - $BUILD_START))
-echo -e "$yellow Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds.$nocol"
+if [[ "${BUILD_RESULT_STRING}" = "BUILD SUCCESSFUL" ]]; then
+echo -e "$cyan****************************************************************************************$nocol"
+echo -e "$cyan*$nocol${red} ${BUILD_RESULT_STRING}$nocol"
+echo -e "$cyan*$nocol$yellow Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds.$nocol"
+echo -e "$cyan*$nocol${green} ZIP LOCATION: ${BUILD_DIR}/${ZIP_NAME}.zip$nocol"
+echo -e "$cyan*$nocol${green} SIZE: $( du -h ${BUILD_DIR}/${ZIP_NAME}.zip | awk '{print $1}' )$nocol"
+echo -e "$cyan****************************************************************************************$nocol"
+fi
