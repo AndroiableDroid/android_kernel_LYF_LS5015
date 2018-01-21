@@ -158,10 +158,6 @@ void ftrace_likely_update(struct ftrace_branch_data *f, int val, int expect);
 # define barrier() __memory_barrier()
 #endif
 
-#ifndef barrier_data
-# define barrier_data(ptr) barrier()
-#endif
-
 /* Unreachable code */
 #ifndef unreachable
 # define unreachable() do { } while (1)
@@ -301,14 +297,6 @@ void ftrace_likely_update(struct ftrace_branch_data *f, int val, int expect);
 #define __visible
 #endif
 
-/*
- * Assume alignment of return value.
- */
-#ifndef __assume_aligned
-#define __assume_aligned(a, ...)
-#endif
-
-
 /* Are two types/vars the same type (ignoring qualifiers)? */
 #ifndef __same_type
 # define __same_type(a, b) __builtin_types_compatible_p(typeof(a), typeof(b))
@@ -383,3 +371,4 @@ void ftrace_likely_update(struct ftrace_branch_data *f, int val, int expect);
 # define __kprobes
 #endif
 #endif /* __LINUX_COMPILER_H */
+
