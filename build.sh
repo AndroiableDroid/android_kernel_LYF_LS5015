@@ -28,6 +28,7 @@ nocol='\033[0m'
 purple='\e[0;35m'
 white='\e[0;37m'
 DEVICE="LS-5015"
+J="-j$(grep -c ^processor /proc/cpuinfo)"
 rm -rf $KERNEL_DIR/out
 mkdir $KERNEL_DIR/out
 
@@ -39,16 +40,15 @@ function TC() {
 
 if [[ -d ${UBER} ]]; then
 	if [[ -d ${UBER}/.git ]]; then
-		cd ${UBER}
-		git fetch origin
-        	git reset --hard origin/master
-		git clean -fxd > /dev/null 2>&1
-		cd ${KERNEL_DIR}
+			cd ${UBER}
+			git fetch origin
+                        git reset --hard origin/master
+                        git clean -fxd > /dev/null 2>&1
+                        cd ${KERNEL_DIR}
 	else
 		rm -rf ${UBER}
 	fi
 else
-
 	git clone https://bitbucket.org/UBERTC/aarch64-linux-android-4.9-kernel.git $UBER
 fi
 }
@@ -62,7 +62,7 @@ export KBUILD_BUILD_HOST="TimeMachine"
 export USE_CCACHE=1
 BUILD_DIR=$KERNEL_DIR/build
 VERSION="X4"
-DATE=$(date +"%d%m%y")
+DATE=$(date -u +%Y%m%d-%H%M)
 ZIP_NAME=Nichrome-$DEVICE-$VERSION-$DATE
 
 compile_kernel ()
@@ -73,7 +73,7 @@ echo -e "****************************************************"
 echo -e "$nocol"
 rm -f $KERN_IMG
 make O=out LS5015_defconfig
-make O=out -j8
+make O=out $J
 if ! [ -a $KERN_IMG ];
 then
 echo -e "$red Kernel Compilation failed! Fix the errors! $nocol"
