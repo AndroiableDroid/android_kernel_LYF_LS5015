@@ -49,7 +49,7 @@ if [[ -d ${UBER} ]]; then
 		rm -rf ${UBER}
 	fi
 else
-	git clone https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9 $UBER
+	git clone https://bitbucket.org/UBERTC/aarch64-linux-android-4.9-kernel.git $UBER
 fi
 }
 
