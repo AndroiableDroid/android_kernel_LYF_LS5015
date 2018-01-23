@@ -458,9 +458,6 @@ extern struct cpufreq_governor cpufreq_gov_intel;
 #elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_SMARTMAX_EPS)
 extern struct cpufreq_governor cpufreq_gov_smartmax_eps;
 #define CPUFREQ_DEFAULT_GOVERNOR        (&cpufreq_gov_smartmax_eps)
-#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_CHILL)
-extern struct cpufreq_governor cpufreq_gov_chill;
-#define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_chill)
 #endif
 
 /*********************************************************************
